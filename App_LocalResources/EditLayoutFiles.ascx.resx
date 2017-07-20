@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Main.Text" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="EditLayoutFiles.Text" xml:space="preserve">
+    <value>Edit Layout Files</value>
+  </data>
+  <data name="LayoutFilesUpdated.Text" xml:space="preserve">
+    <value>Layout Files Updated!</value>
+  </data>
+  <data name="EditLayoutFilesDescription.Text" xml:space="preserve">
+    <value>On this page, you can change the layout of the current template.</value>
+  </data>
+  <data name="plCurrentTemplate.Text" xml:space="preserve">
+    <value>Current Template</value>
+  </data>
+  <data name="plLayoutGroups.Text" xml:space="preserve">
+    <value>Layout Files</value>
+  </data>
+  <data name="Featured.Text" xml:space="preserve">
+    <value>Featured</value>
+  </data>
+  <data name="Latest.Text" xml:space="preserve">
+    <value>Latest (Companion Module)</value>
+  </data>
+  <data name="Listing.Text" xml:space="preserve">
+    <value>Listing</value>
+  </data>
+  <data name="Message.Text" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Photo.Text" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="Search.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Stylesheet.Text" xml:space="preserve">
+    <value>Stylesheet</value>
+  </data>
+  <data name="Type.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="View.Text" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="plHeader.Text" xml:space="preserve">
+    <value>Header</value>
+  </data>
+  <data name="plHeader.Help" xml:space="preserve">
+    <value>Edit the header text of the template.</value>
+  </data>
+  <data name="plItem.Text" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="plItem.Help" xml:space="preserve">
+    <value>Edit the item text of the template.</value>
+  </data>
+  <data name="plAlternate.Text" xml:space="preserve">
+    <value>Alternate</value>
+  </data>
+  <data name="plAlternate.Help" xml:space="preserve">
+    <value>Edit the alternate text of the template.</value>
+  </data>
+  <data name="plSeparator.Text" xml:space="preserve">
+    <value>Separator</value>
+  </data>
+  <data name="plSeparator.Help" xml:space="preserve">
+    <value>Edit the separator text of the template.</value>
+  </data>
+  <data name="plFooter.Text" xml:space="preserve">
+    <value>Footer</value>
+  </data>
+  <data name="plFooter.Help" xml:space="preserve">
+    <value>Edit the footer text of the template.</value>
+  </data>
+  <data name="plPhotoFirst.Text" xml:space="preserve">
+    <value>First Photo</value>
+  </data>
+  <data name="plPhotoFirst.Help" xml:space="preserve">
+    <value>Edit the first photo text of the template.</value>
+  </data>
+  <data name="Contact.Text" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Print.Text" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="ContactDescription.Text" xml:space="preserve">
+    <value>The layout files for the "contact email".</value>
+  </data>
+  <data name="FeaturedDescription.Text" xml:space="preserve">
+    <value>The layout files for the featured section on the front page.</value>
+  </data>
+  <data name="LatestDescription.Text" xml:space="preserve">
+    <value>The layout files for the latest section on the front page.</value>
+  </data>
+  <data name="ListingDescription.Text" xml:space="preserve">
+    <value>The layout files for listings on the view type or search results page.</value>
+  </data>
+  <data name="MessageDescription.Text" xml:space="preserve">
+    <value>The layout files for the message page.</value>
+  </data>
+  <data name="PhotoDescription.Text" xml:space="preserve">
+    <value>The layout files for individual photos.</value>
+  </data>
+  <data name="PrintDescription.Text" xml:space="preserve">
+    <value>The layout files for printing a property.</value>
+  </data>
+  <data name="SearchDescription.Text" xml:space="preserve">
+    <value>The layout files for the search section on the front page.</value>
+  </data>
+  <data name="StylesheetDescription.Text" xml:space="preserve">
+    <value>The layout files for the stylesheet of a template.</value>
+  </data>
+  <data name="TypeDescription.Text" xml:space="preserve">
+    <value>The layout files for the types section on the front page.</value>
+  </data>
+  <data name="ViewDescription.Text" xml:space="preserve">
+    <value>The layout files for viewing a property.</value>
+  </data>
+  <data name="Comment.Text" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="CommentDescription.Text" xml:space="preserve">
+    <value>The layout files for the comment section.</value>
+  </data>
+  <data name="plPageTitle.Help" xml:space="preserve">
+    <value>Edit the text to override the page title.</value>
+  </data>
+  <data name="plPageTitle.Text" xml:space="preserve">
+    <value>Page Title</value>
+  </data>
+  <data name="plPageDescription.Help" xml:space="preserve">
+    <value>Edit the text to override the page description.</value>
+  </data>
+  <data name="plPageDescription.Text" xml:space="preserve">
+    <value>Page Description</value>
+  </data>
+  <data name="plPageKeywords.Help" xml:space="preserve">
+    <value>Edit the text to override the page keywords.</value>
+  </data>
+  <data name="plPageKeywords.Text" xml:space="preserve">
+    <value>Page Keywords</value>
+  </data>
+  <data name="Export.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportDescription.Text" xml:space="preserve">
+    <value>The layout files for the CSV export.</value>
+  </data>
+  <data name="RSS.Text" xml:space="preserve">
+    <value>RSS</value>
+  </data>
+  <data name="RSSDescription.Text" xml:space="preserve">
+    <value>The layout files for the RSS feeds.</value>
+  </data>
+  <data name="Option.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="OptionDescription.Text" xml:space="preserve">
+    <value>The layout files for the menu options, e.g. add new property link.</value>
+  </data>
+  <data name="Types.Text" xml:space="preserve">
+    <value>Types (Companion Module)</value>
+  </data>
+  <data name="RSSReader.Text" xml:space="preserve">
+    <value>RSS Reader</value>
+  </data>
+  <data name="RSSReaderDescription.Text" xml:space="preserve">
+    <value>The layout files for the [RSSREADER] token.</value>
+  </data>
+  <data name="plPhoto.Help" xml:space="preserve">
+    <value>Specify the photo template to be used in [PHOTOS]</value>
+  </data>
+  <data name="plPhoto.Text" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="XML.Text" xml:space="preserve">
+    <value>XML</value>
+  </data>
+  <data name="XMLDescription.Text" xml:space="preserve">
+    <value>The optional XML feed that is enabled in Edit Layout Files.</value>
+  </data>
+  <data name="Review.Text" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="ReviewDescription.Text" xml:space="preserve">
+    <value>The layout files for the review section.</value>
+  </data>
+  <data name="Pdf.Text" xml:space="preserve">
+    <value>PDF</value>
+  </data>
+  <data name="PdfDescription.Text" xml:space="preserve">
+    <value>The layout files for the view pdf file.</value>
+  </data>
+  <data name="ReviewNotification.Text" xml:space="preserve">
+    <value>Review Notification</value>
+  </data>
+  <data name="plPageHeader.Help" xml:space="preserve">
+    <value>Specify the html to go into the head section of the page. </value>
+  </data>
+  <data name="plPageHeader.Text" xml:space="preserve">
+    <value>Page Header</value>
+  </data>
+</root>

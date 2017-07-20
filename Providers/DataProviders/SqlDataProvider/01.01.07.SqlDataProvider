@@ -1,0 +1,99 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+	@ModuleID int, 
+	@PropertyTypeID int,
+	@MaxCount int,
+	@IsPublished bit,
+	@IsNotPublished bit,
+	@IsActive bit,
+	@IsPending bit,
+	@IsExpired bit,
+	@ShowFeaturedOnly bit,
+	@SortBy int,
+	@SortByID int,
+	@SortByIDType int,
+	@SortOrder int,
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000) 
+AS
+
+if( @MaxCount is not null )
+begin
+	SET ROWCOUNT @MaxCount 
+end
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsApproved],
+	p.[IsFeatured],
+	p.[IsPublished],
+	p.[IsArchived],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	pt.[Name] as 'PropertyTypeName',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID'  
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p, {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	p.[ModuleID] = @ModuleID
+	and 
+	p.PropertyTypeID = pt.PropertyTypeID
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@IsPublished is null or p.IsPublished = 1)
+	and
+	(@IsNotPublished is null or p.IsPublished = 0)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+ORDER BY 
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 1 THEN cast(p.[DateModified] as nvarchar)
+              	WHEN @SortBy = 1 and @SortOrder = 1 THEN cast(p.[DatePublished] as nvarchar)
+              	WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN cast(p.[DateModified] as nvarchar) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 0 THEN cast(p.[DateModified] as nvarchar)
+              	WHEN @SortBy = 1 and @SortOrder = 0 THEN cast(p.[DatePublished] as nvarchar)
+              	WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN cast(p.[DateModified] as nvarchar) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC,
+	CASE 
+        WHEN @SortBy = 2 and @SortOrder = 1 THEN p.[ViewCount] 
+		WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN p.[ViewCount]
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(cast(CustomValue as nvarchar) as int) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+        WHEN @SortBy = 2 and @SortOrder = 0 THEN p.[ViewCount]
+		WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN p.[ViewCount]
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(cast(CustomValue as nvarchar) as int) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC
+GO

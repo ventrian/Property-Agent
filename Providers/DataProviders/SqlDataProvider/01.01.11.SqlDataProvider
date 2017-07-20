@@ -1,0 +1,25 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeList
+	@ModuleID	int,
+	@ShowPublishedOnly bit  
+AS
+
+SELECT
+	pt.[PropertyTypeID],
+	pt.[ModuleID],
+	pt.[Name],
+	pt.[Description],
+	pt.[SortOrder],
+	pt.[IsPublished],
+	(SELECT count(*) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p where p.PropertyTypeID = pt.PropertyTypeID and p.IsPublished = 1) as 'PropertyCount' 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	[ModuleID] = @ModuleID
+	and
+	(@ShowPublishedOnly = 0 or pt.[IsPublished] = 1)
+ORDER BY
+	pt.[SortOrder]
+GO

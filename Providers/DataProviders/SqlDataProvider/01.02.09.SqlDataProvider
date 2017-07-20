@@ -1,0 +1,74 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeListAll
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeListAll 
+	@ModuleID int,
+	@Current int, 	
+	@ShowPublishedOnly bit,
+	@SortBy int 
+as
+SET NOCOUNT ON
+DECLARE @level int, @line int
+ 
+CREATE TABLE #hierarchy(HierarchyID int IDENTITY (1,1), PropertyTypeID int, level int)
+CREATE TABLE #stack (item int, level int)
+INSERT INTO #stack VALUES (@current, 1)
+SELECT @level = 1
+ 
+WHILE @level > 0
+BEGIN
+   IF EXISTS (SELECT * FROM #stack WHERE level = @level)
+      BEGIN
+         SELECT @current = item
+         FROM #stack
+         WHERE level = @level
+ 
+ 	insert into #hierarchy(PropertyTypeID, level) values(@current, @level) 
+ 
+         DELETE FROM #stack
+         WHERE level = @level
+            AND item = @current
+ 
+         INSERT #stack
+            SELECT PropertyTypeID, @level + 1
+            FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType
+            WHERE ParentID = @current and ModuleID = @ModuleID 
+     	    ORDER BY 	
+	CASE 
+              	WHEN @SortBy = 0 THEN [SortOrder]
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 1 THEN  [Name]  
+              END DESC
+
+         IF @@ROWCOUNT > 0
+            SELECT @level = @level + 1
+      END
+   ELSE
+      SELECT @level = @level - 1
+END -- WHILE
+ 
+SELECT
+	pt.[PropertyTypeID],
+	pt.[ParentID],
+	pt.[ModuleID],
+	pt.[Name],
+	pt.[Description],
+	pt.[SortOrder],
+	pt.[IsPublished],
+	(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt2 where pt.PropertyTypeID = pt2.ParentID) as 'PropertyTypeCount', 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount(pt.[PropertyTypeID], 0, GetDate()) as 'PropertyCount',
+	REPLICATE('.',(level-2)*2) + pt.[Name] as 'NameIndented' 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt, #hierarchy
+WHERE 
+	#hierarchy.PropertyTypeID = pt.PropertyTypeID
+	AND
+	pt.[ModuleID] = @ModuleID
+	and
+	(@ShowPublishedOnly = 0 or pt.[IsPublished] = 1)
+ORDER BY HierarchyID 
+
+drop table #hierarchy
+drop table #stack
+GO

@@ -1,0 +1,31 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CommentList 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CommentList 
+	@PropertyID int
+AS
+
+SELECT     
+	c.CommentID,
+	c.PropertyID,
+	c.UserID,
+	c.Comment,
+	c.CreateDate,
+	CASE c.UserID
+        	WHEN -1 THEN c.Email
+         	ELSE u.Email
+      	END as 'Email',
+	CASE c.UserID
+        	WHEN -1 THEN c.Name
+         	ELSE u.DisplayName
+      	END as 'Name',
+	c.Website,
+	u.Username,
+	r.Rating
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Comment c LEFT OUTER JOIN {databaseOwner}{objectQualifier}Users u ON c.UserID = u.UserID LEFT OUTER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating r ON c.CommentID = r.CommentID AND c.PropertyID = r.PropertyID
+WHERE
+	c.PropertyID = @PropertyID
+ORDER BY
+	c.CreateDate ASC
+GO

@@ -1,0 +1,134 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo ADD
+	PhotoType int NOT NULL CONSTRAINT DF_{objectQualifier}Ventrian_PropertyAgent_Photo_PhotoType DEFAULT 0,
+	ExternalUrl nvarchar(500) NULL
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoAdd
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoAdd
+	@PropertyID int,
+	@Title nvarchar(255),
+	@Filename nvarchar(50),
+	@DateCreated datetime,
+	@Width int,
+	@Height int,
+	@SortOrder int,
+	@PropertyGuid nvarchar(50),
+	@PhotoType int,
+	@ExternalUrl nvarchar(500)
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo (
+	[PropertyID],
+	[Title],
+	[Filename],
+	[DateCreated],
+	[Width],
+	[Height],
+	[SortOrder],
+	[PropertyGuid],
+	[PhotoType],
+	[ExternalUrl]
+) VALUES (
+	@PropertyID,
+	@Title,
+	@Filename,
+	@DateCreated,
+	@Width,
+	@Height,
+	@SortOrder,
+	@PropertyGuid,
+	@PhotoType,
+	@ExternalUrl
+)
+
+select SCOPE_IDENTITY()
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoGet
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoGet
+	@PhotoID int
+AS
+
+SELECT
+	[PhotoID],
+	[PropertyID],
+	[Title],
+	[Filename],
+	[DateCreated],
+	[Width],
+	[Height],
+	[SortOrder],
+	[PropertyGuid],
+	[PhotoType],
+	[ExternalUrl] 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo
+WHERE
+	[PhotoID] = @PhotoID 
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoList 
+	@PropertyID int,
+	@PropertyGuid nvarchar(50)
+AS
+
+SELECT
+	[PhotoID],
+	[PropertyID],
+	[Title],
+	[Filename],
+	[DateCreated],
+	[Width],
+	[Height],
+	[SortOrder],
+	[PropertyGuid],
+	[PhotoType],
+	[ExternalUrl] 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo
+WHERE
+	[PropertyID] = @PropertyID
+	AND
+	([PropertyGuid] is null OR [PropertyGuid] = @PropertyGuid)
+ORDER BY
+	[SortOrder]
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoUpdate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoUpdate
+	@PhotoID int, 
+	@PropertyID int, 
+	@Title nvarchar(255), 
+	@Filename nvarchar(50), 
+	@DateCreated datetime, 
+	@Width int, 
+	@Height int, 
+	@SortOrder int,
+	@PropertyGuid nvarchar(50),
+	@PhotoType int,
+	@ExternalUrl nvarchar(500) 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo SET
+	[PropertyID] = @PropertyID,
+	[Title] = @Title,
+	[Filename] = @Filename,
+	[DateCreated] = @DateCreated,
+	[Width] = @Width,
+	[Height] = @Height,
+	[SortOrder] = @SortOrder,
+	[PropertyGuid] = @PropertyGuid,
+	[PhotoType] = @PhotoType,
+	[ExternalUrl] = @ExternalUrl 
+WHERE
+	[PhotoID] = @PhotoID
+GO

@@ -1,0 +1,31 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewList
+	@ModuleID int, 
+	@PropertyID int,
+	@IsApproved bit 
+AS
+
+SELECT     
+	r.ReviewID, 
+	r.PropertyID, 
+	r.UserID, 
+	r.CreateDate,
+	r.IsApproved, 
+	u.Username,
+	u.DisplayName,
+	u.Email 
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review r INNER JOIN
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p ON p.PropertyID = r.PropertyID INNER JOIN
+		{databaseOwner}{objectQualifier}Modules m ON m.ModuleID = p.ModuleID LEFT OUTER JOIN 
+		{databaseOwner}{objectQualifier}vw_Users u ON r.UserID = u.UserID 
+WHERE
+	(@ModuleID IS NULL OR p.ModuleID = @ModuleID) AND 
+	(@PropertyID IS NULL OR r.PropertyID = @PropertyID) AND 
+	r.IsApproved = @IsApproved AND 
+	(u.UserID IS NULL OR u.PortalID = m.PortalID) 
+ORDER BY 
+	CreateDate ASC
+GO

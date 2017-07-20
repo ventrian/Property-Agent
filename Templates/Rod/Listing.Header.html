@@ -1,0 +1,54 @@
+   
+   <style type="text/css">
+   .NormalBoldWhite {
+color:#FFFFFF;
+font-weight:bold;
+}
+  table.Normal tr.Featured {background-color:#EDE7D8; }
+
+A.whitelink:link {color:#FFFFFF; text-decoration: underline; font-size:10px}
+A.whitelink:active {color:#FFFFFF; text-decoration: underline; font-size:10px}
+A.whitelink:visited {color: #FFFFFF; text-decoration: underline; font-size:10px}
+A.whitelink:hover {color: #CCCCCC;text-decoration: underline; font-size:10px}
+.whitelink {color: #FFFFFF;text-decoration: none;}
+
+
+
+   </style>
+   
+    <script type="text/javascript">
+
+
+  function DoNav(theUrl)
+  {
+  document.location.href = theUrl;
+  }
+  
+  function hilightRows(id, highlight)
+  {
+  	var baseID = id.substring(0, id.length -2);
+	for (var x = 1; x <= 3; x++)
+    {
+		var currID = baseID + "-" + x;
+		var row = document.getElementById(currID)
+		if (highlight)
+			row.style.backgroundColor = '#EBD9DA';
+		else
+			row.style.backgroundColor = '#EDE7D8';
+    }
+  }
+  
+  
+  </script>
+
+
+<br />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="Normal">
+  <tr bgcolor="#49535F" class="NormalBoldWhite">
+    <td colspan="2">Type</td>
+    <td>Beds</td>
+    <td>Baths</td>
+    <td>Price</td>
+    <td>Area</td>
+  </tr>

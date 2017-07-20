@@ -1,0 +1,298 @@
+﻿CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewField(
+	[ReviewFieldID] [int] IDENTITY(1,1) NOT NULL,
+	[ModuleID] [int] NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[FieldType] [int] NOT NULL,
+	[FieldElements] [ntext] NULL,
+	[DefaultValue] [nvarchar](255) NULL,
+	[Caption] [nvarchar](255) NULL,
+	[CaptionHelp] [nvarchar](255) NULL,
+	[SortOrder] [int] NOT NULL,
+	[IsRequired] [bit] NOT NULL,
+	[Length] [int] NULL,
+ CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_ReviewField] PRIMARY KEY CLUSTERED 
+(
+	[ReviewFieldID] ASC
+) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue(
+	[ReviewValueID] [int] IDENTITY(1,1) NOT NULL,
+	[ReviewID] [int] NOT NULL,
+	[ReviewFieldID] [int] NOT NULL,
+	[ReviewValue] [ntext] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_ReviewValue] PRIMARY KEY CLUSTERED 
+(
+	[ReviewValueID] ASC
+) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review(
+	[ReviewID] [int] IDENTITY(1,1) NOT NULL,
+	[PropertyID] [int] NOT NULL,
+	[UserID] [int] NULL,
+	[CreateDate] [datetime] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_Review] PRIMARY KEY CLUSTERED 
+(
+	[ReviewID] ASC
+) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_Review_{objectQualifier}Ventrian_PropertyAgent_Property] FOREIGN KEY([PropertyID])
+REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property ([PropertyID])
+GO
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review CHECK CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_Review_{objectQualifier}Ventrian_PropertyAgent_Property]
+GO
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_ReviewValue_{objectQualifier}Ventrian_PropertyAgent_Review] FOREIGN KEY([ReviewID])
+REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review ([ReviewID])
+GO
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue CHECK CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_ReviewValue_{objectQualifier}Ventrian_PropertyAgent_Review]
+GO
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue  WITH CHECK ADD  CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_ReviewValue_{objectQualifier}Ventrian_PropertyAgent_ReviewField] FOREIGN KEY([ReviewFieldID])
+REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewField ([ReviewFieldID])
+GO
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue CHECK CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_ReviewValue_{objectQualifier}Ventrian_PropertyAgent_ReviewField]
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyDelete 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyDelete 
+	@PropertyID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue 
+WHERE
+	ReviewID IN (SELECT ReviewID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review WHERE [PropertyID] = @PropertyID) 
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review 
+WHERE
+	[PropertyID] = @PropertyID
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[PropertyID] = @PropertyID
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+WHERE
+	[PropertyID] = @PropertyID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewAdd
+	@PropertyID int,
+	@UserID int,
+	@CreateDate datetime 
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review (
+	[PropertyID],
+	[UserID],
+	[CreateDate]
+) VALUES (
+	@PropertyID,
+	@UserID,
+	@CreateDate 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewDelete 
+	@ReviewID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review
+WHERE
+	[ReviewID] = @ReviewID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewFieldAdd 
+	@ModuleID int,
+	@Name nvarchar(255),
+	@FieldType int,
+	@FieldElements ntext,
+	@DefaultValue nvarchar(255),
+	@Caption nvarchar(255),
+	@CaptionHelp nvarchar(255),
+	@SortOrder int,
+	@IsRequired bit, 
+	@Length int
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewField (
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[SortOrder],
+	[IsRequired],
+	[Length]
+) VALUES (
+	@ModuleID,
+	@Name,
+	@FieldType,
+	@FieldElements,
+	@DefaultValue,
+	@Caption,
+	@CaptionHelp,
+	@SortOrder,
+	@IsRequired,
+	@Length
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewFieldDelete 
+	@ReviewFieldID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewField
+WHERE
+	[ReviewFieldID] = @ReviewFieldID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewFieldGet 
+	@ReviewFieldID int
+AS
+
+SELECT     
+	ReviewFieldID, 
+	ModuleID, 
+	Name, 
+	FieldType, 
+	FieldElements, 
+	DefaultValue, 
+	Caption, 
+	CaptionHelp, 
+	SortOrder, 
+	IsRequired, 
+	Length
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewField
+WHERE
+	[ReviewFieldID] = @ReviewFieldID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewFieldList 
+	@ModuleID int
+AS
+
+SELECT     
+	ReviewFieldID, 
+	ModuleID, 
+	Name, 
+	FieldType, 
+	FieldElements, 
+	DefaultValue, 
+	Caption, 
+	CaptionHelp, 
+	SortOrder, 
+	IsRequired, 
+	Length
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewField
+WHERE
+	[ModuleID] = @ModuleID 
+ORDER BY
+	[SortOrder]
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewFieldUpdate 
+	@ReviewFieldID int, 
+	@ModuleID int, 
+	@Name nvarchar(255), 
+	@FieldType int, 
+	@FieldElements ntext, 
+	@DefaultValue nvarchar(255), 
+	@Caption nvarchar(255), 
+	@CaptionHelp nvarchar(255), 
+	@SortOrder int,
+	@IsRequired bit,
+	@Length int
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewField SET
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[FieldType] = @FieldType,
+	[FieldElements] = @FieldElements,
+	[DefaultValue] = @DefaultValue,
+	[Caption] = @Caption,
+	[CaptionHelp] = @CaptionHelp,
+	[SortOrder] = @SortOrder,
+	[IsRequired] = @IsRequired,
+	[Length] = @Length
+WHERE
+	[ReviewFieldID] = @ReviewFieldID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewList 
+	@PropertyID int
+AS
+
+SELECT     
+	r.ReviewID, 
+	r.PropertyID, 
+	r.UserID, 
+	r.CreateDate,
+	u.Username,
+	u.DisplayName,
+	u.Email 
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review r INNER JOIN
+		{databaseOwner}{objectQualifier}vw_Users u ON r.UserID = u.UserID 
+WHERE
+	PropertyID = @PropertyID 
+ORDER BY 
+	CreateDate ASC
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValueAdd 
+	@ReviewID int,
+	@ReviewFieldID int,
+	@ReviewValue ntext  
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue (
+	[ReviewID],
+	[ReviewFieldID],
+	[ReviewValue]
+) VALUES (
+	@ReviewID,
+	@ReviewFieldID,
+	@ReviewValue 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValueDelete 
+	@ReviewValueID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue
+WHERE
+	[ReviewValueID] = @ReviewValueID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValueList 
+	@ReviewID int
+AS
+
+SELECT     
+	rv.ReviewValueID, 
+	rv.ReviewID, 
+	rv.ReviewFieldID, 
+	rv.ReviewValue
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue rv 
+WHERE
+	rv.ReviewID = @ReviewID 
+GO

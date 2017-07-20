@@ -1,0 +1,258 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField ADD
+	IncludeCount bit NOT NULL CONSTRAINT DF_{objectQualifier}Ventrian_PropertyAgent_CustomField_IncludeCount DEFAULT 0
+
+
+GO
+
+
+
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldAdd
+GO
+
+
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldAdd
+	@ModuleID int,
+	@Name nvarchar(255),
+	@FieldType int,
+	@FieldElements ntext,
+	@FieldElementType int,
+	@DefaultValue nvarchar(255),
+	@Caption nvarchar(255),
+	@CaptionHelp nvarchar(255),
+	@IsInManager bit,
+	@IsSortable bit,
+	@IsInListing bit,
+	@IsCaptionHidden bit,
+	@IsFeatured bit,
+	@IsPublished bit,
+	@IsHidden bit,
+	@IsSearchable bit,
+	@IsLockDown bit,
+	@SearchType int,
+	@SortOrder int,
+	@IsRequired bit, 
+	@ValidationType int, 
+	@FieldElementsFrom nvarchar(4000),
+	@FieldElementsTo nvarchar(4000),
+	@Length int,
+	@RegularExpression nvarchar(500),
+	@IncludeCount bit
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField (
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[FieldElementType],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[IsLockDown], 
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType],
+	[FieldElementsFrom],
+	[FieldElementsTo],
+	[Length],
+	[RegularExpression],
+	[IncludeCount] 
+) VALUES (
+	@ModuleID,
+	@Name,
+	@FieldType,
+	@FieldElements,
+	@FieldElementType,
+	@DefaultValue,
+	@Caption,
+	@CaptionHelp,
+	@IsInManager, 
+	@IsSortable, 
+	@IsInListing,
+	@IsCaptionHidden,
+	@IsFeatured,
+	@IsPublished,
+	@IsHidden,
+	@IsSearchable,
+	@IsLockDown,
+	@SearchType,
+	@SortOrder,
+	@IsRequired,
+	@ValidationType,
+	@FieldElementsFrom,
+	@FieldElementsTo,
+	@Length,
+	@RegularExpression,
+	@IncludeCount
+)
+
+select SCOPE_IDENTITY()
+GO
+
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldUpdate
+GO
+
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldUpdate
+	@CustomFieldID int, 
+	@ModuleID int, 
+	@Name nvarchar(255), 
+	@FieldType int, 
+	@FieldElements ntext, 
+	@FieldElementType int, 
+	@DefaultValue nvarchar(255), 
+	@Caption nvarchar(255), 
+	@CaptionHelp nvarchar(255), 
+	@IsInManager bit, 
+	@IsSortable bit, 
+	@IsInListing bit, 
+	@IsCaptionHidden bit, 
+	@IsFeatured bit, 
+	@IsPublished bit, 
+	@IsHidden bit, 
+	@IsSearchable bit, 
+	@IsLockDown bit,
+	@SearchType int, 
+	@SortOrder int,
+	@IsRequired bit,
+	@ValidationType int, 
+	@FieldElementsFrom nvarchar(4000),
+	@FieldElementsTo nvarchar(4000),
+	@Length int,
+	@RegularExpression nvarchar(500),
+	@IncludeCount bit 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField SET
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[FieldType] = @FieldType,
+	[FieldElements] = @FieldElements,
+	[FieldElementType] = @FieldElementType,
+	[DefaultValue] = @DefaultValue,
+	[Caption] = @Caption,
+	[CaptionHelp] = @CaptionHelp,
+	[IsInListing] = @IsInListing,
+	[IsCaptionHidden] = @IsCaptionHidden,
+	[IsInManager] = @IsInManager, 
+	[IsSortable] = @IsSortable, 
+	[IsFeatured] = @IsFeatured,
+	[IsPublished] = @IsPublished,
+	[IsHidden] = @IsHidden,
+	[IsSearchable] = @IsSearchable,
+	[IsLockDown] = @IsLockDown,
+	[SearchType] = @SearchType,
+	[SortOrder] = @SortOrder,
+	[IsRequired] = @IsRequired,
+	[ValidationType] = @ValidationType,
+	[FieldElementsFrom] = @FieldElementsFrom,
+	[FieldElementsTo] = @FieldElementsTo,
+	[Length] = @Length,
+	[RegularExpression] = @RegularExpression,
+	[IncludeCount] = @IncludeCount    
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldGet
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldGet
+	@CustomFieldID int
+AS
+
+SELECT
+	[CustomFieldID],
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[FieldElementType],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[IsLockDown],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType], 
+	[FieldElementsFrom],
+	[FieldElementsTo],
+	[Length],
+	[RegularExpression],
+	[IncludeCount]  
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO
+
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldList
+
+GO
+
+
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldList
+	@ModuleID int,
+	@IsPublishedOnly bit 
+AS
+
+SELECT
+	[CustomFieldID],
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[FieldElementType],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[IsLockDown],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType], 
+	[FieldElementsFrom],
+	[FieldElementsTo],
+	[Length],
+	[RegularExpression],
+	[IncludeCount]    
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[ModuleID] = @ModuleID 
+	and
+	(@IsPublishedOnly = 0 or IsPublished = 1)
+ORDER BY
+	[SortOrder]
+GO

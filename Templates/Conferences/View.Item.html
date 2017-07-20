@@ -1,0 +1,116 @@
+[ISINROLE:Moderators]
+<p class="info-frame"> <b>Published By:</b> [DISPLAYNAME] <b>on</b> [DATECREATED]<br />
+  <b>[CAPTION:OWNER]?</b> [CUSTOM:OWNER]<br />
+  <b>Last Modified By:</b> [MODIFIEDDISPLAYNAME] <b>on</b> [DATEMODIFIED]<br />
+  [HASBROKER][BROKERDISPLAYNAME] <b>contact:</b>[BROKEREMAIL][/HASBROKER]</p>
+[/ISINROLE:Moderators]
+<div class="rightfloat p10">[RATINGAVG]</div>
+<h2 class="bgblue p10">[EDIT] [CUSTOM:TITLE] <em class="small">added [DATEPUBLISHED]</em></h2>
+<div class="clearfix p5"></div>
+<div class="clearfix asPhotobg"> [ISFEATURED]
+  <div class="clearfix divcenter w220 larger"><span class="icon star"></span>FEATURED LISTING!</div>
+  [/ISFEATURED]
+  <div class="leftfloat photo p5">[HASIMAGES]<a href="[PHOTOLINKLARGE]" title="[PHOTOTITLE]" class="highslide" onclick="return hs.expand(this)"><img src="[PHOTOLINKMEDIUM]" alt="[CUSTOM:TITLE]" /></a>[/HASIMAGES][HASVALUE:URL][HASNOIMAGES]<img src="http://images.w3snapshot.com/?size=s&key=f852b4046ee75f0adaa47e986dc91f95&url=[CUSTOM:URL]" />[/HASNOIMAGES][/HASVALUE:URL]</div>
+  <div class="leftfloat min75 max75 p5">
+    <div class="rightfloat">
+      <ul class="aslist">
+        <li><span class="icon topic"></span>[TYPE]</li>
+        <li><span class="icon check"></span>[HITS] views</li>
+        [ISINROLE:Registered Users]
+        <li><a rel="nofollow" href="MailTo:admin@northeastok.com?Subject=northeastok.com Web Directory:Report&amp;Body=[CUSTOM:Title] [LINK]" class="tooltip" title="Report a bad link, site violation, offense, copyright infringement, or other by sending a message to a site administrator"><span class="icon flag"></span>Report</a></li>
+        [/ISINROLE:Registered Users]
+        <li><a href="[PRINTLINK]" target="_blank" rel="nofollow"><span class="icon printer"></span>Print Highlights</a></li>
+        [ISINROLE:Registered Users]
+        <li><span class="tooltip icon note" title="Add/remove [CUSTOM:TITLE] to your personal watchlist for easy bookmarking and reference"></span>[SHORTLIST]</li>
+        [/ISINROLE:Registered Users]
+      </ul>
+    </div>
+    [HASVALUE:URL]
+    <h4><a href="[CUSTOM:URL]" target="_blank" rel="nofollow">[CUSTOM:URL]</a></h4>
+    [/HASVALUE:URL]
+    <ul id="address" class="aslist">
+      [HASVALUE:Address]
+      <li>[CUSTOM:Address]</li>
+      [/HASVALUE:Address]
+      [HASVALUE:City][HASVALUE:Zip]
+      <li>[CUSTOM:City], [CUSTOM:State], [CUSTOM:Zip]</li>
+      [/HASVALUE:Zip][/HASVALUE:City]
+      [HASVALUE:Phone]
+      <li><b>[CAPTION:Phone]:</b> [CUSTOM:Phone]</li>
+      [/HASVALUE:Phone]
+    </ul>
+  </div>
+</div>
+<div class="tabsBlock">
+  <ul class="tabs">
+    <li><a href="#overview">Overview</a></li>
+    <!-- Still Under Dev <li><a href="coupons"><span>Coupons</span></a></li>-->
+    <li><a href="#reviews">Reviews ([REVIEWCOUNT])</a></li>
+    <li><a href="#write-review">Write A Review</a></li>
+    [HASNOAGENT]
+    <li><a href="#claim">Claim It</a></li>
+    [/HASNOAGENT]
+  </ul>
+  <div class="clearfix tab_container">
+    <div id="overview" class="tab_content">
+      <div class="rightfloat">
+        <ul class="aslist p10">
+          [HASVALUE:URL]
+          <li><a href="[CUSTOM:URL]" target="_blank" rel="nofollow"><span class="icon action"></span>Website</a></li>
+          [/HASVALUE:URL]
+          [HASVALUE:FACEBOOK]
+          <li><a href="[CUSTOM:FACEBOOK]" target="_blank" rel="nofollow"><span class="icon facebook"></span>Facebook</a></li>
+          [/HASVALUE:FACEBOOK]
+          [HASVALUE:TWITTER]
+          <li><a href="[CUSTOM:TWITTER]" target="_blank" rel="nofollow"><span class="icon twitter"></span>Twitter</a></li>
+          [/HASVALUE:TWITTER]
+        </ul>
+      </div>
+      <p class="p5">[CUSTOM:Details]</p>
+    </div>
+    <!-- Still Under Dev <div id="coupons" class="tab_content">
+    <p>Insert Here...</p>
+  </div>-->
+    <div id="reviews" class="tab_content"> [HASNOREVIEWS]
+      <p class="alert-frame">No reviews yet. Why not be the first to review &quot;[CUSTOM:TITLE]&quot;. Simply "click" on the "Write A Review" tab above to get started.</p>
+      [/HASNOREVIEWS]
+      [HASREVIEWS][REVIEWS][/HASREVIEWS] </div>
+    <div id="write-review" class="tab_content">
+      <h4 class="p5 bgblue">Create A Review for [CUSTOM:TITLE]</h4>
+      [ISINROLE:Unauthenticated Users]
+      <p class="info-frame">Sorry, but in order to write a review for [CUSTOM:TITLE], you must be a site member. Becoming a site member is completely free with no obligations. The NortheastOK Community wants to hear what you have to say about [CUSTOM:TITLE]. So feel free to see more about our <a href="/Help/Membership">"membership details"</a>, or get started and <a href="/Help/Sign-Up">"Sign Up"</a> today! If you are already a site member, you just need to <a href="/Login">"log in"</a> to write your own review of [CUSTOM:TITLE]</p>
+      [/ISINROLE:Unauthenticated Users]
+      [ISINROLE:Registered Users]
+      <div class="divcenter min80 max80 p5 tblw100"> [REVIEWFORM]</div>
+      [/ISINROLE:Registered Users] </div>
+    [HASNOAGENT]
+    <div id="claim" class="tab_content">
+      <p class="alert-frame">Is this your Website? Fill out the form provided below to be contacted by an administrator to claim &quot;[CUSTOM:TITLE]&quot;. As the owner of this listing, you will be able to make updates and changes.</p>
+      [COMMENTFORM]
+      [HASCOMMENTS][ISINROLE:Administrators]
+      <hr />
+      [COMMENTS][/ISINROLE:Administrators][/HASCOMMENTS]</div>
+    [/HASNOAGENT] </div>
+</div>
+[EXPRESSION:Map:=:Yes]
+<h5 class="p10 bgblue larger">Location:<span class="icon info tooltip" title="Map accuracy isn't guaranteed. It should only be used as a reference. While most addresses will be accurate, there may be some discrepancies."></span><a href="http://maps.google.com/maps?f=q&hl=en&near=[HASVALUE:Address][CUSTOM:Address][/HASVALUE:Address]+[HASVALUE:City][CUSTOM:City][/HASVALUE:City]+[HASVALUE:State][CUSTOM:State][/HASVALUE:State]+[HASVALUE:Zip][CUSTOM:Zip][/HASVALUE:Zip]" class="rightfloat normal" target="_blank" rel="nofollow"><span class="icon plus"></span>Larger Map</a></h5>
+<div id="map_canvas"></div>
+[/EXPRESSION:Map:=:Yes]
+<div class="advert">
+  <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3908494547653618";
+/* neok-directory-468x60 */
+google_ad_slot = "7045688358";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+  <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<div class="divcenter txtrt p10 bgblue"> [HASPREVIOUSTYPE][PREVIOUSTYPE] |[/HASPREVIOUSTYPE] Showing [TYPEPOSITION] of [TYPECOUNT] [HASNEXTTYPE]| [NEXTTYPE][/HASNEXTTYPE] </div>
+[EXPRESSION:Map:=:Yes]
+<script type="text/javascript" src="/Resources/Shared/scripts/jquery/jquery.simplemap.js"></script>
+<script type="text/javascript">
+	$("#map_canvas").simplemap({ search: "[HASVALUE:Address][CUSTOM:Address],[/HASVALUE:Address] [HASVALUE:City][CUSTOM:City],[/HASVALUE:City] [HASVALUE:State][CUSTOM:State],[/HASVALUE:State] [HASVALUE:Zip][CUSTOM:Zip][/HASVALUE:Zip]", description: "[CUSTOM:TITLE]<br>[HASVALUE:Phone][CUSTOM:Phone][/HASVALUE:Phone]<br>[HASVALUE:Address][CUSTOM:Address][/HASVALUE:Address]<br>[HASVALUE:City][CUSTOM:City],[/HASVALUE:City] [HASVALUE:State][CUSTOM:State][/HASVALUE:State]" });
+</script>
+[/EXPRESSION:Map:=:Yes] 

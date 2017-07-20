@@ -1,0 +1,47 @@
+﻿CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Subscribe(
+	[PropertyID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+ CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_Subscribe] PRIMARY KEY CLUSTERED 
+(
+	[PropertyID] ASC,
+	[UserID] ASC
+)
+) ON [PRIMARY]
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_SubscribeAdd 
+	@PropertyID		int,
+	@UserID			int 
+AS
+
+IF( (SELECT COUNT(*) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Subscribe WHERE PropertyID = @PropertyID AND UserID = @UserID) = 0 )
+BEGIN
+	INSERT INTO	
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Subscribe
+	VALUES(@PropertyID, @UserID)
+END
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_SubscribeDelete 
+	@PropertyID		int,
+	@UserID			int 
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Subscribe WHERE PropertyID = @PropertyID AND UserID = @UserID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_SubscribeList 
+	@PropertyID		int
+AS
+
+SELECT 
+	u.* 
+FROM
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Subscribe p INNER JOIN
+		{databaseOwner}{objectQualifier}vw_Users u ON p.UserID = u.UserID 
+WHERE
+	p.PropertyID = @PropertyID 
+GO
+
+
+

@@ -1,0 +1,815 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating ADD
+	ReviewID int NULL
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_RatingAdd 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_RatingAdd
+	@PropertyID int, 
+	@UserID int,
+	@CommentID int,
+	@ReviewID int,
+	@Rating float,
+	@CreateDate datetime
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating (
+	[PropertyID], 
+	[UserID],
+	[CommentID],
+	[ReviewID],
+	[Rating],
+	[CreateDate]
+) VALUES (
+	@PropertyID, 
+	@UserID,
+	@CommentID,
+	@ReviewID,
+	@Rating,
+	@CreateDate
+)
+
+select SCOPE_IDENTITY()
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property  
+SET Rating = (select avg(rating) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating r where r.PropertyID = {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property.PropertyID)
+WHERE PropertyID = @PropertyID
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property  
+SET RatingCount = (select count(rating) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating r where r.PropertyID = {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property.PropertyID)
+WHERE PropertyID = @PropertyID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewGet 
+	@PropertyID int, 
+	@UserID int
+AS
+
+SELECT     
+	r.ReviewID, 
+	r.PropertyID, 
+	r.UserID, 
+	r.CreateDate,
+	u.Username,
+	u.DisplayName,
+	u.Email 
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review r INNER JOIN
+		{databaseOwner}{objectQualifier}vw_Users u ON r.UserID = u.UserID 
+WHERE
+	r.PropertyID = @PropertyID AND 
+	r.UserID = @UserID 
+ORDER BY 
+	CreateDate ASC
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_RatingDelete 
+	@PropertyID int, 
+	@ReviewID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating
+WHERE
+	[ReviewID] = @ReviewID
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property  
+SET Rating = (select avg(rating) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating r where r.PropertyID = {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property.PropertyID)
+WHERE PropertyID = @PropertyID
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property  
+SET RatingCount = (select count(rating) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating r where r.PropertyID = {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property.PropertyID)
+WHERE PropertyID = @PropertyID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+	@ModuleID int, 
+	@PropertyTypeID int,
+	@Status int, 
+	@AuthorID int, 
+	@BrokerID int, 
+	@IsActive bit,
+	@IsPending bit,
+	@IsExpired bit,
+	@ShowFeaturedOnly bit,
+	@SortBy int,
+	@SortByID int,
+	@SortByIDType int,
+	@SortOrder int,
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000),
+	@PageNumber int, 
+	@PageSize int,
+	@BubbleFeatured bit,
+	@SearchSubTypes bit,
+	@PropertyIDForNextPrev int,
+	@Latitude decimal(10,5),
+	@Longitude decimal(10,5),
+	@StartDate datetime,
+	@AgentFilter nvarchar(4000)
+AS
+
+CREATE TABLE #TempItems 
+(
+   ID int IDENTITY,
+   PropertyID int
+)
+
+IF( @PropertyTypeID is not null and @SearchSubTypes = 1 )
+BEGIN
+	DECLARE @current int
+	SELECT @current = @PropertyTypeID
+	DECLARE @level int, @line int
+ 
+	CREATE TABLE #hierarchy(HierarchyID int IDENTITY (1,1), PropertyTypeID int, level int)
+	CREATE TABLE #stack (item int, level int)
+	INSERT INTO #stack VALUES (@current, 1)
+	SELECT @level = 1
+ 
+	WHILE @level > 0
+	BEGIN
+   		IF EXISTS (SELECT * FROM #stack WHERE level = @level)
+      		BEGIN
+         			SELECT @current = item
+         			FROM #stack
+         			WHERE level = @level
+ 
+ 			insert into #hierarchy(PropertyTypeID, level) values(@current, @level) 
+ 
+         			DELETE FROM #stack
+         			WHERE level = @level
+            			AND item = @current
+ 
+         			INSERT #stack
+            			SELECT PropertyTypeID, @level + 1
+            			FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType
+            			WHERE ParentID = @current and ModuleID = @ModuleID 
+
+         			IF @@ROWCOUNT > 0
+            				SELECT @level = @level + 1
+      			END
+   		ELSE
+     	 		SELECT @level = @level - 1
+	END -- WHILE
+END
+
+IF (@CustomFieldIDs is not null AND @SearchValues is not null)
+BEGIN
+	CREATE TABLE #SearchItems 
+	(
+   		PropertyID int
+	)
+
+	INSERT INTO #SearchItems select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues, @ModuleID)
+END
+ 
+DECLARE @maxRow int
+DECLARE @startRowIndex int
+
+SET @startRowIndex = (@PageNumber * @PageSize)
+
+IF( @PropertyIDForNextPrev is null AND @SortBy <> 9 ) 
+BEGIN
+	SET @maxRow = (@startRowIndex + @PageSize)
+	SET ROWCOUNT @maxRow
+END
+
+DECLARE @strFields	nvarchar(2000)
+DECLARE @strFrom	nvarchar(2000)
+DECLARE @strWhere	nvarchar(2000)
+DECLARE @strGroupBy	nvarchar(2000)
+DECLARE @strOrder	nvarchar(2000)
+
+DECLARE @strWhereSortByConditional	nvarchar(2000)
+DECLARE @strWhereByFinal	nvarchar(2000)
+
+SELECT @strFields = 'SELECT p.[PropertyID] '
+SELECT @strFrom = ' FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p INNER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt ON p.PropertyTypeID = pt.PropertyTypeID'
+SELECT @strWhere = ' WHERE p.[ModuleID] = ' + convert(nvarchar, @ModuleId)
+SELECT @strGroupBy = ' '
+SELECT @strOrder = ' ORDER BY'
+
+SELECT @strWhereSortByConditional = ''
+SELECT @strWhereByFinal = ''
+
+IF (@PropertyTypeID is not null and @SearchSubTypes = 1)
+	SELECT @strWhere = @strWhere + ' AND p.PropertyTypeID in (select PropertyTypeID from #hierarchy)'
+
+IF (@PropertyTypeID is not null and @SearchSubTypes = 0)
+	SELECT @strWhere = @strWhere + ' AND p.PropertyTypeID = ' + convert(nvarchar, @PropertyTypeID)
+
+IF (@Status is not null)
+BEGIN
+	SELECT @strWhere = @strWhere + ' AND p.Status = ' + convert(nvarchar, @Status)
+
+	IF( @Status = 3 )
+		SELECT @strWhere = @strWhere + ' AND pt.IsPublished = 1'
+END
+
+IF (@AuthorID is not null)
+BEGIN
+	SELECT @strWhere = @strWhere + ' AND p.AuthorID = ' + convert(nvarchar, @AuthorID)
+END
+
+IF (@AgentFilter is not null)
+BEGIN
+	SELECT @strWhere = @strWhere + ' AND p.AuthorID IN (' + convert(nvarchar, @AgentFilter) + ')'
+END
+
+IF (@BrokerID is not null)
+BEGIN
+	SELECT @strWhere = @strWhere + ' AND (p.AuthorID = ' + convert(nvarchar, @BrokerID) + ' or p.AuthorID in (select b.UserID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Broker b where b.BrokerID = ' + convert(nvarchar, @BrokerID) + '))'
+END
+
+IF (@IsActive is not null)
+	SELECT @strWhere = @strWhere + ' AND (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate()))'
+
+IF (@IsPending is not null)
+	SELECT @strWhere = @strWhere + ' AND (p.[DatePublished] > GetDate())'
+
+IF (@IsExpired is not null)
+	SELECT @strWhere = @strWhere + ' AND (p.[DateExpired] is not null and p.[DateExpired] < GetDate())'
+
+IF (@StartDate is not null)
+	SELECT @strWhere = @strWhere + ' AND (p.[DatePublished] >= ''' + convert(nvarchar, @StartDate) + ''')'
+
+IF (@ShowFeaturedOnly is not null)
+	SELECT @strWhere = @strWhere + ' AND p.IsFeatured = 1'
+
+IF (@CustomFieldIDs is not null AND @SearchValues is not null)
+	SELECT @strWhere = @strWhere + ' AND (p.PropertyID in (select PropertyID from #SearchItems))'
+
+IF (@BubbleFeatured = 1 AND @SortBy <> 9 AND @SortBy <> 10 AND @SortBy <> 11)
+	SELECT @strOrder = @strOrder + ' p.[IsFeatured] DESC' 
+
+IF (@SortBy = 8 AND (@Latitude IS NULL OR @Longitude IS NULL))
+BEGIN
+	SET @SortBy = 1
+END
+
+IF (@SortBy = 8)
+BEGIN
+	SELECT @strWhere = @strWhere + ' AND (p.[Latitude] IS NOT NULL AND p.[Longitude] IS NOT NULL)'
+END
+
+DECLARE @strOrder2 nvarchar(2000)	
+
+IF (@SortBy = 3) 
+BEGIN
+	SELECT @strFrom = @strFrom + ' LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue pv ON p.PropertyID = pv.PropertyID AND pv.CustomFieldID = ' + convert(nvarchar, @SortByID) + ' '
+	
+	SELECT @strOrder2 = ''	
+		
+	IF( @SortOrder = 1 and @SortByIDType is null)
+	BEGIN
+		SELECT @strOrder2 = ' cast(pv.CustomValue as nvarchar) DESC, p.PropertyID ASC'
+	END
+		
+	IF( @SortOrder = 0 and @SortByIDType is null)
+	BEGIN
+		SELECT @strOrder2 = ' cast(pv.CustomValue as nvarchar) ASC, p.PropertyID ASC'
+	END
+		
+	IF( @SortOrder = 1 and (@SortByIDType <> 1 and @SortByIDType <> 2 and @SortByIDType <> 3 and @SortByIDType <> 4) )
+	BEGIN
+		SELECT @strOrder2 = ' cast(pv.CustomValue as nvarchar) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortOrder = 0 and (@SortByIDType <> 1 and @SortByIDType <> 2 and @SortByIDType <> 3 and @SortByIDType <> 4) )
+	BEGIN
+		SELECT @strOrder2 = ' cast(pv.CustomValue as nvarchar) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortOrder = 1 and (@SortByIDType = 2) )
+	BEGIN
+		SELECT @strWhereSortByConditional = @strWhere + ' AND (pv.[CustomFieldID] is null)'
+		SELECT @strWhereByFinal = @strWhere + ' AND (pv.[CustomFieldID] is null OR pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		
+		SELECT @strWhere = @strWhere + ' AND (pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		SELECT @strOrder2 = ' cast(cast(pv.CustomValue as nvarchar) as datetime) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortOrder = 0 and (@SortByIDType = 2) )
+	BEGIN
+		SELECT @strWhereSortByConditional = @strWhere + ' AND (pv.[CustomFieldID] is null)'
+		SELECT @strWhereByFinal = @strWhere + ' AND (pv.[CustomFieldID] is null OR pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		
+		SELECT @strWhere = @strWhere + ' AND (pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		SELECT @strOrder2 = ' cast(cast(pv.CustomValue as nvarchar) as datetime) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortOrder = 1 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) )
+	BEGIN
+		SELECT @strWhereSortByConditional = @strWhere + ' AND (pv.[CustomFieldID] is null)'
+		SELECT @strWhereByFinal = @strWhere + ' AND (pv.[CustomFieldID] is null OR pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		
+		SELECT @strWhere = @strWhere + ' AND (pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		SELECT @strOrder2 = ' cast(cast(pv.CustomValue as nvarchar) as decimal) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortOrder = 0 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) )
+	BEGIN
+		SELECT @strWhereSortByConditional = @strWhere + ' AND (pv.[CustomFieldID] is null)'
+		SELECT @strWhereByFinal = @strWhere + ' AND (pv.[CustomFieldID] is null OR pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		
+		SELECT @strWhere = @strWhere + ' AND (pv.[CustomFieldID] = ' + convert(nvarchar, @SortByID) + ')'
+		SELECT @strOrder2 = ' cast(cast(pv.CustomValue as nvarchar) as decimal) ASC, p.PropertyID ASC'
+	END
+
+	IF( @strOrder = ' ORDER BY' ) 
+	BEGIN
+		SELECT @strOrder = @strOrder + @strOrder2
+	END
+	ELSE
+	BEGIN
+		SELECT @strOrder = @strOrder + ',' + @strOrder2
+	END
+END
+ELSE
+BEGIN
+	SELECT @strOrder2 = ''	
+
+	IF( @SortBy = 0 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strOrder2 = ' convert(varchar, p.[DateModified], 120) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 0 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strOrder2 = ' convert(varchar, p.[DateModified], 120) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 1 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strOrder2 = ' convert(varchar, p.[DatePublished], 120) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 1 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strOrder2 = ' convert(varchar, p.[DatePublished], 120) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 2 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strOrder2 = ' p.[ViewCount] DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 2 and @SortOrder = 0 )
+	BEGIN
+
+		SELECT @strOrder2 = ' p.[ViewCount] ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 4 )
+	BEGIN
+		SELECT @strOrder2 = ' CAST((rand(24701) * p.[PropertyID]) * 24701 AS int) % (DATEPART(ms, GetDate())+1) + DATEPART(ms, GetDate())'
+	END
+
+	IF( @SortBy = 5 )
+	BEGIN
+		IF( @SortOrder = 1 )
+		BEGIN
+			SELECT @strOrder2 = ' pt.[Name] DESC, p.PropertyID ASC'
+		END
+
+		IF( @SortOrder = 0 )
+		BEGIN
+			SELECT @strOrder2 = ' pt.[Name] ASC, p.PropertyID ASC'
+		END
+	END
+
+	IF( @SortBy = 6 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strOrder2 = ' p.[CommentCount] DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 6 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strOrder2 = ' p.[CommentCount] ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 7 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strOrder2 = ' p.[Rating] DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 7 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strOrder2 = ' p.[Rating] ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 8 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strOrder2 = ' {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_LatLonRadiusDistance(' + convert(nvarchar, @Latitude) + ',' + convert(nvarchar, @Longitude) + ',p.Latitude,p.Longitude) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 8 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strOrder2 = ' {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_LatLonRadiusDistance(' + convert(nvarchar, @Latitude) + ',' + convert(nvarchar, @Longitude) + ',p.Latitude,p.Longitude) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 9 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strFrom = @strFrom + ' LEFT OUTER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s ON p.PropertyID = s.PropertyID '
+		SELECT @strWhere = @strWhere + ' AND (s.[DateCreated] IS NULL OR s.[DateCreated] > DateAdd(dd, -7, GetDate())) '
+		SELECT @strGroupBy = @strGroupBy + ' GROUP BY p.PropertyID '
+		SELECT @strOrder2 = ' COUNT(p.PropertyID) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 9 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strFrom = @strFrom + ' LEFT OUTER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s ON p.PropertyID = s.PropertyID '
+		SELECT @strWhere = @strWhere + ' AND (s.[DateCreated] IS NULL OR s.[DateCreated] > DateAdd(dd, -7, GetDate())) '
+		SELECT @strGroupBy = @strGroupBy + ' GROUP BY p.PropertyID '
+		SELECT @strOrder2 = ' COUNT(p.PropertyID) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 10 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strFrom = @strFrom + ' LEFT OUTER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s ON p.PropertyID = s.PropertyID '
+		SELECT @strWhere = @strWhere + ' AND (s.[DateCreated] IS NULL OR s.[DateCreated] > DateAdd(dd, -30, GetDate())) '
+		SELECT @strGroupBy = @strGroupBy + ' GROUP BY p.PropertyID '
+		SELECT @strOrder2 = ' COUNT(p.PropertyID) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 10 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strFrom = @strFrom + ' LEFT OUTER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s ON p.PropertyID = s.PropertyID '
+		SELECT @strWhere = @strWhere + ' AND (s.[DateCreated] IS NULL OR s.[DateCreated] > DateAdd(dd, -30, GetDate())) '
+		SELECT @strGroupBy = @strGroupBy + ' GROUP BY p.PropertyID '
+		SELECT @strOrder2 = ' COUNT(p.PropertyID) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 11 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strFrom = @strFrom + ' LEFT OUTER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s ON p.PropertyID = s.PropertyID '
+		SELECT @strWhere = @strWhere + ' AND (s.[DateCreated] IS NULL OR s.[DateCreated] > DateAdd(yy, -1, GetDate())) '
+		SELECT @strGroupBy = @strGroupBy + ' GROUP BY p.PropertyID '
+		SELECT @strOrder2 = ' COUNT(p.PropertyID) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 11 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strFrom = @strFrom + ' LEFT OUTER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s ON p.PropertyID = s.PropertyID '
+		SELECT @strWhere = @strWhere + ' AND (s.[DateCreated] IS NULL OR s.[DateCreated] > DateAdd(yy, -1, GetDate())) '
+		SELECT @strGroupBy = @strGroupBy + ' GROUP BY p.PropertyID '
+		SELECT @strOrder2 = ' COUNT(p.PropertyID) ASC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 12 and @SortOrder = 1 )
+	BEGIN
+		SELECT @strOrder2 = ' convert(varchar, p.[DateExpired], 120) DESC, p.PropertyID ASC'
+	END
+
+	IF( @SortBy = 12 and @SortOrder = 0 )
+	BEGIN
+		SELECT @strOrder2 = ' convert(varchar, p.[DateExpired], 120) ASC, p.PropertyID ASC'
+	END
+
+	IF (@SortBy = 13 and @SortOrder = 1) 
+	BEGIN
+		SELECT @strOrder2 = ' (SELECT avg(cast(cast(rv.ReviewValue as nvarchar) as integer)) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue rv INNER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review r ON rv.ReviewID = r.ReviewID  WHERE r.PropertyID = p.PropertyID AND ReviewFieldID = ' + convert(nvarchar, @SortByID) + ') DESC, p.PropertyID ASC'
+	END
+
+	IF (@SortBy = 13 and @SortOrder = 0) 
+	BEGIN
+		SELECT @strOrder2 = ' (SELECT avg(cast(cast(rv.ReviewValue as nvarchar) as integer)) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ReviewValue rv INNER JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Review r ON rv.ReviewID = r.ReviewID  WHERE r.PropertyID = p.PropertyID AND ReviewFieldID = ' + convert(nvarchar, @SortByID) + ') ASC, p.PropertyID ASC'
+	END
+	
+	IF( @strOrder = ' ORDER BY' ) 
+	BEGIN
+		SELECT @strOrder = @strOrder + @strOrder2
+	END
+	ELSE
+	BEGIN
+		SELECT @strOrder = @strOrder + ',' + @strOrder2
+	END
+END
+
+EXEC('INSERT INTO #TempItems (PropertyID) ' + @strFields + @strFrom + @strWhere + @strGroupBy + @strOrder)
+IF( @strWhereSortByConditional != '' )
+BEGIN
+	EXEC('INSERT INTO #TempItems (PropertyID) ' + @strFields + @strFrom + @strWhereSortByConditional)
+END
+
+DECLARE @TypePosition int 
+SELECT @TypePosition = 0
+
+IF( @PropertyIDForNextPrev is not null ) 
+BEGIN
+
+	SELECT @TypePosition = MIN(s.ID)
+	FROM #TempItems s
+	WHERE PropertyID = @PropertyIDForNextPrev
+	GROUP BY s.PropertyID
+
+	IF( @TypePosition = 0 )
+	BEGIN
+		SET @TypePosition = 1000000
+	END
+	ELSE
+	BEGIN
+		IF( @TypePosition = 1 )
+		BEGIN
+			SELECT @PageSize = 2
+		END
+		ELSE
+		BEGIN
+			SELECT @PageSize = 3
+		END
+
+		IF( @TypePosition > 0 )
+		BEGIN
+			SELECT @startRowIndex = @TypePosition - 2
+		END
+	END
+END
+
+if( @PageSize > 0 )
+	SET ROWCOUNT @PageSize
+
+IF( @SortBy = 8 ) 
+BEGIN
+	SELECT
+		p.[PropertyID],
+		p.[ModuleID],
+		p.[PropertyTypeID],
+		p.[IsFeatured],
+		p.[DateCreated],
+		p.[DateModified],
+		p.[DatePublished],
+		p.[DateExpired],
+		p.[ViewCount],
+		p.[Status], 
+		p.[AuthorID], 
+		p.[Rating],
+		p.[RatingCount],
+		p.[CommentCount], 
+		p.[Latitude],
+		p.[Longitude], 
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_LatLonRadiusDistance(@Latitude,@Longitude,p.Latitude,p.Longitude) as 'Distance',
+		pt.[Name] as 'PropertyTypeName',
+		pt.[Description] as 'PropertyTypeDescription',
+		(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+		(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+		u.[UserName],
+		u.[DisplayName],
+		u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+		u.[Email],
+		m.[UserID] as 'ModifiedID',
+		m.[Username] as 'ModifiedUsername',
+		m.[DisplayName] as 'ModifiedDisplayName',
+		m.[Email] as 'ModifiedEmail', 
+		b.[BrokerID] as 'BrokerID',
+		Broker.[Username] as 'BrokerUsername',
+		Broker.[DisplayName] as 'BrokerDisplayName',
+		Broker.[Email] as 'BrokerEmail' 
+	FROM #TempItems t
+   		INNER JOIN {databaseOwner}{objectQualifier}ventrian_propertyagent_property p ON
+       			t.PropertyID = p.PropertyID
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u ON p.AuthorID = u.UserID 
+		LEFT JOIN {databaseOwner}{objectQualifier}Users m ON p.ModifiedID = m.UserID
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Broker b ON b.UserID = p.AuthorID and b.ModuleID = p.ModuleID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users as Broker ON b.BrokerID = Broker.UserID 
+	WHERE
+		ID > @startRowIndex
+END
+ELSE
+BEGIN
+	IF( @SortBy = 9 )
+	BEGIN
+		SELECT
+			p.[PropertyID],
+			p.[ModuleID],
+			p.[PropertyTypeID],
+			p.[IsFeatured],
+			p.[DateCreated],
+			p.[DateModified],
+			p.[DatePublished],
+			p.[DateExpired],
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s where p.PropertyID = s.PropertyID AND s.[DateCreated] > DateAdd(dd, -7, GetDate())) as 'ViewCount',
+			p.[Status], 
+			p.[AuthorID], 
+			p.[Rating],
+			p.[RatingCount],
+			p.[CommentCount], 
+			p.[Latitude],
+			p.[Longitude], 
+			pt.[Name] as 'PropertyTypeName',
+			pt.[Description] as 'PropertyTypeDescription',
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+			(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+			u.[UserName],
+			u.[DisplayName],
+			u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+			u.[Email],
+			m.[UserID] as 'ModifiedID',
+			m.[Username] as 'ModifiedUsername',
+			m.[DisplayName] as 'ModifiedDisplayName',
+			m.[Email] as 'ModifiedEmail', 
+			b.[BrokerID] as 'BrokerID',
+			Broker.[Username] as 'BrokerUsername',
+			Broker.[DisplayName] as 'BrokerDisplayName',
+			Broker.[Email] as 'BrokerEmail' 
+		FROM #TempItems t
+   			INNER JOIN {databaseOwner}{objectQualifier}ventrian_propertyagent_property p ON
+       				t.PropertyID = p.PropertyID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+				ON p.PropertyTypeID = pt.PropertyTypeID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users u ON p.AuthorID = u.UserID 
+			LEFT JOIN {databaseOwner}{objectQualifier}Users m ON p.ModifiedID = m.UserID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Broker b ON b.UserID = p.AuthorID and b.ModuleID = p.ModuleID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users as Broker ON b.BrokerID = Broker.UserID 
+		WHERE
+			ID > @startRowIndex
+	END
+	ELSE
+	BEGIN
+		IF( @SortBy = 10 )
+	BEGIN
+		SELECT
+			p.[PropertyID],
+			p.[ModuleID],
+			p.[PropertyTypeID],
+			p.[IsFeatured],
+			p.[DateCreated],
+			p.[DateModified],
+			p.[DatePublished],
+			p.[DateExpired],
+			--p.[ViewCount],
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s where p.PropertyID = s.PropertyID AND s.[DateCreated] > DateAdd(dd, -30, GetDate())) as 'ViewCount',
+			p.[Status], 
+			p.[AuthorID], 
+			p.[Rating],
+			p.[RatingCount],
+			p.[CommentCount], 
+			p.[Latitude],
+			p.[Longitude], 
+			pt.[Name] as 'PropertyTypeName',
+			pt.[Description] as 'PropertyTypeDescription',
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+			(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+			u.[UserName],
+			u.[DisplayName],
+			u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+			u.[Email],
+			m.[UserID] as 'ModifiedID',
+			m.[Username] as 'ModifiedUsername',
+			m.[DisplayName] as 'ModifiedDisplayName',
+			m.[Email] as 'ModifiedEmail', 
+			b.[BrokerID] as 'BrokerID',
+			Broker.[Username] as 'BrokerUsername',
+			Broker.[DisplayName] as 'BrokerDisplayName',
+			Broker.[Email] as 'BrokerEmail' 
+		FROM #TempItems t
+   			INNER JOIN {databaseOwner}{objectQualifier}ventrian_propertyagent_property p ON
+       				t.PropertyID = p.PropertyID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+				ON p.PropertyTypeID = pt.PropertyTypeID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users u ON p.AuthorID = u.UserID 
+			LEFT JOIN {databaseOwner}{objectQualifier}Users m ON p.ModifiedID = m.UserID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Broker b ON b.UserID = p.AuthorID and b.ModuleID = p.ModuleID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users as Broker ON b.BrokerID = Broker.UserID 
+		WHERE
+			ID > @startRowIndex
+	END
+	ELSE
+	BEGIN
+		IF( @SortBy = 11 )
+	BEGIN
+		SELECT
+			p.[PropertyID],
+			p.[ModuleID],
+			p.[PropertyTypeID],
+			p.[IsFeatured],
+			p.[DateCreated],
+			p.[DateModified],
+			p.[DatePublished],
+			p.[DateExpired],
+			--p.[ViewCount],
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic s where p.PropertyID = s.PropertyID AND s.[DateCreated] > DateAdd(yy, -1, GetDate())) as 'ViewCount',
+			p.[Status], 
+			p.[AuthorID], 
+			p.[Rating],
+			p.[RatingCount],
+			p.[CommentCount], 
+			p.[Latitude],
+			p.[Longitude], 
+			pt.[Name] as 'PropertyTypeName',
+			pt.[Description] as 'PropertyTypeDescription',
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+			(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+			u.[UserName],
+			u.[DisplayName],
+			u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+			u.[Email],
+			m.[UserID] as 'ModifiedID',
+			m.[Username] as 'ModifiedUsername',
+			m.[DisplayName] as 'ModifiedDisplayName',
+			m.[Email] as 'ModifiedEmail', 
+			b.[BrokerID] as 'BrokerID',
+			Broker.[Username] as 'BrokerUsername',
+			Broker.[DisplayName] as 'BrokerDisplayName',
+			Broker.[Email] as 'BrokerEmail' 
+		FROM #TempItems t
+   			INNER JOIN {databaseOwner}{objectQualifier}ventrian_propertyagent_property p ON
+       				t.PropertyID = p.PropertyID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+				ON p.PropertyTypeID = pt.PropertyTypeID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users u ON p.AuthorID = u.UserID 
+			LEFT JOIN {databaseOwner}{objectQualifier}Users m ON p.ModifiedID = m.UserID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Broker b ON b.UserID = p.AuthorID and b.ModuleID = p.ModuleID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users as Broker ON b.BrokerID = Broker.UserID 
+		WHERE
+			ID > @startRowIndex
+	END
+	ELSE
+	BEGIN
+		SELECT
+			p.[PropertyID],
+			p.[ModuleID],
+			p.[PropertyTypeID],
+			p.[IsFeatured],
+			p.[DateCreated],
+			p.[DateModified],
+			p.[DatePublished],
+			p.[DateExpired],
+			p.[ViewCount],
+			p.[Status], 
+			p.[AuthorID], 
+			p.[Rating],
+			p.[RatingCount],
+			p.[CommentCount], 
+			p.[Latitude],
+			p.[Longitude], 
+			pt.[Name] as 'PropertyTypeName',
+			pt.[Description] as 'PropertyTypeDescription',
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+			(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+			u.[UserName],
+			u.[DisplayName],
+			u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+			u.[Email],
+			m.[UserID] as 'ModifiedID',
+			m.[Username] as 'ModifiedUsername',
+			m.[DisplayName] as 'ModifiedDisplayName',
+			m.[Email] as 'ModifiedEmail', 
+			b.[BrokerID] as 'BrokerID',
+			Broker.[Username] as 'BrokerUsername',
+			Broker.[DisplayName] as 'BrokerDisplayName',
+			Broker.[Email] as 'BrokerEmail' 
+		FROM #TempItems t
+   			INNER JOIN {databaseOwner}{objectQualifier}ventrian_propertyagent_property p ON
+       				t.PropertyID = p.PropertyID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+				ON p.PropertyTypeID = pt.PropertyTypeID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users u ON p.AuthorID = u.UserID 
+			LEFT JOIN {databaseOwner}{objectQualifier}Users m ON p.ModifiedID = m.UserID
+			LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Broker b ON b.UserID = p.AuthorID and b.ModuleID = p.ModuleID
+			LEFT JOIN {databaseOwner}{objectQualifier}Users as Broker ON b.BrokerID = Broker.UserID 
+		WHERE
+			ID > @startRowIndex
+	END
+	END
+	END
+END
+
+IF( @SortBy = 9 ) 
+BEGIN
+	SELECT COUNT(*) as 'TotalRecords' FROM #TempItems
+END
+DROP TABLE #TempItems
+
+SET ROWCOUNT 0
+
+IF( @SortBy <> 9 ) 
+BEGIN
+	SELECT @strFields = 'SELECT Count(*) as ''TotalRecords'' '
+	if( @strWhereByFinal != '' )
+	BEGIN
+		EXEC(@strFields + @strFrom + @strWhereByFinal )
+	END
+	ELSE
+	BEGIN
+		EXEC(@strFields + @strFrom + @strWhere )
+	END
+END
+
+IF (@CustomFieldIDs is not null AND @SearchValues is not null)
+BEGIN
+	DROP TABLE #SearchItems 
+END
+
+IF (@PropertyTypeID is not null and @SearchSubTypes = 1)
+BEGIN
+	drop table #stack
+	drop table #hierarchy
+END
+
+SELECT @TypePosition AS 'TypePosition'
+GO

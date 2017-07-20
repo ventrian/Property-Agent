@@ -1,0 +1,27 @@
+#tblReviewFormDesign td.SubHead,#tblCommentFormDesign td.SubHead {
+text-align:right;
+vertical-align:top !important;
+}
+
+#tblReviewFormDesign td.SubHead label,#tblCommentFormDesign td.SubHead label {
+color:#06a !important;
+font-size:14px;
+}
+
+#tblReviewFormDesign td,#tblCommentFormDesign td {
+padding:5px 0;
+}
+
+#tblReviewFormDesign td span,#tblReviewFormDesign td span label,#tblCommentFormDesign td span,#tblCommentFormDesign td span label {
+padding:5px;
+}
+
+#map_canvas {
+min-width:90%;
+max-width:90%;
+height:375px;
+margin-left:auto;
+margin-right:auto;
+margin-top:10px;
+margin-bottom:10px;
+}

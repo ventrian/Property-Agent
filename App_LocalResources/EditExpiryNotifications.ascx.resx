@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Main.Text" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="EditExpiryNotifications.Text" xml:space="preserve">
+    <value>Edit Expiry Notifications</value>
+  </data>
+  <data name="Content.Help" xml:space="preserve">
+    <value>Content of the email.</value>
+  </data>
+  <data name="Content.Text" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="Description.Header" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Duration.Header" xml:space="preserve">
+    <value>Duration (ms)</value>
+  </data>
+  <data name="ExpirySettings.Text" xml:space="preserve">
+    <value>Expiry Settings</value>
+  </data>
+  <data name="ExpirySettingsHelp.Text" xml:space="preserve">
+    <value>Customize the settings about the expiry.</value>
+  </data>
+  <data name="plReminderFrequency.Help" xml:space="preserve">
+    <value>Set reminder frequency to only notify property owners within a given time period. (e.g. 7 days would only notify an owner that hasn't been notified in 7 days)</value>
+  </data>
+  <data name="plReminderFrequency.Text" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="plReminderPeriod.Help" xml:space="preserve">
+    <value>Set reminder period to pick up expired properties that expire within this time period. (e.g. 28 days would notify owners of properties that expire within 28 days)</value>
+  </data>
+  <data name="plReminderPeriod.Text" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="plRetryTimeLapse.Help" xml:space="preserve">
+    <value>Content of the email.</value>
+  </data>
+  <data name="plRetryTimeLapse.Text" xml:space="preserve">
+    <value>Retry Frequency</value>
+  </data>
+  <data name="plSchedulerEnabled.Help" xml:space="preserve">
+    <value>Check to enable automatic reminder notifications.</value>
+  </data>
+  <data name="plSchedulerEnabled.Text" xml:space="preserve">
+    <value>Enabled?</value>
+  </data>
+  <data name="plTimeLapse.Help" xml:space="preserve">
+    <value>Content of the email.</value>
+  </data>
+  <data name="plTimeLapse.Text" xml:space="preserve">
+    <value>Time Lapse</value>
+  </data>
+  <data name="SchedulerHistory.Text" xml:space="preserve">
+    <value>Scheduler History</value>
+  </data>
+  <data name="SchedulerHistoryHelp.Text" xml:space="preserve">
+    <value>View the scheduler history for your reminders.</value>
+  </data>
+  <data name="SchedulerSettings.Text" xml:space="preserve">
+    <value>Scheduler Settings</value>
+  </data>
+  <data name="SchedulerSettingsHelp.Text" xml:space="preserve">
+    <value>Customize the settings to schedule to the reminders.</value>
+  </data>
+  <data name="Start/End/Next Start.Header" xml:space="preserve">
+    <value>Start/End/Next Start</value>
+  </data>
+  <data name="Subject.Help" xml:space="preserve">
+    <value>Subject of the email.</value>
+  </data>
+  <data name="Subject.Text" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="Succeeded.Header" xml:space="preserve">
+    <value>Succeeded</value>
+  </data>
+  <data name="valSubject.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Subject is required.</value>
+  </data>
+  <data name="valTemplate.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Template is required.</value>
+  </data>
+  <data name="plBCCEmail.Help" xml:space="preserve">
+    <value>Optionally specify an email to BCC on reminders.</value>
+  </data>
+  <data name="plBCCEmail.Text" xml:space="preserve">
+    <value>BCC Email</value>
+  </data>
+</root>

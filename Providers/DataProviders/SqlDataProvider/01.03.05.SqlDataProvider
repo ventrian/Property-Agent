@@ -1,0 +1,111 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+	@ModuleID int, 
+	@PropertyTypeID int,
+	@MaxCount int,
+	@Status int, 
+	@AuthorID int, 
+	@IsActive bit,
+	@IsPending bit,
+	@IsExpired bit,
+	@ShowFeaturedOnly bit,
+	@SortBy int,
+	@SortByID int,
+	@SortByIDType int,
+	@SortOrder int,
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000) 
+AS
+
+if( @MaxCount is not null )
+begin
+	SET ROWCOUNT @MaxCount 
+end
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsFeatured],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	p.[Status], 
+	p.[AuthorID], 
+	pt.[Name] as 'PropertyTypeName',
+	(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+	u.[UserName],
+	u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+	u.[Email]   
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u
+			ON p.AuthorID = u.UserID 
+WHERE
+	p.[ModuleID] = @ModuleID
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@Status is null or p.Status = @Status)
+	and
+	(@AuthorID is null or p.AuthorID = @AuthorID)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+ORDER BY 
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 1 THEN convert(varchar, p.[DateModified], 120)
+              	WHEN @SortBy = 1 and @SortOrder = 1 THEN convert(varchar, p.[DatePublished], 120)
+              	WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN convert(varchar, p.[DateModified], 120) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 0 THEN convert(varchar, p.[DateModified], 120)
+              	WHEN @SortBy = 1 and @SortOrder = 0 THEN convert(varchar, p.[DatePublished], 120)
+              	WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN convert(varchar, p.[DateModified], 120) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 1 THEN p.[ViewCount] 
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 0 THEN p.[ViewCount]
+              END ASC,
+	CASE 
+		WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN p.[ViewCount]
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(cast(CustomValue as nvarchar) as decimal) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+		WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN p.[ViewCount]
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(cast(CustomValue as nvarchar) as decimal) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC,
+	CASE 
+		WHEN @SortBy = 4 THEN  CAST((rand(24701) * p.[PropertyID]) * 24701 AS int) % DATEPART(ms, GetDate() ) + DATEPART(ms, GetDate()) 
+			END
+GO

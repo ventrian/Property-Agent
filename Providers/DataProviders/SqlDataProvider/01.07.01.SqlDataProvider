@@ -1,0 +1,40 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueListByField
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueListByField
+	@CustomFieldID int
+AS
+
+DECLARE @List TABLE ([CustomValue] VARCHAR(8000))
+
+DECLARE @CustomValue nvarchar(4000)
+	
+DECLARE c1 CURSOR READ_ONLY
+FOR
+SELECT
+	cast([CustomValue] as nvarchar(4000)) as 'CustomValue' 
+FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GROUP BY
+	cast([CustomValue] as nvarchar(4000))
+OPEN c1
+
+FETCH NEXT FROM c1
+INTO @CustomValue
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+	INSERT INTO @List SELECT * from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_fnSplit(@CustomValue, ';')
+
+	FETCH NEXT FROM c1
+	INTO @CustomValue
+
+END
+
+CLOSE c1
+DEALLOCATE c1
+
+SELECT * from @List group by customvalue order by customvalue
+GO

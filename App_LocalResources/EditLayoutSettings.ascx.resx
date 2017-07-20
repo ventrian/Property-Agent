@@ -1,0 +1,1512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Main.Text" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="EditLayoutSettings.Text" xml:space="preserve">
+    <value>Edit Layout Settings</value>
+  </data>
+  <data name="LabelSettings.Text" xml:space="preserve">
+    <value>Label Settings</value>
+  </data>
+  <data name="LabelSettingsDescription.Text" xml:space="preserve">
+    <value>This section allows you to change the labels used within the module.</value>
+  </data>
+  <data name="plPropertyLabel.Text" xml:space="preserve">
+    <value>Property Label</value>
+  </data>
+  <data name="plPropertyLabel.Help" xml:space="preserve">
+    <value>Enter the label for a property to be used within this module.</value>
+  </data>
+  <data name="valPropertyLabel.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Property Label Is Required.</value>
+  </data>
+  <data name="plPropertyPluralLabel.Text" xml:space="preserve">
+    <value>Property Plural Label</value>
+  </data>
+  <data name="plPropertyPluralLabel.Help" xml:space="preserve">
+    <value>Enter the plural label for a property to be used within this module.</value>
+  </data>
+  <data name="valPropertyPluralLabel.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Property Plural Label Is Required.</value>
+  </data>
+  <data name="plPropertyTypeLabel.Text" xml:space="preserve">
+    <value>Type Label</value>
+  </data>
+  <data name="plPropertyTypeLabel.Help" xml:space="preserve">
+    <value>Enter the label for a property type to be used within this module.</value>
+  </data>
+  <data name="valPropertyTypeLabel.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Property Type Label Is Required.</value>
+  </data>
+  <data name="plPropertyTypePluralLabel.Text" xml:space="preserve">
+    <value>Type Plural Label</value>
+  </data>
+  <data name="plPropertyTypePluralLabel.Help" xml:space="preserve">
+    <value>Enter the plural label for a property type to be used within this module.</value>
+  </data>
+  <data name="valPropertyTypePluralLabel.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Property Type Plural Label Is Required.</value>
+  </data>
+  <data name="valFeaturedMaxNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Maximum Number Is Required.</value>
+  </data>
+  <data name="LangingPageSettings.Text" xml:space="preserve">
+    <value>Landing Page Settings</value>
+  </data>
+  <data name="LangingPageSettingsDescription.Text" xml:space="preserve">
+    <value>This section allows you to change aspects of the landing page.</value>
+  </data>
+  <data name="SortOrderSettings.Text" xml:space="preserve">
+    <value>Sort Order Settings</value>
+  </data>
+  <data name="SortOrderSettingsDescription.Text" xml:space="preserve">
+    <value>This section allows you to change the sort order of the landing page.</value>
+  </data>
+  <data name="SortOrder.Header" xml:space="preserve">
+    <value>Sort Order</value>
+  </data>
+  <data name="Section.Header" xml:space="preserve">
+    <value>Section</value>
+  </data>
+  <data name="Featured.Text" xml:space="preserve">
+    <value>Featured</value>
+  </data>
+  <data name="Search.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Types.Text" xml:space="preserve">
+    <value>Types</value>
+  </data>
+  <data name="FeaturedSettings.Text" xml:space="preserve">
+    <value>Featured Settings</value>
+  </data>
+  <data name="FeaturedSettingsDescription.Text" xml:space="preserve">
+    <value>This section allows you change aspects of the featured properties area.</value>
+  </data>
+  <data name="plFeaturedEnabled.Text" xml:space="preserve">
+    <value>Enable Featured</value>
+  </data>
+  <data name="plFeaturedEnabled.Help" xml:space="preserve">
+    <value>Select to enable featured properties on the landing page.</value>
+  </data>
+  <data name="plFeaturedMaxNumber.Text" xml:space="preserve">
+    <value>Maximum Number</value>
+  </data>
+  <data name="plFeaturedMaxNumber.Help" xml:space="preserve">
+    <value>Enter the maximum number of items to display.</value>
+  </data>
+  <data name="valFeaturedMaxNumberIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Maximum Number Must Be A Number</value>
+  </data>
+  <data name="plFeaturedItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row</value>
+  </data>
+  <data name="plFeaturedItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of items to display per row.</value>
+  </data>
+  <data name="valFeaturedItemsPerRow.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row Is Required.</value>
+  </data>
+  <data name="valFeaturedItemsPerRowIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row Must Be A Number</value>
+  </data>
+  <data name="plFeaturedSortBy.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="plFeaturedSortBy.Help" xml:space="preserve">
+    <value>Select the default sort order.</value>
+  </data>
+  <data name="plFeaturedSortDirection.Text" xml:space="preserve">
+    <value>Sort Direction</value>
+  </data>
+  <data name="plFeaturedSortDirection.Help" xml:space="preserve">
+    <value>Select the default sort direction.</value>
+  </data>
+  <data name="SearchSettings.Text" xml:space="preserve">
+    <value>Search Settings</value>
+  </data>
+  <data name="SearchSettingsDescription.Text" xml:space="preserve">
+    <value>This section allows you change aspects of the search properties area.</value>
+  </data>
+  <data name="plSearchEnabled.Text" xml:space="preserve">
+    <value>Enable Search</value>
+  </data>
+  <data name="plSearchEnabled.Help" xml:space="preserve">
+    <value>Select to enable search on the landing page.</value>
+  </data>
+  <data name="plSearchTypes.Text" xml:space="preserve">
+    <value>Search Types</value>
+  </data>
+  <data name="plSearchTypes.Help" xml:space="preserve">
+    <value>Select to enable searching of property types.</value>
+  </data>
+  <data name="TypesSettings.Text" xml:space="preserve">
+    <value>Types Settings</value>
+  </data>
+  <data name="TypesSettingsDescription.Text" xml:space="preserve">
+    <value>This section allows you change aspects of the types area.</value>
+  </data>
+  <data name="plTypesEnabled.Text" xml:space="preserve">
+    <value>Enable Types</value>
+  </data>
+  <data name="plTypesEnabled.Help" xml:space="preserve">
+    <value>Select to enable types on the landing page.</value>
+  </data>
+  <data name="plTypesItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row</value>
+  </data>
+  <data name="plTypesItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of items to display per row.</value>
+  </data>
+  <data name="valTypesItemsPerRow.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row Is Required.</value>
+  </data>
+  <data name="valTypesItemsPerRowIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row Must Be A Number</value>
+  </data>
+  <data name="plTypesRepeatDirection.Text" xml:space="preserve">
+    <value>Repeat Direction</value>
+  </data>
+  <data name="plTypesRepeatDirection.Help" xml:space="preserve">
+    <value>Select a direction to repeat values.</value>
+  </data>
+  <data name="plTypesSortBy.Text" xml:space="preserve">
+    <value>Sort Order</value>
+  </data>
+  <data name="plTypesSortBy.Help" xml:space="preserve">
+    <value>Select a sort order for property types.</value>
+  </data>
+  <data name="Standard.Text" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="Name.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ListingSettings.Text" xml:space="preserve">
+    <value>Listing Settings</value>
+  </data>
+  <data name="plListingItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row</value>
+  </data>
+  <data name="plListingItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of items to display per row.</value>
+  </data>
+  <data name="valListingItemsPerRow.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row Is Required.</value>
+  </data>
+  <data name="valListingItemsPerRowIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row Must Be A Number</value>
+  </data>
+  <data name="plListingItemsPerPage.Text" xml:space="preserve">
+    <value>Items Per Page</value>
+  </data>
+  <data name="plListingItemsPerPage.Help" xml:space="preserve">
+    <value>Enter the number of items to display per page.</value>
+  </data>
+  <data name="valListingItemsPerPage.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Page Is Required.</value>
+  </data>
+  <data name="valListingItemsPerPageIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Page Must Be A Number</value>
+  </data>
+  <data name="plSortBy.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="plSortBy.Help" xml:space="preserve">
+    <value>Select the default sort order.</value>
+  </data>
+  <data name="plSortDirection.Text" xml:space="preserve">
+    <value>Sort Direction</value>
+  </data>
+  <data name="plSortDirection.Help" xml:space="preserve">
+    <value>Select the default sort direction.</value>
+  </data>
+  <data name="Ascending.Text" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="Descending.Text" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="Modified.Text" xml:space="preserve">
+    <value>Last Modified</value>
+  </data>
+  <data name="Published.Text" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="Hits.Text" xml:space="preserve">
+    <value>Hits</value>
+  </data>
+  <data name="Random.Text" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="Horizontal.Text" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="Vertical.Text" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="plUserSortable.Text" xml:space="preserve">
+    <value>User Sortable?</value>
+  </data>
+  <data name="plUserSortable.Help" xml:space="preserve">
+    <value>Check to allow the user to change the sort order on the listing page.</value>
+  </data>
+  <data name="ImageSettings.Text" xml:space="preserve">
+    <value>Image Settings</value>
+  </data>
+  <data name="plImagesEnabled.Text" xml:space="preserve">
+    <value>Enable Images</value>
+  </data>
+  <data name="plImagesEnabled.Help" xml:space="preserve">
+    <value>Select to enable images.</value>
+  </data>
+  <data name="plSmallWidth.Text" xml:space="preserve">
+    <value>Small Width</value>
+  </data>
+  <data name="plSmallWidth.Help" xml:space="preserve">
+    <value>Enter the maximum width for a small photo.</value>
+  </data>
+  <data name="valSmallWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Small Width Is Required.</value>
+  </data>
+  <data name="valSmallWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Small Width Must Be A Number</value>
+  </data>
+  <data name="plSmallHeight.Text" xml:space="preserve">
+    <value>Small Height</value>
+  </data>
+  <data name="plSmallHeight.Help" xml:space="preserve">
+    <value>Enter the maximum height for a small photo.</value>
+  </data>
+  <data name="valSmallHeight.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Small Height Is Required.</value>
+  </data>
+  <data name="valSmallHeightIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Small Height Must Be A Number</value>
+  </data>
+  <data name="plMediumWidth.Text" xml:space="preserve">
+    <value>Medium Width</value>
+  </data>
+  <data name="plMediumWidth.Help" xml:space="preserve">
+    <value>Enter the maximum width for a medium photo.</value>
+  </data>
+  <data name="valMediumWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Medium Width Is Required.</value>
+  </data>
+  <data name="valMediumWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Medium Width Must Be A Number</value>
+  </data>
+  <data name="plMediumHeight.Text" xml:space="preserve">
+    <value>Medium Height</value>
+  </data>
+  <data name="plMediumHeight.Help" xml:space="preserve">
+    <value>Enter the maximum height for a medium photo.</value>
+  </data>
+  <data name="valMediumHeight.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Medium Height Is Required.</value>
+  </data>
+  <data name="valMediumHeightIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Medium Height Must Be A Number</value>
+  </data>
+  <data name="plLargeWidth.Text" xml:space="preserve">
+    <value>Large Width</value>
+  </data>
+  <data name="plLargeWidth.Help" xml:space="preserve">
+    <value>Enter the maximum width for a large photo.</value>
+  </data>
+  <data name="valLargeWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Large Width Is Required.</value>
+  </data>
+  <data name="valLargeWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Large Width Must Be A Number</value>
+  </data>
+  <data name="plLargeHeight.Text" xml:space="preserve">
+    <value>Large Height</value>
+  </data>
+  <data name="plLargeHeight.Help" xml:space="preserve">
+    <value>Enter the maximum height for a large photo.</value>
+  </data>
+  <data name="valLargeHeight.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Large Height Is Required.</value>
+  </data>
+  <data name="valLargeHeightIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Large Height Must Be A Number</value>
+  </data>
+  <data name="plImagesItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row</value>
+  </data>
+  <data name="plImagesItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of images to display per row.</value>
+  </data>
+  <data name="FormSettings.Text" xml:space="preserve">
+    <value>Form Settings</value>
+  </data>
+  <data name="plFieldWidth.Text" xml:space="preserve">
+    <value>Field Width</value>
+  </data>
+  <data name="plFieldWidth.Help" xml:space="preserve">
+    <value>Enter the width of form fields.</value>
+  </data>
+  <data name="valFieldWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;You must specify a field width.</value>
+  </data>
+  <data name="valFieldWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Field width must be a number.</value>
+  </data>
+  <data name="plRadioButtonItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row (Radio Button)</value>
+  </data>
+  <data name="plRadioButtonItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of radio buttons to display per row.</value>
+  </data>
+  <data name="plCheckBoxListItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row (Checkbox)</value>
+  </data>
+  <data name="plCheckBoxListItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of checkbox's to display per row.</value>
+  </data>
+  <data name="PropertyManagerSettings.Text" xml:space="preserve">
+    <value>Property Manager Settings</value>
+  </data>
+  <data name="plPropertyManagerRecordsPerPage.Text" xml:space="preserve">
+    <value>Items Per Page</value>
+  </data>
+  <data name="plPropertyManagerRecordsPerPage.Help" xml:space="preserve">
+    <value>Select the number of items to display per page.</value>
+  </data>
+  <data name="plPropertyManagerSortBy.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="plPropertyManagerSortBy.Help" xml:space="preserve">
+    <value>Select the default sort order.</value>
+  </data>
+  <data name="plPropertyManagerSortDirection.Text" xml:space="preserve">
+    <value>Sort Direction</value>
+  </data>
+  <data name="plPropertyManagerSortDirection.Help" xml:space="preserve">
+    <value>Select the default sort direction.</value>
+  </data>
+  <data name="plHideAuthorDetails.Help" xml:space="preserve">
+    <value>Check to hide the author details on the edit property form.</value>
+  </data>
+  <data name="plHideAuthorDetails.Text" xml:space="preserve">
+    <value>Hide Author Details</value>
+  </data>
+  <data name="ContactSettings.Text" xml:space="preserve">
+    <value>Contact Settings</value>
+  </data>
+  <data name="plContactBCC.Text" xml:space="preserve">
+    <value>Contact BCC</value>
+  </data>
+  <data name="plContactBCC.Help" xml:space="preserve">
+    <value>Specify an optional BCC list for contact emails.</value>
+  </data>
+  <data name="plContactWidth.Help" xml:space="preserve">
+    <value>Enter the width of each textbox.</value>
+  </data>
+  <data name="plContactWidth.Text" xml:space="preserve">
+    <value>Contact Width</value>
+  </data>
+  <data name="plContactMessageLines.Help" xml:space="preserve">
+    <value>Enter the number of lines in the message text area.</value>
+  </data>
+  <data name="plContactMessageLines.Text" xml:space="preserve">
+    <value>Message Lines</value>
+  </data>
+  <data name="plHideEmail.Help" xml:space="preserve">
+    <value>Check to not ask for an email address on the contact form.</value>
+  </data>
+  <data name="plHideEmail.Text" xml:space="preserve">
+    <value>Hide Email?</value>
+  </data>
+  <data name="plHidePhone.Help" xml:space="preserve">
+    <value>Check to not ask for the phone number on the contact form.</value>
+  </data>
+  <data name="plHidePhone.Text" xml:space="preserve">
+    <value>Hide Phone?</value>
+  </data>
+  <data name="plSearchAgents.Help" xml:space="preserve">
+    <value>Select to enable searching of agents.</value>
+  </data>
+  <data name="plSearchAgents.Text" xml:space="preserve">
+    <value>Search Agents</value>
+  </data>
+  <data name="plLockDownPropertyType.Text" xml:space="preserve">
+    <value>LockDown Property Type</value>
+  </data>
+  <data name="plLockDownPropertyDates.Text" xml:space="preserve">
+    <value>LockDown Property Dates</value>
+  </data>
+  <data name="plLockDownPropertyType.Help" xml:space="preserve">
+    <value>Check to lockdown 'Property Type' in the Add New / Edit Property form.</value>
+  </data>
+  <data name="plLockDownPropertyDates.Help" xml:space="preserve">
+    <value>Check to lockdown Creation, Start and End Dates in the Add New / Edit Property form.</value>
+  </data>
+  <data name="plLockDownFeatured.Text" xml:space="preserve">
+    <value>LockDown Featured</value>
+  </data>
+  <data name="plLockDownFeatured.Help" xml:space="preserve">
+    <value>Check to lockdown 'Featured' in the Add New / Edit Property form.</value>
+  </data>
+  <data name="plHighQuality.Help" xml:space="preserve">
+    <value>Check to enabled high quality resizing of images (high quality = big file sizes)</value>
+  </data>
+  <data name="plHighQuality.Text" xml:space="preserve">
+    <value>High Quality</value>
+  </data>
+  <data name="CustomField.Text" xml:space="preserve">
+    <value>Custom Fields</value>
+  </data>
+  <data name="plSortFields.Text" xml:space="preserve">
+    <value>Sort Fields</value>
+  </data>
+  <data name="plHidePublishingDetails.Help" xml:space="preserve">
+    <value>Check to hide the publishing details on the edit property form.</value>
+  </data>
+  <data name="plHidePublishingDetails.Text" xml:space="preserve">
+    <value>Hide Publishing Details</value>
+  </data>
+  <data name="plSortFields.Help" xml:space="preserve">
+    <value>Select the fields available to sort by on the listing page.</value>
+  </data>
+  <data name="plMainLabel.Help" xml:space="preserve">
+    <value>Change the main label in the breadcrumbs.</value>
+  </data>
+  <data name="plMainLabel.Text" xml:space="preserve">
+    <value>Main Label</value>
+  </data>
+  <data name="Type.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="plSearchWidth.Help" xml:space="preserve">
+    <value>Specify the width for the search fields.</value>
+  </data>
+  <data name="plSearchWidth.Text" xml:space="preserve">
+    <value>Search Width</value>
+  </data>
+  <data name="valSearchWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;You must specify the search width.</value>
+  </data>
+  <data name="valSearchWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Search width must be a number.</value>
+  </data>
+  <data name="plBubbleFeatured.Help" xml:space="preserve">
+    <value>Check to bubble featured properties to the top.</value>
+  </data>
+  <data name="plBubbleFeatured.Text" xml:space="preserve">
+    <value>Bubble Featured</value>
+  </data>
+  <data name="CommentSettings.Text" xml:space="preserve">
+    <value>Comment Settings</value>
+  </data>
+  <data name="plCommentWidth.Help" xml:space="preserve">
+    <value>Enter the width for each textbox.</value>
+  </data>
+  <data name="plCommentWidth.Text" xml:space="preserve">
+    <value>Comment Width</value>
+  </data>
+  <data name="valCommentWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Comment Width Is Required.</value>
+  </data>
+  <data name="valCommentWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Comment Width Must Be A Number.</value>
+  </data>
+  <data name="Comments.Text" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Rating.Text" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="plSearchWildcard.Help" xml:space="preserve">
+    <value>Adds a single textbox that will search all custom fields.</value>
+  </data>
+  <data name="plSearchWildcard.Text" xml:space="preserve">
+    <value>Search Wildcard</value>
+  </data>
+  <data name="NotificationSettings.Text" xml:space="preserve">
+    <value>Notification Settings</value>
+  </data>
+  <data name="plNotificationEmail.Help" xml:space="preserve">
+    <value>Notify email on approval.</value>
+  </data>
+  <data name="plNotificationEmail.Text" xml:space="preserve">
+    <value>Notify Email</value>
+  </data>
+  <data name="plNotificationNotifyApprovers.Help" xml:space="preserve">
+    <value>Notify approvers on submission.</value>
+  </data>
+  <data name="plNotificationNotifyApprovers.Text" xml:space="preserve">
+    <value>Notify Approvers</value>
+  </data>
+  <data name="plSearchStyle.Help" xml:space="preserve">
+    <value>Customize the css class of the search link.</value>
+  </data>
+  <data name="plSearchStyle.Text" xml:space="preserve">
+    <value>Search Style</value>
+  </data>
+  <data name="valSearchStyle.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Search Style Is Required.</value>
+  </data>
+  <data name="plSearchHideHelpIcon.Help" xml:space="preserve">
+    <value>Check to hide the help icon in all forms.</value>
+  </data>
+  <data name="plSearchHideHelpIcon.Text" xml:space="preserve">
+    <value>Hide Help Icon</value>
+  </data>
+  <data name="plRssEnable.Help" xml:space="preserve">
+    <value>Check to enable RSS feeds.</value>
+  </data>
+  <data name="plRssEnable.Text" xml:space="preserve">
+    <value>Enable RSS</value>
+  </data>
+  <data name="plRssMaxRecords.Help" xml:space="preserve">
+    <value>Enter the maximum number of records to return in an RSS feed.</value>
+  </data>
+  <data name="plRssMaxRecords.Text" xml:space="preserve">
+    <value>Max Records</value>
+  </data>
+  <data name="RssSettings.Text" xml:space="preserve">
+    <value>RSS Settings</value>
+  </data>
+  <data name="valRssMaxRecords.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Max Records Is Required.</value>
+  </data>
+  <data name="valRssMaxRecordsIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Max Records Must Be A Number.</value>
+  </data>
+  <data name="plRssTitleLatest.Text" xml:space="preserve">
+    <value>Latest Title</value>
+  </data>
+  <data name="plRssTitleSearchResult.Text" xml:space="preserve">
+    <value>Search Result Title</value>
+  </data>
+  <data name="plRssTitleType.Text" xml:space="preserve">
+    <value>Type Title</value>
+  </data>
+  <data name="valRssTitleLatest.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Latest Title Is Required.</value>
+  </data>
+  <data name="valRssTitleSearchResult.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Search Result Title Is Required.</value>
+  </data>
+  <data name="valRssTitleType.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Type Title Is Required.</value>
+  </data>
+  <data name="plSearchBrokers.Help" xml:space="preserve">
+    <value>Check to search on brokers. </value>
+  </data>
+  <data name="plSearchBrokers.Text" xml:space="preserve">
+    <value>Search Brokers</value>
+  </data>
+  <data name="plNotifyBroker.Help" xml:space="preserve">
+    <value>Check to notify broker when property is changed by someone else. </value>
+  </data>
+  <data name="plNotifyBroker.Text" xml:space="preserve">
+    <value>Notify Broker</value>
+  </data>
+  <data name="plNotifyOwner.Help" xml:space="preserve">
+    <value>Check to notify owner when property is changed by someone else. </value>
+  </data>
+  <data name="plNotifyOwner.Text" xml:space="preserve">
+    <value>Notify Owner</value>
+  </data>
+  <data name="plIncludejQuery.Help" xml:space="preserve">
+    <value>Check to include the jQuery script, this is required for lightbox. </value>
+  </data>
+  <data name="plIncludejQuery.Text" xml:space="preserve">
+    <value>Include jQuery?</value>
+  </data>
+  <data name="ContactPerson.Text" xml:space="preserve">
+    <value>Contact Person</value>
+  </data>
+  <data name="plContactReply.Help" xml:space="preserve">
+    <value>Select who contact emails are sent from.</value>
+  </data>
+  <data name="plContactReply.Text" xml:space="preserve">
+    <value>Contact Reply</value>
+  </data>
+  <data name="PortalAdmin.Text" xml:space="preserve">
+    <value>Portal Admin</value>
+  </data>
+  <data name="DefaultExpiration.Text" xml:space="preserve">
+    <value>Leave blank for no default expiration.</value>
+  </data>
+  <data name="plDefaultExpiration.Help" xml:space="preserve">
+    <value>Enter a default expiration period for new properties. </value>
+  </data>
+  <data name="plDefaultExpiration.Text" xml:space="preserve">
+    <value>Default Expiration</value>
+  </data>
+  <data name="valDefaultExpirationIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Default Expiration Must Be A Number</value>
+  </data>
+  <data name="plSearchSubTypes.Help" xml:space="preserve">
+    <value>Check to show properties in sub-types on the view type screen.</value>
+  </data>
+  <data name="plSearchSubTypes.Text" xml:space="preserve">
+    <value>Search Sub-Types</value>
+  </data>
+  <data name="plHideName.Help" xml:space="preserve">
+    <value>Check to not ask for name on the contact form.</value>
+  </data>
+  <data name="plHideName.Text" xml:space="preserve">
+    <value>Hide Name?</value>
+  </data>
+  <data name="plRequireEmail.Help" xml:space="preserve">
+    <value>Check to require an email on the contact form.</value>
+  </data>
+  <data name="plRequireEmail.Text" xml:space="preserve">
+    <value>Require Email?</value>
+  </data>
+  <data name="plRequireName.Help" xml:space="preserve">
+    <value>Check to require a name on the contact form.</value>
+  </data>
+  <data name="plRequireName.Text" xml:space="preserve">
+    <value>Require Name?</value>
+  </data>
+  <data name="plRequirePhone.Help" xml:space="preserve">
+    <value>Check to require a phone on the contact form.</value>
+  </data>
+  <data name="plRequirePhone.Text" xml:space="preserve">
+    <value>Require Phone?</value>
+  </data>
+  <data name="CustomEmail.Text" xml:space="preserve">
+    <value>Custom Email</value>
+  </data>
+  <data name="plContactCustomEmail.Help" xml:space="preserve">
+    <value>Enter the email to send contact forms to.</value>
+  </data>
+  <data name="plContactCustomEmail.Text" xml:space="preserve">
+    <value>Custom Email</value>
+  </data>
+  <data name="plContactDestination.Help" xml:space="preserve">
+    <value>Specify where contact emails are sent.</value>
+  </data>
+  <data name="plContactDestination.Text" xml:space="preserve">
+    <value>Contact Destination</value>
+  </data>
+  <data name="PropertyOwner.Text" xml:space="preserve">
+    <value>Property Owner</value>
+  </data>
+  <data name="Flash.Text" xml:space="preserve">
+    <value>Flash</value>
+  </data>
+  <data name="plUploadMode.Help" xml:space="preserve">
+    <value>Select the mode for uploading images.</value>
+  </data>
+  <data name="plUploadMode.Text" xml:space="preserve">
+    <value>Upload Mode</value>
+  </data>
+  <data name="InlineBottom.Text" xml:space="preserve">
+    <value>Inline Bottom</value>
+  </data>
+  <data name="InlineTop.Text" xml:space="preserve">
+    <value>Inline Top</value>
+  </data>
+  <data name="plUploadPlacement.Help" xml:space="preserve">
+    <value>Specify there the upload photos functionality will go.</value>
+  </data>
+  <data name="plUploadPlacement.Text" xml:space="preserve">
+    <value>Upload Placement</value>
+  </data>
+  <data name="SeparatePage.Text" xml:space="preserve">
+    <value>Separate Page</value>
+  </data>
+  <data name="plUseCaptcha.Help" xml:space="preserve">
+    <value>Check to use captcha on the comment form.</value>
+  </data>
+  <data name="plUseCaptcha.Text" xml:space="preserve">
+    <value>Use Captcha?</value>
+  </data>
+  <data name="MapSettings.Text" xml:space="preserve">
+    <value>Map Settings</value>
+  </data>
+  <data name="plEnableMaps.Help" xml:space="preserve">
+    <value>Check to enable mapping of properties.</value>
+  </data>
+  <data name="plEnableMaps.Text" xml:space="preserve">
+    <value>Enable Maps?</value>
+  </data>
+  <data name="plMapKey.Help" xml:space="preserve">
+    <value>Enter your google developer map key. http://code.google.com/apis/maps/signup.html</value>
+  </data>
+  <data name="plMapKey.Text" xml:space="preserve">
+    <value>Google Map Key</value>
+  </data>
+  <data name="AUD.Text" xml:space="preserve">
+    <value>Australian Dollar</value>
+  </data>
+  <data name="CAD.Text" xml:space="preserve">
+    <value>Canadian Dollar</value>
+  </data>
+  <data name="CurrencySettings.Text" xml:space="preserve">
+    <value>Currency Settings</value>
+  </data>
+  <data name="EUR.Text" xml:space="preserve">
+    <value>Euro</value>
+  </data>
+  <data name="GBP.Text" xml:space="preserve">
+    <value>Pound Sterling</value>
+  </data>
+  <data name="JPY.Text" xml:space="preserve">
+    <value>Japanese Yen</value>
+  </data>
+  <data name="MYR.Text" xml:space="preserve">
+    <value>Malaysia Ringgit</value>
+  </data>
+  <data name="NZD.Text" xml:space="preserve">
+    <value>New Zealand Dollars</value>
+  </data>
+  <data name="plCurrency.Help" xml:space="preserve">
+    <value>Select the default currency.</value>
+  </data>
+  <data name="plCurrency.Text" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="USD.Text" xml:space="preserve">
+    <value>U.S. Dollar</value>
+  </data>
+  <data name="ZAR.Text" xml:space="preserve">
+    <value>South African Ran</value>
+  </data>
+  <data name="CZK.Text" xml:space="preserve">
+    <value>Czech Koruna</value>
+  </data>
+  <data name="plMapHeight.Help" xml:space="preserve">
+    <value>Enter the height for the [MAP] token image.</value>
+  </data>
+  <data name="plMapHeight.Text" xml:space="preserve">
+    <value>Map Height</value>
+  </data>
+  <data name="plMapWidth.Help" xml:space="preserve">
+    <value>Enter the width for the [MAP] token image.</value>
+  </data>
+  <data name="plMapWidth.Text" xml:space="preserve">
+    <value>Map Width</value>
+  </data>
+  <data name="plMapZoom.Height" xml:space="preserve">
+    <value>Enter the map zoom level (0-17).</value>
+  </data>
+  <data name="plMapZoom.Text" xml:space="preserve">
+    <value>Map Zoom</value>
+  </data>
+  <data name="valMapHeight.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Map height is required.</value>
+  </data>
+  <data name="valMapHeightIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Map height must be a number.</value>
+  </data>
+  <data name="valMapWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Map width is required.</value>
+  </data>
+  <data name="valMapWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Map width must be a number.</value>
+  </data>
+  <data name="valMapZoom.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Map zoom is required.</value>
+  </data>
+  <data name="valMapZoomIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Map zoom must be a number.</value>
+  </data>
+  <data name="NOK.Text" xml:space="preserve">
+    <value>Norwegian Krone</value>
+  </data>
+  <data name="plCurrencyAvailable.Help" xml:space="preserve">
+    <value>Optionally select which currencies are available for the end user to select.</value>
+  </data>
+  <data name="plCurrencyAvailable.Text" xml:space="preserve">
+    <value>Available Currency</value>
+  </data>
+  <data name="ShowAll.Text" xml:space="preserve">
+    <value>Show all</value>
+  </data>
+  <data name="CoreSearchSettings.Text" xml:space="preserve">
+    <value>Core Search Settings</value>
+  </data>
+  <data name="plCoreSearch.Help" xml:space="preserve">
+    <value>Check to integrate this module with the core dotnetnuke search.</value>
+  </data>
+  <data name="plCoreSearch.Text" xml:space="preserve">
+    <value>Use Core Search?</value>
+  </data>
+  <data name="plCoreSearchDescription.Help" xml:space="preserve">
+    <value>The description to be used in the search item. Use [CUSTOM:FieldName] to substitute values. Max length is 100 characters.</value>
+  </data>
+  <data name="plCoreSearchDescription.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="plCoreSearchTitle.Help" xml:space="preserve">
+    <value>The title to be used in the search item. Use [CUSTOM:FieldName] to substitute values. Max length 100 characters.</value>
+  </data>
+  <data name="plCoreSearchTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="plDistanceExpression.Help" xml:space="preserve">
+    <value>The expression used to resolve the origin point, e.g. [LOCATION], USA</value>
+  </data>
+  <data name="plDistanceExpression.Text" xml:space="preserve">
+    <value>Distance Expression</value>
+  </data>
+  <data name="plEnableDistance.Help" xml:space="preserve">
+    <value>Check to enable sorting by distance. The option will only appear when an origin point can be established through the distance expression.</value>
+  </data>
+  <data name="plEnableDistance.Text" xml:space="preserve">
+    <value>Distance Sorting?</value>
+  </data>
+  <data name="Distance.Text" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="Kilometres.Text" xml:space="preserve">
+    <value>Kilometres</value>
+  </data>
+  <data name="Miles.Text" xml:space="preserve">
+    <value>Miles</value>
+  </data>
+  <data name="plDistanceType.Help" xml:space="preserve">
+    <value>Select how to measure distance.</value>
+  </data>
+  <data name="plDistanceType.Text" xml:space="preserve">
+    <value>Distance Type</value>
+  </data>
+  <data name="plLocationLabel.Help" xml:space="preserve">
+    <value>Location label used for distance searching.</value>
+  </data>
+  <data name="plLocationLabel.Text" xml:space="preserve">
+    <value>Location Label</value>
+  </data>
+  <data name="Dutch.Text" xml:space="preserve">
+    <value>€ 3,14</value>
+  </data>
+  <data name="English.Text" xml:space="preserve">
+    <value>€3.14</value>
+  </data>
+  <data name="French.Text" xml:space="preserve">
+    <value>3,14 €</value>
+  </data>
+  <data name="plEuroFormat.Help" xml:space="preserve">
+    <value>Select your chosen euro format.</value>
+  </data>
+  <data name="plEuroFormat.Text" xml:space="preserve">
+    <value>Euro Format</value>
+  </data>
+  <data name="plSearchLocation.Help" xml:space="preserve">
+    <value>Check to search on location for distance sorting.</value>
+  </data>
+  <data name="plSearchLocation.Text" xml:space="preserve">
+    <value>Search Location</value>
+  </data>
+  <data name="plPassSearchValues.Help" xml:space="preserve">
+    <value>Check to pass search values to the view property page. This is used for next/prev functionality.</value>
+  </data>
+  <data name="plPassSearchValues.Text" xml:space="preserve">
+    <value>Pass Search Values?</value>
+  </data>
+  <data name="Module.Text" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="None.Text" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="plBreadcrumbPlacement.Help" xml:space="preserve">
+    <value>Specify where breadcrumbs are placed.</value>
+  </data>
+  <data name="plBreadcrumbPlacement.Text" xml:space="preserve">
+    <value>Breadcrumb Placement</value>
+  </data>
+  <data name="Portal.Text" xml:space="preserve">
+    <value>Portal</value>
+  </data>
+  <data name="plTypesHideZero.help" xml:space="preserve">
+    <value>Check to hide types with a 0 count.</value>
+  </data>
+  <data name="plTypesHideZero.Text" xml:space="preserve">
+    <value>Hide 0 Count Types</value>
+  </data>
+  <data name="plIncludeStylesheet.Help" xml:space="preserve">
+    <value>Check to include template stylesheet.</value>
+  </data>
+  <data name="plIncludeStylesheet.Text" xml:space="preserve">
+    <value>Include Stylesheet?</value>
+  </data>
+  <data name="TemplateSettings.Text" xml:space="preserve">
+    <value>Template Settings</value>
+  </data>
+  <data name="Hits1Year.Text" xml:space="preserve">
+    <value>Hits (Last Year)</value>
+  </data>
+  <data name="Hits30Days.Text" xml:space="preserve">
+    <value>Hits (Last 30 Days)</value>
+  </data>
+  <data name="Hits7Days.Text" xml:space="preserve">
+    <value>Hits (Last 7 Days)</value>
+  </data>
+  <data name="plDecimalPlaces.Help" xml:space="preserve">
+    <value>Enter the number of decimal places to display for currency values.</value>
+  </data>
+  <data name="plDecimalPlaces.Text" xml:space="preserve">
+    <value>Decimal Places</value>
+  </data>
+  <data name="valDecimalPlaces.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Decimal Places Is Required.</value>
+  </data>
+  <data name="valDecimalPlacesIsNumber.ErrorMessage" xml:space="preserve">
+    <value>Decimal Places Must Be A Number.</value>
+  </data>
+  <data name="plFriendBCC.Help" xml:space="preserve">
+    <value>Optionally receive an email to specified address.</value>
+  </data>
+  <data name="plFriendBCC.Text" xml:space="preserve">
+    <value>BCC Email</value>
+  </data>
+  <data name="plFriendWidth.Help" xml:space="preserve">
+    <value>Width of input fields.</value>
+  </data>
+  <data name="plFriendWidth.Text" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="SendToFriendSettings.Text" xml:space="preserve">
+    <value>Send To Friend Settings</value>
+  </data>
+  <data name="valFriendWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Width Is Required.</value>
+  </data>
+  <data name="valFriendWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Width Must Be A Number.</value>
+  </data>
+  <data name="plCommentEmail.Help" xml:space="preserve">
+    <value>Specify an email address to notify on comment.</value>
+  </data>
+  <data name="plCommentEmail.Text" xml:space="preserve">
+    <value>Notify Email?</value>
+  </data>
+  <data name="plCommentNotifyOwner.Help" xml:space="preserve">
+    <value>Check to notify owner on comment.</value>
+  </data>
+  <data name="plCommentNotifyOwner.Text" xml:space="preserve">
+    <value>Notify Owner?</value>
+  </data>
+  <data name="plHideTypes.Help" xml:space="preserve">
+    <value>Check to hide types on the add/edit property form.</value>
+  </data>
+  <data name="plHideTypes.Text" xml:space="preserve">
+    <value>Hide Types</value>
+  </data>
+  <data name="plTypeParams.Help" xml:space="preserve">
+    <value>Check to show type information in the view type url.</value>
+  </data>
+  <data name="plTypeParams.Text" xml:space="preserve">
+    <value>Type Parameters</value>
+  </data>
+  <data name="BottomLeft.Text" xml:space="preserve">
+    <value>Bottom Left</value>
+  </data>
+  <data name="BottomRight.Text" xml:space="preserve">
+    <value>Bottom Right</value>
+  </data>
+  <data name="TopLeft.Text" xml:space="preserve">
+    <value>Top Left</value>
+  </data>
+  <data name="TopRight.Text" xml:space="preserve">
+    <value>Top Right</value>
+  </data>
+  <data name="UseWatermark.Help" xml:space="preserve">
+    <value>Check to apply a watermark on uploaded images. The watermark is applied during the upload process.</value>
+  </data>
+  <data name="UseWatermark.Text" xml:space="preserve">
+    <value>Use Watermark?</value>
+  </data>
+  <data name="WatermarkImage.Help" xml:space="preserve">
+    <value>Specify an image to apply as a watermark.</value>
+  </data>
+  <data name="WatermarkImage.Text" xml:space="preserve">
+    <value>Watermark Image</value>
+  </data>
+  <data name="WatermarkPosition.Help" xml:space="preserve">
+    <value>Specify the position to place the watermark image.</value>
+  </data>
+  <data name="WatermarkPosition.Text" xml:space="preserve">
+    <value>Watermark Position</value>
+  </data>
+  <data name="WatermarkText.Help" xml:space="preserve">
+    <value>Specify a text string to apply as a watermark.</value>
+  </data>
+  <data name="WatermarkText.Text" xml:space="preserve">
+    <value>Watermark Text</value>
+  </data>
+  <data name="plAgentLabel.Help" xml:space="preserve">
+    <value>Agent label used in property agent.</value>
+  </data>
+  <data name="plAgentLabel.Text" xml:space="preserve">
+    <value>Agent Label</value>
+  </data>
+  <data name="plBrokerLabel.Help" xml:space="preserve">
+    <value>Broker label used in property agent.</value>
+  </data>
+  <data name="plBrokerLabel.Text" xml:space="preserve">
+    <value>Broker Label</value>
+  </data>
+  <data name="plSearchHideZeroTypes.Help" xml:space="preserve">
+    <value>Check to hide types with a 0 count.</value>
+  </data>
+  <data name="plSearchHideZeroTypes.Text" xml:space="preserve">
+    <value>Hide 0 Count Types</value>
+  </data>
+  <data name="plAgentPluralLabel.Help" xml:space="preserve">
+    <value>Agent label for plurals used in property agent.</value>
+  </data>
+  <data name="plAgentPluralLabel.Text" xml:space="preserve">
+    <value>Agent Plural Label</value>
+  </data>
+  <data name="plBrokerPluralLabel.Help" xml:space="preserve">
+    <value>Broker plural label used in property agent.</value>
+  </data>
+  <data name="plBrokerPluralLabel.Text" xml:space="preserve">
+    <value>Broker Plural Label</value>
+  </data>
+  <data name="plContactUseCaptcha.Help" xml:space="preserve">
+    <value>Check to use captcha on the contact form.</value>
+  </data>
+  <data name="plContactUseCaptcha.Text" xml:space="preserve">
+    <value>Use Captcha?</value>
+  </data>
+  <data name="BRL.Text" xml:space="preserve">
+    <value>Brazilian Real</value>
+  </data>
+  <data name="CHF.Text" xml:space="preserve">
+    <value>Swiss Franc</value>
+  </data>
+  <data name="CNY.Text" xml:space="preserve">
+    <value>Chinese Yuan</value>
+  </data>
+  <data name="THB.Text" xml:space="preserve">
+    <value>Thai Baht</value>
+  </data>
+  <data name="plSearchHideTypesCount.Help" xml:space="preserve">
+    <value>Check to hide the type count.</value>
+  </data>
+  <data name="plSearchHideTypesCount.Text" xml:space="preserve">
+    <value>Hide Type Count</value>
+  </data>
+  <data name="plLandingPageType.Help" xml:space="preserve">
+    <value>Select a landing page mode.</value>
+  </data>
+  <data name="plLandingPageType.Text" xml:space="preserve">
+    <value>Landing Page Mode</value>
+  </data>
+  <data name="SearchResults.Text" xml:space="preserve">
+    <value>Search Results</value>
+  </data>
+  <data name="plSEOAgentType.Help" xml:space="preserve">
+    <value>Override the agent type parameter.</value>
+  </data>
+  <data name="plSEOAgentType.Text" xml:space="preserve">
+    <value>Agent Type Param</value>
+  </data>
+  <data name="plSEOPropertyID.Help" xml:space="preserve">
+    <value>Override the property ID parameter.</value>
+  </data>
+  <data name="plSEOPropertyID.Text" xml:space="preserve">
+    <value>Property ID Param</value>
+  </data>
+  <data name="plSEOPropertyTypeID.Help" xml:space="preserve">
+    <value>Override the property type ID parameter.</value>
+  </data>
+  <data name="plSEOPropertyTypeID.Text" xml:space="preserve">
+    <value>Type ID Param</value>
+  </data>
+  <data name="SEOSettings.Text" xml:space="preserve">
+    <value>SEO Settings</value>
+  </data>
+  <data name="SEOSettingsDescription.Text" xml:space="preserve">
+    <value>This section allows you to configure items related to SEO.</value>
+  </data>
+  <data name="valSEOAgentType.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Agent Type Param Is Required.</value>
+  </data>
+  <data name="valSEOPropertyID.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Property ID Param Is Required.</value>
+  </data>
+  <data name="valSEOPropertyTypeID.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Property Type ID Param Is Required.</value>
+  </data>
+  <data name="plSEOViewPropertyTitle.Help" xml:space="preserve">
+    <value>Optionally specify the format for the page title of view property. e.g. [CUSTOM:XXX] [TYPE:0]</value>
+  </data>
+  <data name="plSEOViewPropertyTitle.Text" xml:space="preserve">
+    <value>View Property Title</value>
+  </data>
+  <data name="Dash.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="plRssTitleLatest.Help" xml:space="preserve">
+    <value>Specify the title for the latest RSS feed using tokens, e.g. [CUSTOM:XXX]</value>
+  </data>
+  <data name="plRssTitleSearchResult.Help" xml:space="preserve">
+    <value>Specify the title for the search result RSS feed using tokens, e.g. [CUSTOM:XXX]</value>
+  </data>
+  <data name="plRssTitleType.Help" xml:space="preserve">
+    <value>Specify the title for the type RSS feed using tokens, e.g. [CUSTOM:XXX]</value>
+  </data>
+  <data name="plSEOTitleReplacement.Help" xml:space="preserve">
+    <value>Select how to replace spaces in the title.</value>
+  </data>
+  <data name="plSEOTitleReplacement.Text" xml:space="preserve">
+    <value>Title Replacement</value>
+  </data>
+  <data name="plSEOViewTypeTitle.Help" xml:space="preserve">
+    <value>Optionally specify the format for the page title of view type. e.g. [CUSTOM:XXX] [TYPE:0]</value>
+  </data>
+  <data name="plSEOViewTypeTitle.Text" xml:space="preserve">
+    <value>View Type Title</value>
+  </data>
+  <data name="Underscore.Text" xml:space="preserve">
+    <value>_</value>
+  </data>
+  <data name="plSEORedirect.Help" xml:space="preserve">
+    <value>Check to perform redirects when a urls do not match.</value>
+  </data>
+  <data name="plSEORedirect.Text" xml:space="preserve">
+    <value>Do Redirect?</value>
+  </data>
+  <data name="plCachePropertyValues.Help" xml:space="preserve">
+    <value>Cache property values, if turning this setting off you may have to reset the cache in host -&gt; host settings.</value>
+  </data>
+  <data name="plCachePropertyValues.Text" xml:space="preserve">
+    <value>Cache Properties</value>
+  </data>
+  <data name="plXmlEnable.Help" xml:space="preserve">
+    <value>Check to enable the XML feed.</value>
+  </data>
+  <data name="plXmlEnable.Text" xml:space="preserve">
+    <value>Enable XML</value>
+  </data>
+  <data name="plXmlMaxRecords.Help" xml:space="preserve">
+    <value>Enter the maximum number of records to return in an XML feed.</value>
+  </data>
+  <data name="plXmlMaxRecords.Text" xml:space="preserve">
+    <value>Max Records</value>
+  </data>
+  <data name="plXmlUrl.Help" xml:space="preserve">
+    <value>A url to the xml feed.</value>
+  </data>
+  <data name="plXmlUrl.Text" xml:space="preserve">
+    <value>Xml Url</value>
+  </data>
+  <data name="valXmlMaxRecords.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Max Records Is Required.</value>
+  </data>
+  <data name="valXmlMaxRecordsIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Max Records Must Be A Number.</value>
+  </data>
+  <data name="XmlSettings.Text" xml:space="preserve">
+    <value>XML Settings</value>
+  </data>
+  <data name="Expiry.Text" xml:space="preserve">
+    <value>Expiry Date</value>
+  </data>
+  <data name="ReviewField.Text" xml:space="preserve">
+    <value>Review Fields</value>
+  </data>
+  <data name="NotSpecified.Text" xml:space="preserve">
+    <value>&lt;Not Specified&gt;</value>
+  </data>
+  <data name="plBindExpiry.Help" xml:space="preserve">
+    <value>Select a custom field to bind expiry to.</value>
+  </data>
+  <data name="plBindExpiry.Text" xml:space="preserve">
+    <value>Bind Expiry</value>
+  </data>
+  <data name="CRC.Text" xml:space="preserve">
+    <value>Costa Rica Colon</value>
+  </data>
+  <data name="DKK.Text" xml:space="preserve">
+    <value>Danish Krone</value>
+  </data>
+  <data name="plSEOCanonicalLink.Help" xml:space="preserve">
+    <value>Check to use a canonical link on the view property page.</value>
+  </data>
+  <data name="plSEOCanonicalLink.Text" xml:space="preserve">
+    <value>Canonical Link?</value>
+  </data>
+  <data name="plButtonClass.Help" xml:space="preserve">
+    <value>Specify the css class for buttons.</value>
+  </data>
+  <data name="plButtonClass.Text" xml:space="preserve">
+    <value>Button Class</value>
+  </data>
+  <data name="valButtonClass.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Button Class Is Required.</value>
+  </data>
+  <data name="plRedirectType.Help" xml:space="preserve">
+    <value>Specify how to redirect after updating a property.</value>
+  </data>
+  <data name="plRedirectType.Text" xml:space="preserve">
+    <value>Redirect Type</value>
+  </data>
+  <data name="RedirectPage.Text" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="RedirectPropertyManager.Text" xml:space="preserve">
+    <value>Property Manager</value>
+  </data>
+  <data name="RedirectViewProperty.Text" xml:space="preserve">
+    <value>View Property</value>
+  </data>
+  <data name="plRedirectPage.Help" xml:space="preserve">
+    <value>Specify where to redirect after property submission.</value>
+  </data>
+  <data name="plRedirectPage.Text" xml:space="preserve">
+    <value>Redirect Page</value>
+  </data>
+  <data name="plShortListLabel.Help" xml:space="preserve">
+    <value>Shortlist label used in property agent.</value>
+  </data>
+  <data name="plShortListLabel.Text" xml:space="preserve">
+    <value>Shortlist Label</value>
+  </data>
+  <data name="valShortListLabel.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt; Shortlist Label Is Required.</value>
+  </data>
+  <data name="plReviewWidth.Help" xml:space="preserve">
+    <value>Enter the width for each textbox.</value>
+  </data>
+  <data name="plReviewWidth.Text" xml:space="preserve">
+    <value>Review Width</value>
+  </data>
+  <data name="ReviewSettings.Text" xml:space="preserve">
+    <value>Review Settings</value>
+  </data>
+  <data name="valReviewWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Review Width Is Required.</value>
+  </data>
+  <data name="valReviewWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Review Width Must Be A Number.</value>
+  </data>
+  <data name="plSortBySecondary.Help" xml:space="preserve">
+    <value>Specify the secondary sort.</value>
+  </data>
+  <data name="plSortBySecondary.Text" xml:space="preserve">
+    <value>Sort by secondary</value>
+  </data>
+  <data name="plSortByTertiary.Help" xml:space="preserve">
+    <value>Specify the tertiary sort.</value>
+  </data>
+  <data name="plSortByTertiary.Text" xml:space="preserve">
+    <value>Sort by tertiary</value>
+  </data>
+  <data name="plSortDirectionSecondary.Help" xml:space="preserve">
+    <value>Specify the sort direction for the secondary sort.</value>
+  </data>
+  <data name="plSortDirectionSecondary.Text" xml:space="preserve">
+    <value>Sort Dir. secondary</value>
+  </data>
+  <data name="plSortDirectionTertiary.Help" xml:space="preserve">
+    <value>Specify the sort direction for the tertiary sort.</value>
+  </data>
+  <data name="plSortDirectionTertiary.Text" xml:space="preserve">
+    <value>Sort Dir. tertiary</value>
+  </data>
+  <data name="plProtectXSS.Help" xml:space="preserve">
+    <value>Protect against cross site scripting. </value>
+  </data>
+  <data name="plProtectXSS.Text" xml:space="preserve">
+    <value>Protect XSS</value>
+  </data>
+  <data name="plReviewModeration.Help" xml:space="preserve">
+    <value>Specify whether reviews require approval before appearing.</value>
+  </data>
+  <data name="plReviewModeration.Text" xml:space="preserve">
+    <value>Review Moderation</value>
+  </data>
+  <data name="plReviewAnonymous.Help" xml:space="preserve">
+    <value>Allow reviews by anonymous users.</value>
+  </data>
+  <data name="plReviewAnonymous.Text" xml:space="preserve">
+    <value>Allow Anonymous?</value>
+  </data>
+  <data name="plReviewEmail.Help" xml:space="preserve">
+    <value>Specify email address to send approval notifications.</value>
+  </data>
+  <data name="plReviewEmail.Text" xml:space="preserve">
+    <value>Review Email</value>
+  </data>
+  <data name="ImageCategories.Help" xml:space="preserve">
+    <value>Specify image categories separated by a ;</value>
+  </data>
+  <data name="ImageCategories.Text" xml:space="preserve">
+    <value>Image Categories</value>
+  </data>
+  <data name="ImageCategoriesHelp.Text" xml:space="preserve">
+    <value>&lt;br /&gt;Separate categories by ; e.g. display shots;plans</value>
+  </data>
+  <data name="plAgentDropdown.Help" xml:space="preserve">
+    <value>Check to make the agent dropdown default</value>
+  </data>
+  <data name="plAgentDropdown.Text" xml:space="preserve">
+    <value>Agent Dropdown</value>
+  </data>
+  <data name="plContactLogField.Help" xml:space="preserve">
+    <value>Specify a custom field to show on the contact log. </value>
+  </data>
+  <data name="plContactLogField.Text" xml:space="preserve">
+    <value>Contact Log Field</value>
+  </data>
+  <data name="ContactField.Text" xml:space="preserve">
+    <value>Contact Field</value>
+  </data>
+  <data name="plContactCustomField.Help" xml:space="preserve">
+    <value>Select custom field to display in contact log. </value>
+  </data>
+  <data name="plContactCustomField.Text" xml:space="preserve">
+    <value>Contact Custom Field</value>
+  </data>
+  <data name="plContactField.Help" xml:space="preserve">
+    <value>Specify a contact field that represents an email address.</value>
+  </data>
+  <data name="plContactField.Text" xml:space="preserve">
+    <value>Contact Field</value>
+  </data>
+  <data name="FreeFlowLayout.Text" xml:space="preserve">
+    <value>Free Flow</value>
+  </data>
+  <data name="plLayoutType.Help" xml:space="preserve">
+    <value>Specify how to render latest properties.</value>
+  </data>
+  <data name="plLayoutType.Text" xml:space="preserve">
+    <value>Layout Type</value>
+  </data>
+  <data name="TableLayout.Text" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="plLayoutTypeFeatured.Help" xml:space="preserve">
+    <value>Specify how to render featured properties.</value>
+  </data>
+  <data name="plLayoutTypeFeatured.Text" xml:space="preserve">
+    <value>Layout Type</value>
+  </data>
+  <data name="plLayoutTypeTypes.Help" xml:space="preserve">
+    <value>Specify how to render types.</value>
+  </data>
+  <data name="plLayoutTypeTypes.Text" xml:space="preserve">
+    <value>Layout Type</value>
+  </data>
+</root>

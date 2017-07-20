@@ -1,0 +1,205 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType ADD
+	ParentID int NOT NULL CONSTRAINT DF_ParentID DEFAULT (-1)
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeAdd
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeAdd
+	@ParentID int, 
+	@ModuleID int,
+	@Name nvarchar(50),
+	@Description ntext,
+	@SortOrder int,
+	@IsPublished bit
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType (
+	[ParentID], 
+	[ModuleID],
+	[Name],
+	[Description],
+	[SortOrder],
+	[IsPublished]
+) VALUES (
+	@ParentID, 
+	@ModuleID,
+	@Name,
+	@Description,
+	@SortOrder,
+	@IsPublished
+)
+
+select SCOPE_IDENTITY()
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeGet
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeGet
+	@PropertyTypeID int
+AS
+
+SELECT
+	[PropertyTypeID],
+	[ParentID], 
+	[ModuleID],
+	[Name],
+	[Description],
+	[SortOrder],
+	[IsPublished]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType
+WHERE
+	[PropertyTypeID] = @PropertyTypeID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeList
+	@ModuleID	int,
+	@ShowPublishedOnly bit,
+	@SortBy int,
+	@ParentID int 
+AS
+
+SELECT
+	pt.[PropertyTypeID],
+	pt.[ParentID],
+	pt.[ModuleID],
+	pt.[Name],
+	pt.[Description],
+	pt.[SortOrder],
+	pt.[IsPublished],
+	(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt2 where pt.PropertyTypeID = pt2.ParentID) as 'PropertyTypeCount', 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount(pt.[PropertyTypeID], 0, GetDate()) as 'PropertyCount'
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	[ModuleID] = @ModuleID
+	and
+	(@ShowPublishedOnly = 0 or pt.[IsPublished] = 1)
+	and
+	[ParentID] = @ParentID
+ORDER BY
+	CASE 
+              	WHEN @SortBy = 0 THEN pt.[SortOrder]
+              END,
+	CASE 
+              	WHEN @SortBy = 1 THEN  pt.[Name]
+              END
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeListAll 
+	@ModuleID int,
+	@Current int, 	
+	@ShowPublishedOnly bit,
+	@SortBy int 
+as
+SET NOCOUNT ON
+DECLARE @level int, @line int
+ 
+CREATE TABLE #hierarchy(PropertyTypeID int, level int)
+CREATE TABLE #stack (item int, level int)
+INSERT INTO #stack VALUES (@current, 1)
+SELECT @level = 1
+ 
+WHILE @level > 0
+BEGIN
+   IF EXISTS (SELECT * FROM #stack WHERE level = @level)
+      BEGIN
+         SELECT @current = item
+         FROM #stack
+         WHERE level = @level
+ 
+ 	insert into #hierarchy(PropertyTypeID, level) values(@current, @level) 
+ 
+         DELETE FROM #stack
+         WHERE level = @level
+            AND item = @current
+ 
+         INSERT #stack
+            SELECT PropertyTypeID, @level + 1
+            FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType
+            WHERE ParentID = @current and ModuleID = @ModuleID 
+     	    ORDER BY 	
+	CASE 
+              	WHEN @SortBy = 0 THEN [SortOrder]
+              END,
+	CASE 
+              	WHEN @SortBy = 1 THEN  [Name]
+              END
+ 
+         IF @@ROWCOUNT > 0
+            SELECT @level = @level + 1
+      END
+   ELSE
+      SELECT @level = @level - 1
+END -- WHILE
+ 
+SELECT
+	pt.[PropertyTypeID],
+	pt.[ParentID],
+	pt.[ModuleID],
+	pt.[Name],
+	pt.[Description],
+	pt.[SortOrder],
+	pt.[IsPublished],
+	(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt2 where pt.PropertyTypeID = pt2.ParentID) as 'PropertyTypeCount', 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount(pt.[PropertyTypeID], 0, GetDate()) as 'PropertyCount',
+	REPLICATE('.',(level-2)*2) + pt.[Name] as 'NameIndented' 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt, #hierarchy
+WHERE 
+	#hierarchy.PropertyTypeID = pt.PropertyTypeID
+	AND
+	pt.[ModuleID] = @ModuleID
+	and
+	(@ShowPublishedOnly = 0 or pt.[IsPublished] = 1)
+
+drop table #hierarchy
+drop table #stack
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeUpdate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeUpdate
+	@PropertyTypeID int, 
+	@ParentID int, 
+	@ModuleID int, 
+	@Name nvarchar(50), 
+	@Description ntext, 
+	@SortOrder int, 
+	@IsPublished bit 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType SET
+	[ParentID] = @ParentID, 
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[Description] = @Description,
+	[SortOrder] = @SortOrder,
+	[IsPublished] = @IsPublished
+WHERE
+	[PropertyTypeID] = @PropertyTypeID
+GO
+
+CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount 
+(@PropertyTypeID int, @cChildren int, @CurrentDate datetime)
+RETURNS bigint 
+AS
+BEGIN
+
+IF( @PropertyTypeID <> -1 )
+BEGIN
+	SET @cChildren = @cChildren + (SELECT count(*) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p where p.PropertyTypeID = @PropertyTypeID and p.Status = 3 and (p.[DatePublished] < @CurrentDate and (p.[DateExpired] is null or p.[DateExpired] > @CurrentDate)))
+	
+  	SELECT @cChildren = {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount(pt.PropertyTypeID, @cChildren, @CurrentDate) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt where pt.ParentID = @PropertyTypeID 
+END 
+
+RETURN @cChildren 
+
+END
+GO

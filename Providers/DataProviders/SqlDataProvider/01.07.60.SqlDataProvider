@@ -1,0 +1,19 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortalList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortalList
+	@TemplateID int 
+AS
+
+SELECT
+	tp.[TemplatePortalID],
+	tp.[TemplateID],
+	tp.[PortalID],
+	p.[PortalName] 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortal tp, {databaseOwner}{objectQualifier}vw_Portals p
+WHERE
+	tp.[PortalID] = p.[PortalID]
+	and
+	tp.[TemplateID] = @TemplateID
+GO

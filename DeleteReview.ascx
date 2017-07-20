@@ -1,0 +1,2 @@
+<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="DeleteReview.ascx.vb" Inherits="Ventrian.PropertyAgent.DeleteReview" %>
+<asp:LinkButton ID="cmdDelete" runat="server" ResourceKey="cmdDelete" CssClass="CommandButton"></asp:LinkButton>

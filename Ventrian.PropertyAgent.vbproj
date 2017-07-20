@@ -1,0 +1,940 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{57AD424D-D2A3-440F-8FA8-4B2B03B95545}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>Ventrian.PropertyAgent</AssemblyName>
+    <OptionStrict>Off</OptionStrict>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DocumentationFile>Ventrian.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>Ventrian.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetNuke, Version=4.5.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DotNetNuke.Web.Client, Version=6.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\DotNetNuke.Web.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ephtmltopdf, Version=4.0.6.31734, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL" />
+    <Reference Include="SharpZipLib, Version=0.81.0.1407, Culture=neutral">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Ventrian.ImageResizer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Ventrian.ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="Ventrian.NewsArticles.Secure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Ventrian.NewsArticles.Secure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AccessDenied.ascx" />
+    <Content Include="App_LocalResources\AccessDenied.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ChangeTemplate.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\CommentForm.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ContactForm.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\Default.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\DeleteComment.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditBrokers.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditCustomField.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditCustomFields.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditEmailFiles.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditLayoutFiles.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditLayoutSettings.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditPermissions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditPhotos.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditProperties.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditProperty.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditPropertyType.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditPropertyTypes.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditTemplateDefinition.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditTemplateDefinitions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ExportTemplateDefinition.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ImportTemplateDefinition.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\LandingPage.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\Latest.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\LatestOptions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\NoTemplate.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\SearchSmall.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\SearchSmallOptions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\SharedResources.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ViewProperty.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ViewType.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ChangeTemplate.ascx" />
+    <Content Include="CommentForm.ascx" />
+    <Content Include="ContactForm.ascx" />
+    <Content Include="Default.ascx" />
+    <Content Include="DeleteComment.ascx" />
+    <Content Include="EditBrokers.ascx" />
+    <Content Include="EditCustomField.ascx" />
+    <Content Include="EditCustomFields.ascx" />
+    <Content Include="EditEmailFiles.ascx" />
+    <Content Include="EditLayoutFiles.ascx" />
+    <Content Include="EditLayoutSettings.ascx" />
+    <Content Include="EditPermissions.ascx" />
+    <Content Include="EditPhotos.ascx" />
+    <Content Include="EditProperties.ascx" />
+    <Content Include="EditProperty.ascx" />
+    <Content Include="EditPropertyType.ascx" />
+    <Content Include="EditPropertyTypes.ascx" />
+    <Content Include="EditTemplateDefinition.ascx" />
+    <Content Include="EditTemplateDefinitions.ascx" />
+    <Content Include="Export.ascx" />
+    <Content Include="ExportTemplateDefinition.ascx" />
+    <Content Include="Images\Lightbox\lightbox-ico-loading.gif" />
+    <Content Include="Images\placeholder-600.jpg" />
+    <Content Include="Images\Rating\star.gif" />
+    <Content Include="Images\Rating\stars.png" />
+    <Content Include="Images\xml.gif" />
+    <Content Include="Images\xml_small.gif" />
+    <Content Include="ImportTemplateDefinition.ascx" />
+    <Content Include="JS\Lightbox\jquery.lightbox-0.4.js" />
+    <Content Include="JS\Lightbox\jquery.lightbox-0.4.pack.js" />
+    <Content Include="JS\Rating\jquery.rating.js" />
+    <Content Include="LandingPage.ascx" />
+    <Content Include="Latest.ascx" />
+    <Content Include="LatestOptions.ascx" />
+    <Content Include="Libraries\Ventrian.ImageResizer.dll" />
+    <Content Include="module.css" />
+    <Content Include="NoTemplate.ascx" />
+    <Content Include="Options.ascx" />
+    <Content Include="Print.aspx" />
+    <Content Include="App_LocalResources\SendToFriendForm.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\TypesOptions.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\Types.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditReviewFields.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditReviewField.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ReviewForm.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\DeleteReview.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditExpiryNotifications.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditPropertyNotifications.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ShortListForm.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ApproveReviews.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditContactField.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\EditContactFields.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\ViewContactLog.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_LocalResources\SubscribeForm.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\EditPropertyPhotos.ascx" />
+    <Content Include="Controls\Sortable.asmx" />
+    <Content Include="Controls\UploadPhotoStandard.ascx" />
+    <Content Include="Controls\UploadPhotoSWF.ascx" />
+    <Content Include="ApproveReviews.ascx" />
+    <Content Include="EditContactField.ascx" />
+    <Content Include="EditContactFields.ascx" />
+    <Content Include="CurrencyConverter.ascx" />
+    <Content Include="EditPropertyNotifications.ascx" />
+    <Content Include="EditExpiryNotifications.ascx" />
+    <Content Include="DeleteReview.ascx" />
+    <Content Include="JS\jquery-1.7.1.min.js" />
+    <Content Include="JS\jquery-ui-1.8.16.min.js" />
+    <Content Include="Libraries\ephtmltopdf.dll" />
+    <Content Include="Libraries\Ventrian.NewsArticles.Secure.dll" />
+    <Content Include="PdfRender.ascx" />
+    <Content Include="ReviewForm.ascx" />
+    <Content Include="EditReviewField.ascx" />
+    <Content Include="EditReviewFields.ascx" />
+    <Content Include="ShortListForm.ascx" />
+    <Content Include="SubscribeForm.ascx" />
+    <Content Include="ViewContactLog.ascx" />
+    <Content Include="Xml.ascx" />
+    <Content Include="Includes\plaxo_cb.html" />
+    <Content Include="JS\Lightbox\jquery-1.3.2.min.js" />
+    <Content Include="SendToFriendForm.ascx" />
+    <Content Include="CurrencySelector.ascx" />
+    <Content Include="ImageHandler.ashx" />
+    <Content Include="Images\SWFUpload\cancelbutton.gif" />
+    <Content Include="Images\SWFUpload\error.gif" />
+    <Content Include="Images\SWFUpload\toobig.gif" />
+    <Content Include="Images\SWFUpload\uploadlimit.gif" />
+    <Content Include="Images\SWFUpload\XPButtonNoText_160x22.png" />
+    <Content Include="Images\SWFUpload\zerobyte.gif" />
+    <Content Include="JS\SWFUpload\handlers.01.07.33.js" />
+    <Content Include="JS\SWFUpload\swfupload.01.07.33.js" />
+    <Content Include="JS\SWFUpload\swfupload.01.07.33.swf" />
+    <Content Include="Rss.ascx" />
+    <Content Include="Search.ascx" />
+    <Content Include="SearchSmall.ascx" />
+    <Content Include="SearchSmallOptions.ascx" />
+    <Content Include="Template.ascx" />
+    <Content Include="Types.ascx" />
+    <Content Include="TypesOptions.ascx" />
+    <Content Include="ViewProperty.ascx" />
+    <Content Include="ViewType.ascx" />
+    <Content Include="Controls\SWFUploader.ashx" />
+    <Content Include="ImageHandlerExt.ashx" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="PropertyAgent.dnn">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PropertyAgentPdf.dnn" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessDenied.ascx.designer.vb">
+      <DependentUpon>AccessDenied.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AccessDenied.ascx.vb">
+      <DependentUpon>AccessDenied.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangeTemplate.ascx.designer.vb">
+      <DependentUpon>ChangeTemplate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeTemplate.ascx.vb">
+      <DependentUpon>ChangeTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommentForm.ascx.designer.vb">
+      <DependentUpon>CommentForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommentForm.ascx.vb">
+      <DependentUpon>CommentForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContactForm.ascx.designer.vb">
+      <DependentUpon>ContactForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ContactForm.ascx.vb">
+      <DependentUpon>ContactForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EditPropertyPhotos.ascx.designer.vb">
+      <DependentUpon>EditPropertyPhotos.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditPropertyPhotos.ascx.vb">
+      <DependentUpon>EditPropertyPhotos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\LinkButtonDefault.vb" />
+    <Compile Include="Controls\Sortable.asmx.vb">
+      <DependentUpon>Sortable.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SWFUploader.ashx.vb">
+      <DependentUpon>SWFUploader.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UploadPhotoStandard.ascx.designer.vb">
+      <DependentUpon>UploadPhotoStandard.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UploadPhotoStandard.ascx.vb">
+      <DependentUpon>UploadPhotoStandard.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\UploadPhotoSWF.ascx.designer.vb">
+      <DependentUpon>UploadPhotoSWF.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UploadPhotoSWF.ascx.vb">
+      <DependentUpon>UploadPhotoSWF.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ApproveReviews.ascx.designer.vb">
+      <DependentUpon>ApproveReviews.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ApproveReviews.ascx.vb">
+      <DependentUpon>ApproveReviews.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditContactField.ascx.designer.vb">
+      <DependentUpon>EditContactField.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditContactField.ascx.vb">
+      <DependentUpon>EditContactField.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditContactFields.ascx.designer.vb">
+      <DependentUpon>EditContactFields.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditContactFields.ascx.vb">
+      <DependentUpon>EditContactFields.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CurrencyConverter.ascx.designer.vb">
+      <DependentUpon>CurrencyConverter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencyConverter.ascx.vb">
+      <DependentUpon>CurrencyConverter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\ContactFields\ContactFieldController.vb" />
+    <Compile Include="Entities\ContactFields\ContactFieldInfo.vb" />
+    <Compile Include="Entities\ContactFields\ContactFieldType.vb" />
+    <Compile Include="Entities\ContactFields\ContactLogController.vb" />
+    <Compile Include="Entities\ContactFields\ContactLogInfo.vb" />
+    <Compile Include="Entities\Mapping\UserGeoLocator.vb" />
+    <Compile Include="Entities\Property\SubscriberController.vb" />
+    <Compile Include="Entities\Social\Journal.vb" />
+    <Compile Include="Entities\SortByTypeSecondary.vb" />
+    <Compile Include="Entities\WebControls\RefreshControl.vb" />
+    <Compile Include="ImageHandlerExt.ashx.vb">
+      <DependentUpon>ImageHandlerExt.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="EditPropertyNotifications.ascx.designer.vb">
+      <DependentUpon>EditPropertyNotifications.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditPropertyNotifications.ascx.vb">
+      <DependentUpon>EditPropertyNotifications.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditExpiryNotifications.ascx.designer.vb">
+      <DependentUpon>EditExpiryNotifications.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditExpiryNotifications.ascx.vb">
+      <DependentUpon>EditExpiryNotifications.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteReview.ascx.designer.vb">
+      <DependentUpon>DeleteReview.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteReview.ascx.vb">
+      <DependentUpon>DeleteReview.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\PhotoType.vb" />
+    <Compile Include="Entities\RedirectType.vb" />
+    <Compile Include="Entities\LatestLayoutType.vb" />
+    <Compile Include="Entities\Reminders\NotificationJob.vb" />
+    <Compile Include="Entities\Reminders\ReminderJob.vb" />
+    <Compile Include="Entities\ReviewFields\ReviewController.vb" />
+    <Compile Include="Entities\ReviewFields\ReviewInfo.vb" />
+    <Compile Include="Entities\ReviewFields\ReviewValueInfo.vb" />
+    <Compile Include="Entities\ShortListController.vb" />
+    <Compile Include="Entities\ShortListInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="PdfRender.ascx.designer.vb">
+      <DependentUpon>PdfRender.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PdfRender.ascx.vb">
+      <DependentUpon>PdfRender.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReviewForm.ascx.designer.vb">
+      <DependentUpon>ReviewForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ReviewForm.ascx.vb">
+      <DependentUpon>ReviewForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditReviewField.ascx.designer.vb">
+      <DependentUpon>EditReviewField.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditReviewField.ascx.vb">
+      <DependentUpon>EditReviewField.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditReviewFields.ascx.designer.vb">
+      <DependentUpon>EditReviewFields.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditReviewFields.ascx.vb">
+      <DependentUpon>EditReviewFields.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\ReviewFields\ReviewFieldController.vb" />
+    <Compile Include="Entities\ReviewFields\ReviewFieldInfo.vb" />
+    <Compile Include="Entities\ReviewFields\ReviewFieldType.vb" />
+    <Compile Include="ShortListForm.ascx.designer.vb">
+      <DependentUpon>ShortListForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ShortListForm.ascx.vb">
+      <DependentUpon>ShortListForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SubscribeForm.ascx.designer.vb">
+      <DependentUpon>SubscribeForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SubscribeForm.ascx.vb">
+      <DependentUpon>SubscribeForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewContactLog.ascx.designer.vb">
+      <DependentUpon>ViewContactLog.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewContactLog.ascx.vb">
+      <DependentUpon>ViewContactLog.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Xml.ascx.designer.vb">
+      <DependentUpon>Xml.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Xml.ascx.vb">
+      <DependentUpon>Xml.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\LandingPageType.vb" />
+    <Compile Include="Entities\PropertyAgentTypesBase.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\Property\PropertySettingsTypes.vb" />
+    <Compile Include="Entities\RssInfo.vb" />
+    <Compile Include="Entities\SendToFriendFieldType.vb" />
+    <Compile Include="Entities\TitleReplacementType.vb" />
+    <Compile Include="Entities\WatermarkPosition.vb" />
+    <Compile Include="Entities\WebControls\PagingControl.vb" />
+    <Compile Include="SendToFriendForm.ascx.designer.vb">
+      <DependentUpon>SendToFriendForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SendToFriendForm.ascx.vb">
+      <DependentUpon>SendToFriendForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CurrencySelector.ascx.designer.vb">
+      <DependentUpon>CurrencySelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CurrencySelector.ascx.vb">
+      <DependentUpon>CurrencySelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.ascx.designer.vb">
+      <DependentUpon>Default.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.ascx.vb">
+      <DependentUpon>Default.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteComment.ascx.designer.vb">
+      <DependentUpon>DeleteComment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteComment.ascx.vb">
+      <DependentUpon>DeleteComment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditBrokers.ascx.designer.vb">
+      <DependentUpon>EditBrokers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditBrokers.ascx.vb">
+      <DependentUpon>EditBrokers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditCustomField.ascx.designer.vb">
+      <DependentUpon>EditCustomField.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditCustomField.ascx.vb">
+      <DependentUpon>EditCustomField.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditCustomFields.ascx.designer.vb">
+      <DependentUpon>EditCustomFields.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditCustomFields.ascx.vb">
+      <DependentUpon>EditCustomFields.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditEmailFiles.ascx.designer.vb">
+      <DependentUpon>EditEmailFiles.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditEmailFiles.ascx.vb">
+      <DependentUpon>EditEmailFiles.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditLayoutFiles.ascx.designer.vb">
+      <DependentUpon>EditLayoutFiles.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditLayoutFiles.ascx.vb">
+      <DependentUpon>EditLayoutFiles.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditLayoutSettings.ascx.designer.vb">
+      <DependentUpon>EditLayoutSettings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditLayoutSettings.ascx.vb">
+      <DependentUpon>EditLayoutSettings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditPermissions.ascx.designer.vb">
+      <DependentUpon>EditPermissions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditPermissions.ascx.vb">
+      <DependentUpon>EditPermissions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditPhotos.ascx.designer.vb">
+      <DependentUpon>EditPhotos.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditPhotos.ascx.vb">
+      <DependentUpon>EditPhotos.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditProperties.ascx.designer.vb">
+      <DependentUpon>EditProperties.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditProperties.ascx.vb">
+      <DependentUpon>EditProperties.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditProperty.ascx.designer.vb">
+      <DependentUpon>EditProperty.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditProperty.ascx.vb">
+      <DependentUpon>EditProperty.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditPropertyType.ascx.designer.vb">
+      <DependentUpon>EditPropertyType.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditPropertyType.ascx.vb">
+      <DependentUpon>EditPropertyType.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditPropertyTypes.ascx.designer.vb">
+      <DependentUpon>EditPropertyTypes.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditPropertyTypes.ascx.vb">
+      <DependentUpon>EditPropertyTypes.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditTemplateDefinition.ascx.designer.vb">
+      <DependentUpon>EditTemplateDefinition.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditTemplateDefinition.ascx.vb">
+      <DependentUpon>EditTemplateDefinition.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditTemplateDefinitions.ascx.designer.vb">
+      <DependentUpon>EditTemplateDefinitions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditTemplateDefinitions.ascx.vb">
+      <DependentUpon>EditTemplateDefinitions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\AgentController.vb" />
+    <Compile Include="Entities\CommentController.vb" />
+    <Compile Include="Entities\CommentFieldType.vb" />
+    <Compile Include="Entities\CommentInfo.vb" />
+    <Compile Include="Entities\Constants.vb" />
+    <Compile Include="Entities\ContactFields\ContactDefaultFieldType.vb" />
+    <Compile Include="Entities\BreadcrumbType.vb" />
+    <Compile Include="Entities\UserFilterType.vb" />
+    <Compile Include="Entities\EuroType.vb" />
+    <Compile Include="Entities\CurrencyType.vb" />
+    <Compile Include="Entities\Mapping\GeocodeInfo.vb" />
+    <Compile Include="Entities\Mapping\Geocoder.vb" />
+    <Compile Include="Entities\Mapping\DistanceType.vb" />
+    <Compile Include="Entities\SearchLayoutMode.vb" />
+    <Compile Include="Entities\FieldElementType.vb" />
+    <Compile Include="Entities\UploadPlacementType.vb" />
+    <Compile Include="Entities\CrumbInfo.vb" />
+    <Compile Include="Entities\CustomFields\CustomFieldController.vb" />
+    <Compile Include="Entities\CustomFields\CustomFieldInfo.vb" />
+    <Compile Include="Entities\CustomFields\CustomFieldType.vb" />
+    <Compile Include="Entities\CustomFields\CustomFieldValidationType.vb" />
+    <Compile Include="Entities\DestinationType.vb" />
+    <Compile Include="Entities\LatestLayoutMode.vb" />
+    <Compile Include="Entities\Layout\LayoutController.vb" />
+    <Compile Include="Entities\Layout\LayoutGroupType.vb" />
+    <Compile Include="Entities\Layout\LayoutInfo.vb" />
+    <Compile Include="Entities\Layout\LayoutTemplate.vb" />
+    <Compile Include="Entities\Layout\LayoutType.vb" />
+    <Compile Include="Entities\PhotoController.vb" />
+    <Compile Include="Entities\PhotoInfo.vb" />
+    <Compile Include="Entities\PropertyAgentBase.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\PropertyAgentControl.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\PropertyAgentLatestBase.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\PropertyAgentSearchBase.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entities\PropertyUtil.vb" />
+    <Compile Include="Entities\Property\PropertyController.vb" />
+    <Compile Include="Entities\Property\PropertyInfo.vb" />
+    <Compile Include="Entities\Property\PropertySettings.vb" />
+    <Compile Include="Entities\Property\PropertySettingsLatest.vb" />
+    <Compile Include="Entities\Property\PropertySettingsSearch.vb" />
+    <Compile Include="Entities\Property\PropertyTypeController.vb" />
+    <Compile Include="Entities\Property\PropertyTypeInfo.vb" />
+    <Compile Include="Entities\Property\PropertyTypeSortByType.vb" />
+    <Compile Include="Entities\Property\PropertyValueController.vb" />
+    <Compile Include="Entities\Property\PropertyValueInfo.vb" />
+    <Compile Include="Entities\RatingController.vb" />
+    <Compile Include="Entities\RatingInfo.vb" />
+    <Compile Include="Entities\ReplyToType.vb" />
+    <Compile Include="Entities\SearchStatusType.vb" />
+    <Compile Include="Entities\SearchType.vb" />
+    <Compile Include="Entities\SortByType.vb" />
+    <Compile Include="Entities\SortDirectionType.vb" />
+    <Compile Include="Entities\StatusType.vb" />
+    <Compile Include="Entities\Templates\TemplateController.vb" />
+    <Compile Include="Entities\Templates\TemplateInfo.vb" />
+    <Compile Include="Entities\Templates\TemplatePortalController.vb" />
+    <Compile Include="Entities\Templates\TemplatePortalInfo.vb" />
+    <Compile Include="Entities\Templates\TemplateWriter.vb" />
+    <Compile Include="Entities\ThumbnailType.vb" />
+    <Compile Include="Entities\UploadType.vb" />
+    <Compile Include="Export.ascx.designer.vb">
+      <DependentUpon>Export.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Export.ascx.vb">
+      <DependentUpon>Export.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExportTemplateDefinition.ascx.designer.vb">
+      <DependentUpon>ExportTemplateDefinition.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ExportTemplateDefinition.ascx.vb">
+      <DependentUpon>ExportTemplateDefinition.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImageHandler.ashx.vb">
+      <DependentUpon>ImageHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ImportTemplateDefinition.ascx.designer.vb">
+      <DependentUpon>ImportTemplateDefinition.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ImportTemplateDefinition.ascx.vb">
+      <DependentUpon>ImportTemplateDefinition.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LandingPage.ascx.designer.vb">
+      <DependentUpon>LandingPage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="LandingPage.ascx.vb">
+      <DependentUpon>LandingPage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Latest.ascx.designer.vb">
+      <DependentUpon>Latest.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Latest.ascx.vb">
+      <DependentUpon>Latest.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LatestOptions.ascx.designer.vb">
+      <DependentUpon>LatestOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="LatestOptions.ascx.vb">
+      <DependentUpon>LatestOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NoTemplate.ascx.designer.vb">
+      <DependentUpon>NoTemplate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="NoTemplate.ascx.vb">
+      <DependentUpon>NoTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Options.ascx.designer.vb">
+      <DependentUpon>Options.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Options.ascx.vb">
+      <DependentUpon>Options.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print.aspx.designer.vb">
+      <DependentUpon>Print.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Print.aspx.vb">
+      <DependentUpon>Print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Providers\DataProviders\DataProvider.vb" />
+    <Compile Include="Rss.ascx.designer.vb">
+      <DependentUpon>Rss.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Rss.ascx.vb">
+      <DependentUpon>Rss.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search.ascx.designer.vb">
+      <DependentUpon>Search.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Search.ascx.vb">
+      <DependentUpon>Search.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchSmall.ascx.designer.vb">
+      <DependentUpon>SearchSmall.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchSmall.ascx.vb">
+      <DependentUpon>SearchSmall.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SearchSmallOptions.ascx.designer.vb">
+      <DependentUpon>SearchSmallOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SearchSmallOptions.ascx.vb">
+      <DependentUpon>SearchSmallOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Template.ascx.designer.vb">
+      <DependentUpon>Template.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Template.ascx.vb">
+      <DependentUpon>Template.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Types.ascx.designer.vb">
+      <DependentUpon>Types.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Types.ascx.vb">
+      <DependentUpon>Types.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TypesOptions.ascx.designer.vb">
+      <DependentUpon>TypesOptions.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="TypesOptions.ascx.vb">
+      <DependentUpon>TypesOptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewProperty.ascx.designer.vb">
+      <DependentUpon>ViewProperty.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProperty.ascx.vb">
+      <DependentUpon>ViewProperty.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewType.ascx.designer.vb">
+      <DependentUpon>ViewType.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewType.ascx.vb">
+      <DependentUpon>ViewType.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60281</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/DotNetNuke620</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/DotNetNuke620/DesktopModules/PropertyAgent</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

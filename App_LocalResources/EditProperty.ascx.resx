@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Main.Text" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="PropertyManager.Text" xml:space="preserve">
+    <value>[PROPERTYLABEL] Manager</value>
+  </data>
+  <data name="EditProperty.Text" xml:space="preserve">
+    <value>Edit [PROPERTYLABEL]</value>
+  </data>
+  <data name="AddNewProperty.Text" xml:space="preserve">
+    <value>Add New [PROPERTYLABEL]</value>
+  </data>
+  <data name="PropertyDetails.Text" xml:space="preserve">
+    <value>[PROPERTYLABEL] Details</value>
+  </data>
+  <data name="PropertyDetailsDescription.Text" xml:space="preserve">
+    <value>Enter the details of your [PROPERTYLABEL] and then click "update".</value>
+  </data>
+  <data name="Type.Text" xml:space="preserve">
+    <value>[PROPERTYTYPELABEL]</value>
+  </data>
+  <data name="Type.Help" xml:space="preserve">
+    <value>Select a [PROPERTYTYPELABEL]</value>
+  </data>
+  <data name="SelectType.Text" xml:space="preserve">
+    <value>&lt;Select [PROPERTYTYPELABEL]&gt;</value>
+  </data>
+  <data name="SelectValue.Text" xml:space="preserve">
+    <value>&lt;Select [VALUE]&gt;</value>
+  </data>
+  <data name="valRequired.Text" xml:space="preserve">
+    <value>&lt;br&gt;Required</value>
+  </data>
+  <data name="valValidateCurrency.Text" xml:space="preserve">
+    <value>&lt;br&gt;Invalid value, must be a currency.</value>
+  </data>
+  <data name="valValidateDate.Text" xml:space="preserve">
+    <value>&lt;br&gt;Invalid value, must be a date.</value>
+  </data>
+  <data name="valValidateNumber.Text" xml:space="preserve">
+    <value>&lt;br&gt;Invalid value, must be a number.</value>
+  </data>
+  <data name="valValidateDecimal.Text" xml:space="preserve">
+    <value>&lt;br&gt;Invalid value, must be a decimal.</value>
+  </data>
+  <data name="PublishDetails.Text" xml:space="preserve">
+    <value>Publishing Details</value>
+  </data>
+  <data name="PublishDetailsDescription.Text" xml:space="preserve">
+    <value>Enter the publishing details of your [PROPERTYLABEL].</value>
+  </data>
+  <data name="plOwner.Text" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="plOwner.Help" xml:space="preserve">
+    <value>Optionally change the owner of the property.</value>
+  </data>
+  <data name="cmdChangeOwner.Text" xml:space="preserve">
+    <value>Change [AGENTLABEL]</value>
+  </data>
+  <data name="CreationDate.Text" xml:space="preserve">
+    <value>Creation Date</value>
+  </data>
+  <data name="CreationDate.Help" xml:space="preserve">
+    <value>Optionally override the creation date.</value>
+  </data>
+  <data name="valCreationDateRequired.ErrorMessage" xml:space="preserve">
+    <value>Creation date is required.</value>
+  </data>
+  <data name="valCreationDate.ErrorMessage" xml:space="preserve">
+    <value>Invalid creation date.</value>
+  </data>
+  <data name="PublishDate.Text" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="PublishDate.Help" xml:space="preserve">
+    <value>Specify a date to begin showing [PROPERTYLABEL].</value>
+  </data>
+  <data name="valPublishDate.ErrorMessage" xml:space="preserve">
+    <value>Invalid publish date.</value>
+  </data>
+  <data name="ExpiryDate.Text" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="ExpiryDate.Help" xml:space="preserve">
+    <value>Specify a date to end showing [PROPERTYLABEL].</value>
+  </data>
+  <data name="valExpiryDate.ErrorMessage" xml:space="preserve">
+    <value>Invalid end date.</value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Status.Help" xml:space="preserve">
+    <value>Check to select the status of the property.</value>
+  </data>
+  <data name="Featured.Text" xml:space="preserve">
+    <value>Featured?</value>
+  </data>
+  <data name="Published.Text" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="Published.Help" xml:space="preserve">
+    <value>Check to mark the [PROPERTYLABEL] as featured.</value>
+  </data>
+  <data name="cmdUpdateEditPhotos.Text" xml:space="preserve">
+    <value>Update &amp; Edit Photos</value>
+  </data>
+  <data name="Confirmation.Text" xml:space="preserve">
+    <value>Are you sure you want to delete this [PROPERTYLABEL]?</value>
+  </data>
+  <data name="To.Text" xml:space="preserve">
+    <value>&amp;nbsp;To:&amp;nbsp;</value>
+  </data>
+  <data name="SelectFrom.Text" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="SelectTo.Text" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="PropertyTypes.Text" xml:space="preserve">
+    <value>[PROPERTYTYPELABEL]:</value>
+  </data>
+  <data name="PropertyTypesHelp.Text" xml:space="preserve">
+    <value>Select a [PROPERTYTYPELABEL] to search on.</value>
+  </data>
+  <data name="Agent.Text" xml:space="preserve">
+    <value>[AGENTLABEL]:</value>
+  </data>
+  <data name="AgentHelp.Text" xml:space="preserve">
+    <value>Select [AGENTLABEL]</value>
+  </data>
+  <data name="Approved.Text" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="Approved.Help" xml:space="preserve">
+    <value>Check to approve the property.</value>
+  </data>
+  <data name="plPublished.Text" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="plPublished.Help" xml:space="preserve">
+    <value>Check to publish the property.</value>
+  </data>
+  <data name="AuthorDetails.Text" xml:space="preserve">
+    <value>Author Details</value>
+  </data>
+  <data name="AuthorDetailsDescription.Text" xml:space="preserve">
+    <value>The author details of your [PROPERTYLABEL].</value>
+  </data>
+  <data name="Username.Text" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Username.Help" xml:space="preserve">
+    <value>The username of the author.</value>
+  </data>
+  <data name="DisplayName.Text" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="DisplayName.Help" xml:space="preserve">
+    <value>The display name of the author.</value>
+  </data>
+  <data name="Email.Text" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Email.Help" xml:space="preserve">
+    <value>The email of the author.</value>
+  </data>
+  <data name="SelectAgent.Text" xml:space="preserve">
+    <value>&lt;Select [AGENTLABEL]&gt;</value>
+  </data>
+  <data name="PropertyAgentsHelp.Text" xml:space="preserve">
+    <value>Select a [AGENTLABEL] to search on.</value>
+  </data>
+  <data name="PropertyAgents.Text" xml:space="preserve">
+    <value>[AGENTLABEL]</value>
+  </data>
+  <data name="valValidateEmail.Text" xml:space="preserve">
+    <value>&lt;br&gt;Invalid value, must be an email address.</value>
+  </data>
+  <data name="Featured.Help" xml:space="preserve">
+    <value>Check to highlight the property as featured.</value>
+  </data>
+  <data name="SelectItem.Text" xml:space="preserve">
+    <value>&lt;Select Value&gt;</value>
+  </data>
+  <data name="Search.Text" xml:space="preserve">
+    <value>Search:</value>
+  </data>
+  <data name="SearchHelp.Text" xml:space="preserve">
+    <value>Enter search keywords.</value>
+  </data>
+  <data name="valFieldCurrency.Text" xml:space="preserve">
+    <value>[CUSTOMFIELD] must be a currency.</value>
+  </data>
+  <data name="valFieldDecimal.Text" xml:space="preserve">
+    <value>[CUSTOMFIELD] must be a decimal.</value>
+  </data>
+  <data name="valFieldEmail.Text" xml:space="preserve">
+    <value>[CUSTOMFIELD] must be an email address.</value>
+  </data>
+  <data name="valFieldNumber.Text" xml:space="preserve">
+    <value>[CUSTOMFIELD] must be a number.</value>
+  </data>
+  <data name="valFieldRequired.Text" xml:space="preserve">
+    <value>[CUSTOMFIELD] is required. </value>
+  </data>
+  <data name="valTypeRequired.Text" xml:space="preserve">
+    <value>[PROPERTYTYPELABEL] is required.</value>
+  </data>
+  <data name="valFieldDate.Text" xml:space="preserve">
+    <value>[CUSTOMFIELD] must be a date.</value>
+  </data>
+  <data name="ShowAll.Text" xml:space="preserve">
+    <value>Show all users</value>
+  </data>
+  <data name="Broker.Text" xml:space="preserve">
+    <value>[BROKERLABEL]:</value>
+  </data>
+  <data name="BrokerHelp.Text" xml:space="preserve">
+    <value>Select a [BROKERLABEL] to search on. </value>
+  </data>
+  <data name="PropertyBrokers.Text" xml:space="preserve">
+    <value>[BROKERLABEL]</value>
+  </data>
+  <data name="PropertyBrokersHelp.Text" xml:space="preserve">
+    <value>Select a [BROKERLABEL] to search on.</value>
+  </data>
+  <data name="SelectBroker.Text" xml:space="preserve">
+    <value>&lt;Select [BROKERLABEL]&gt;</value>
+  </data>
+  <data name="AssignedPhotos.Text" xml:space="preserve">
+    <value>Assigned Photo(s)</value>
+  </data>
+  <data name="AssignedPhotosDescription.Text" xml:space="preserve">
+    <value>Below are the photos assigned to this property</value>
+  </data>
+  <data name="DeletePhoto.Text" xml:space="preserve">
+    <value>Are you sure you want to delete this photo?</value>
+  </data>
+  <data name="SelectPhotos.Text" xml:space="preserve">
+    <value>Select Photos</value>
+  </data>
+  <data name="UploadPhoto.Text" xml:space="preserve">
+    <value>Upload Photo(s)</value>
+  </data>
+  <data name="UploadPhotoDescription.Text" xml:space="preserve">
+    <value>Specify a title, a file to upload and then click "Upload Photo"</value>
+  </data>
+  <data name="UploadPhotoDescription2.Text" xml:space="preserve">
+    <value>Click "Select Photos" to begin uploading photos. Hold down "shift" to select multiple.</value>
+  </data>
+  <data name="NoPhotos.Text" xml:space="preserve">
+    <value>&lt;br&gt;There are no photos currently assigned.</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>SWFUpload has not loaded.  It may take a few moments.  SWFUpload requires JavaScript and Flash Player 8 or later.</value>
+  </data>
+  <data name="FindAddress.Text" xml:space="preserve">
+    <value>Search by address</value>
+  </data>
+  <data name="lblLatitude.Text" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="lblLongitude.Text" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="LocationDetails.Text" xml:space="preserve">
+    <value>Optionally select the location of your property.</value>
+  </data>
+  <data name="valFieldRegex.Text" xml:space="preserve">
+    <value>[CUSTOMFIELD] is an invalid format.</value>
+  </data>
+  <data name="Location.Text" xml:space="preserve">
+    <value>[LOCATIONLABEL]</value>
+  </data>
+  <data name="LocationHelp.Text" xml:space="preserve">
+    <value>Search by [LOCATIONLABEL]</value>
+  </data>
+  <data name="valPropertyTypeSubmission.ErrorMessage" xml:space="preserve">
+    <value>You cannot add a property to this [PROPERTYTYPELABEL].</value>
+  </data>
+  <data name="AttachPhoto.Text" xml:space="preserve">
+    <value>Attach Photo</value>
+  </data>
+  <data name="plExternalUrl.Help" xml:space="preserve">
+    <value>Specify the url of the image.</value>
+  </data>
+  <data name="plExternalUrl.Text" xml:space="preserve">
+    <value>External Url</value>
+  </data>
+  <data name="UploadExternalPhoto.Text" xml:space="preserve">
+    <value>Upload External Photo(s)</value>
+  </data>
+  <data name="UploadExternalPhotoDescription.Text" xml:space="preserve">
+    <value>Specify a url of an image and then click "Attach Photo"</value>
+  </data>
+  <data name="UploadExternalPhotoDescription2.Text" xml:space="preserve">
+    <value>Specify a url of an image and then click "Attach Photo".</value>
+  </data>
+  <data name="plImage.Help" xml:space="preserve">
+    <value>Specify image to upload</value>
+  </data>
+  <data name="plImage.Text" xml:space="preserve">
+    <value>Upload Images</value>
+  </data>
+  <data name="plImageCategories.Help" xml:space="preserve">
+    <value>Optionally, specify an image category.</value>
+  </data>
+  <data name="plImageCategories.Text" xml:space="preserve">
+    <value>Image Category</value>
+  </data>
+  <data name="plImageCategoriesExternal.Help" xml:space="preserve">
+    <value>Optionally, specify an image category.</value>
+  </data>
+  <data name="plImageCategoriesExternal.Text" xml:space="preserve">
+    <value>Image Category</value>
+  </data>
+  <data name="cmdClone.Text" xml:space="preserve">
+    <value>Clone</value>
+  </data>
+  <data name="ConfirmationClone.Text" xml:space="preserve">
+    <value>Are you sure you want to clone this [PROPERTYLABEL]?</value>
+  </data>
+</root>

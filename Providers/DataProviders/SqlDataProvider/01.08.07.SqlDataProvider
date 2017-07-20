@@ -1,0 +1,98 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Comment ADD
+	ParentID int NULL
+GO
+
+ALTER PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CommentAdd 
+	@PropertyID int, 
+	@ParentID int, 
+	@UserID int,
+	@Comment ntext, 
+	@CreateDate datetime,
+	@Name nvarchar(255),
+	@Email nvarchar(255),
+	@Website nvarchar(255) 
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Comment (
+	[PropertyID], 
+	[ParentID], 
+	[UserID],
+	[Comment],
+	[CreateDate],
+	[Name],
+	[Email],
+	[Website]
+) VALUES (
+	@PropertyID, 
+	@ParentID, 
+	@UserID,
+	@Comment,
+	@CreateDate,
+	@Name,
+	@Email,
+	@Website
+)
+
+select SCOPE_IDENTITY()
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property  
+SET CommentCount = (select count(CommentID) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Comment c where c.PropertyID = dbo.Ventrian_PropertyAgent_Property.PropertyID)
+WHERE PropertyID = @PropertyID
+GO
+
+ALTER PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CommentList 
+	@PropertyID int
+AS
+
+;WITH Heirarchy
+AS
+(
+    SELECT TOP 1000 
+        c.CommentID,
+		c.ParentID,
+        1 AS 'nLevel', 
+		ROW_NUMBER() OVER (ORDER BY c.CreateDate) AS 'Family'  
+    FROM
+        {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Comment c
+	WHERE
+		c.ParentID IS NULL AND c.PropertyID = @PropertyID
+
+    UNION ALL
+
+    SELECT 
+        c.CommentID,
+		c.ParentID,
+		TH.nLevel+1 AS 'nLevel', 
+		Family  
+    FROM
+        {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Comment c
+			INNER JOIN Heirarchy TH ON TH.CommentID = c.ParentID
+	WHERE
+		c.PropertyID = @PropertyID 
+)
+SELECT 
+	c.CommentID,
+	c.PropertyID,
+	c.UserID,
+	c.Comment,
+	c.CreateDate,
+	CASE c.UserID
+        	WHEN -1 THEN c.Email
+         	ELSE u.Email
+      	END as 'Email',
+	CASE c.UserID
+        	WHEN -1 THEN c.Name
+         	ELSE u.DisplayName
+      	END as 'Name',
+	c.Website,
+	c.ParentID, 
+	u.Username,
+	r.Rating
+FROM 
+	Heirarchy h INNER JOIN 
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Comment c ON h.CommentID = c.CommentID LEFT OUTER JOIN 
+		{databaseOwner}{objectQualifier}Users u ON c.UserID = u.UserID LEFT OUTER JOIN 
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Rating r ON c.CommentID = r.CommentID AND c.PropertyID = r.PropertyID
+ORDER BY Family, nLevel
+GO
+

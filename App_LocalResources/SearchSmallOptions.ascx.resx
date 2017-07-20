@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SelectModule.Text" xml:space="preserve">
+    <value>&lt;Select Module&gt;</value>
+  </data>
+  <data name="Module.Text" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="Module.Help" xml:space="preserve">
+    <value>Select the property agent module to link to.</value>
+  </data>
+  <data name="plWidth.Text" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="plWidth.Help" xml:space="preserve">
+    <value>The width of controls to display.</value>
+  </data>
+  <data name="valWidth.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Width is required.</value>
+  </data>
+  <data name="valWidthIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Width must be a number.</value>
+  </data>
+  <data name="plRadioButtonItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row (Radio Button)</value>
+  </data>
+  <data name="plRadioButtonItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of radio buttons to display per row.</value>
+  </data>
+  <data name="valRadioButtonItemsPerRow.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row (Radio Button) is required.</value>
+  </data>
+  <data name="valRadioButtonItemsPerRowIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row (Radio Button) must be a number.</value>
+  </data>
+  <data name="plCheckBoxListItemsPerRow.Text" xml:space="preserve">
+    <value>Items Per Row (Checkbox)</value>
+  </data>
+  <data name="plCheckBoxListItemsPerRow.Help" xml:space="preserve">
+    <value>Enter the number of checkbox's to display per row.</value>
+  </data>
+  <data name="valCheckBoxListItemsPerRow.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row (Checkbox) is required.</value>
+  </data>
+  <data name="valCheckBoxListItemsPerRowIsNumber.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Items Per Row (Checkbox) must be a number.</value>
+  </data>
+  <data name="ControlTitle_settings.Text" xml:space="preserve">
+    <value>Property Agent Search Settings</value>
+  </data>
+  <data name="plSearchTypes.Text" xml:space="preserve">
+    <value>Search Types</value>
+  </data>
+  <data name="plSearchTypes.Help" xml:space="preserve">
+    <value>Select to search types.</value>
+  </data>
+  <data name="plCustomFields.Text" xml:space="preserve">
+    <value>Custom Fields</value>
+  </data>
+  <data name="plCustomFields.Help" xml:space="preserve">
+    <value>Select the custom fields to display.</value>
+  </data>
+  <data name="ModuleHelp.Text" xml:space="preserve">
+    <value>&lt;h1&gt;Property Agent&lt;/h1&gt;&lt;p&gt;This module allows users to manage properties.&lt;/p&gt;</value>
+  </data>
+  <data name="plSearchAgents.Help" xml:space="preserve">
+    <value>Check to search by agent.</value>
+  </data>
+  <data name="plSearchAgents.Text" xml:space="preserve">
+    <value>Search Agents</value>
+  </data>
+  <data name="plSearchWildcard.Help" xml:space="preserve">
+    <value>Adds a single textbox that will search all custom fields.</value>
+  </data>
+  <data name="plSearchWildcard.Text" xml:space="preserve">
+    <value>Search Wildcard</value>
+  </data>
+  <data name="FormSettings.Text" xml:space="preserve">
+    <value>Form Settings</value>
+  </data>
+  <data name="FormSettingsDescription.Text" xml:space="preserve">
+    <value>Customize the layout of form fields displayed.</value>
+  </data>
+  <data name="plSplitRange.Help" xml:space="preserve">
+    <value>Check to split the 'from' and 'to' for ranges with a break.</value>
+  </data>
+  <data name="plSplitRange.Text" xml:space="preserve">
+    <value>Split Range</value>
+  </data>
+  <data name="plSearchStyle.Help" xml:space="preserve">
+    <value>Customize the css class of the search link.</value>
+  </data>
+  <data name="plSearchStyle.Text" xml:space="preserve">
+    <value>Search Style</value>
+  </data>
+  <data name="valSearchStyle.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;Search Style Is Required.</value>
+  </data>
+  <data name="plHideHelpIcon.Help" xml:space="preserve">
+    <value>Check to hide the help icon.</value>
+  </data>
+  <data name="plHideHelpIcon.Text" xml:space="preserve">
+    <value>Hide Help Icon</value>
+  </data>
+  <data name="plSearchBrokers.Help" xml:space="preserve">
+    <value>Check to search by broker.</value>
+  </data>
+  <data name="plSearchBrokers.Text" xml:space="preserve">
+    <value>Search Brokers</value>
+  </data>
+  <data name="CustomLayout.Text" xml:space="preserve">
+    <value>Custom Layout</value>
+  </data>
+  <data name="plSearchItem.Text" xml:space="preserve">
+    <value>Search Layout</value>
+  </data>
+  <data name="StandardLayout.Text" xml:space="preserve">
+    <value>Standard Layout</value>
+  </data>
+  <data name="plSearchLocation.Help" xml:space="preserve">
+    <value>Check to searc by location (used for distance sorting).</value>
+  </data>
+  <data name="plSearchLocation.Text" xml:space="preserve">
+    <value>Search Location</value>
+  </data>
+  <data name="Ascending.Text" xml:space="preserve">
+    <value>Ascending</value>
+  </data>
+  <data name="Comments.Text" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Descending.Text" xml:space="preserve">
+    <value>Descending</value>
+  </data>
+  <data name="Distance.Text" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="Hits.Text" xml:space="preserve">
+    <value>Hits</value>
+  </data>
+  <data name="Modified.Text" xml:space="preserve">
+    <value>Modified</value>
+  </data>
+  <data name="NotSpecified.Text" xml:space="preserve">
+    <value>Not Specified</value>
+  </data>
+  <data name="plSortBy.Help" xml:space="preserve">
+    <value>Optionally select a default sort order.</value>
+  </data>
+  <data name="plSortBy.Text" xml:space="preserve">
+    <value>Sort By</value>
+  </data>
+  <data name="plSortDirection.Help" xml:space="preserve">
+    <value>Optionally select a default sort order.</value>
+  </data>
+  <data name="plSortDirection.Text" xml:space="preserve">
+    <value>Sort Direction</value>
+  </data>
+  <data name="Published.Text" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="Random.Text" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="Rating.Text" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="Type.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Hits1Year.Text" xml:space="preserve">
+    <value>Hits (Last Year)</value>
+  </data>
+  <data name="Hits30Days.Text" xml:space="preserve">
+    <value>Hits (Last 30 Days)</value>
+  </data>
+  <data name="Hits7Days.Text" xml:space="preserve">
+    <value>Hits (Last 7 Days)</value>
+  </data>
+  <data name="plHideZero.Help" xml:space="preserve">
+    <value>Check to hide types with a 0 count.</value>
+  </data>
+  <data name="plHideZero.Text" xml:space="preserve">
+    <value>Hide 0 Count Types</value>
+  </data>
+  <data name="plHideTypeCount.Help" xml:space="preserve">
+    <value>Check to hide the type count.</value>
+  </data>
+  <data name="plHideTypeCount.Text" xml:space="preserve">
+    <value>Hide Type Count</value>
+  </data>
+</root>

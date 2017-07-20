@@ -1,0 +1,31 @@
+   <script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js"
+      type="text/javascript"></script>
+	    <style type="text/css">
+    @import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+
+    #feedControl { 
+      margin-top : 20px;
+      margin-left: auto;
+      margin-right: auto;
+      width : 440px;
+      font-size: 16px;
+      color: #9CADD0;
+    }
+  </style>
+
+  <script type="text/javascript">
+    function load() {
+      var feed ="[CUSTOM:RSS]";
+      new GFdynamicFeedControl(feed, "site_rss");
+
+    }
+    google.load("feeds", "1");
+    google.setOnLoadCallback(load);
+  </script>
+<div id="view-page">
+<div id="site_name">[CAPTION:NAME]: <a href="[CUSTOM:URL]" title="[CUSTOM:NAME]">[CUSTOM:NAME]</a></div>
+<div id="site_title">[CAPTION:TITLE]: [CUSTOM:TITLE]</div>
+<div id="site_descrition">[CAPTION:description]: [CUSTOM:DESCRIPTION]</div>
+<br/>
+<div id="site_rss">טוען.....</div>
+</div>

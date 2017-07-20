@@ -1,0 +1,278 @@
+﻿/**
+ * jQuery lightBox plugin
+ * This jQuery plugin was inspired and based on Lightbox 2 by Lokesh Dhakar (http://www.huddletogether.com/projects/lightbox2/)
+ * and adapted to me for use like a plugin from jQuery.
+ * @name jquery-lightbox-0.4.css
+ * @author Leandro Vieira Pinho - http://leandrovieira.com
+ * @version 0.4
+ * @date November 17, 2007
+ * @category jQuery plugin
+ * @copyright (c) 2007 Leandro Vieira Pinho (leandrovieira.com)
+ * @license CC Attribution-No Derivative Works 2.5 Brazil - http://creativecommons.org/licenses/by-nd/2.5/br/deed.en_US
+ * @example Visit http://leandrovieira.com/projects/jquery/lightbox/ for more informations about this jQuery plugin
+ */
+#jquery-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 3000;
+	width: 100%;
+	height: 500px;
+}
+#jquery-lightbox {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 5000;
+	text-align: center;
+	line-height: 0;
+}
+#jquery-lightbox a img { border: none; }
+#lightbox-container-image-box {
+	position: relative;
+	background-color: #fff;
+	width: 250px;
+	height: 250px;
+	margin: 0 auto;
+}
+#lightbox-container-image { padding: 10px; }
+#lightbox-loading {
+	position: absolute;
+	top: 40%;
+	left: 0%;
+	height: 25%;
+	width: 100%;
+	text-align: center;
+	line-height: 0;
+}
+
+#lightbox-container-image-data-box {
+	background-color: #fff;
+	margin:0pt auto;
+	overflow: auto;
+	font-family:Verdana,Helvetica,sans-serif;
+	font-size:10px;
+	font-size-adjust:none;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:1.4em;
+}
+
+#lightbox-container-image-data {
+	padding: 0 10px; 
+}
+
+#lightbox-container-image-details {
+	float:left;
+	text-align:left;
+	width:70%;
+}
+
+#lightbox-container-image-details-caption
+{
+	font-weight: bold;
+}
+
+#lightbox-container-image-details-currentNumber 
+{
+	clear:left;
+	display:block;
+}
+
+#lightbox-container-image-details-currentNumber a, lightbox-container-image-details-currentNumber a:hover
+{
+	border-bottom:medium none;
+	color:#151410;
+	text-decoration:underline;
+}
+
+#lightbox-container-image-details-nav {
+	clear:left;
+	display:block;
+	padding:0pt 0pt 10px;
+}
+
+#lightbox-container-image-details-nav a, #lightbox-container-image-details-nav a:hover {
+	border-bottom:medium none;
+	color:#151410;
+	text-decoration:underline;
+}
+
+#lightbox-container-image-details-nav-btnPrev
+{
+	margin:0pt 8px 0pt 0pt;
+}
+	
+#lightbox-image-details-close-btnClose {
+	float: right;
+}
+
+#lightbox-image-details-close a, #lightbox-image-details-close a:hover {
+	border-bottom:medium none;
+	color:#151410;
+	text-decoration:underline;
+}
+
+/* Ratings */
+
+.pa-star-rating,
+.pa-star-rating a:hover,
+.pa-star-rating a:active,
+.pa-star-rating a:focus,
+.pa-star-rating .pa-current-rating{
+	background: url(images/rating/star.gif) left -1000px repeat-x;
+}
+.pa-star-rating{
+	position:relative;
+	width:125px;
+	height:25px;
+	overflow:hidden;
+	list-style:none;
+	margin:0;
+	padding:0;
+	background-position: left top;
+}
+.pa-star-rating li{
+	display: inline;
+}
+.pa-star-rating a, 
+.pa-current-rating{
+	position:absolute;
+	top:0;
+	left:0;
+	text-indent:-1000em;
+	height:25px;
+	line-height:25px;
+	outline:none;
+	overflow:hidden;
+	border: none;
+}
+.pa-star-rating a:hover,
+.pa-star-rating a:active,
+.pa-star-rating a:focus{
+	background-position: left bottom;
+}
+.pa-star-rating a.pa-one-star{
+	width:20%;
+	z-index:6;
+}
+.pa-star-rating a.pa-two-stars{
+	width:40%;
+	z-index:5;
+}
+.pa-star-rating a.pa-three-stars{
+	width:60%;
+	z-index:4;
+}
+.pa-star-rating a.pa-four-stars{
+	width:80%;
+	z-index:3;
+}
+.pa-star-rating a.pa-five-stars{
+	width:100%;
+	z-index:2;
+}
+.pa-star-rating .pa-current-rating{
+	z-index:1;
+	background-position: left center;
+}	
+
+.pa-has-rated .pa-current-rating {
+display:inline;
+} 
+
+.pa-has-rated li a {
+display:none;
+}
+
+
+/* Uploader Styles */
+
+.pa_photolist li
+{
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.progressWrapper 
+{
+	width: 357px;
+	overflow: hidden;
+	background-color: #000;
+}
+
+.progressContainer {
+	margin: 1px;
+	padding: 4px;
+	
+	border: solid 1px #E8E8E8;
+	background-color: #F7F7F7;
+	
+	overflow: hidden;
+}
+
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+	font-size: 0px;
+	width: 0%;
+	height: 2px;
+	background-color: blue;
+	text-align: left;
+	margin-top: 2px;
+	float: left;
+}
+.progressBarComplete {
+	width: 100%;
+	background-color: green;
+	visibility: hidden;
+}
+.progressBarError {
+	width: 100%;
+	background-color: red;
+	visibility: hidden;
+}
+.progressBarStatus {
+	margin-top: 2px;
+	text-align: left;
+	white-space: nowrap;
+}
+a.progressCancel,
+a.progressCancel:link,
+a.progressCancel:active,
+a.progressCancel:visited,
+a.progressCancel:hover
+{
+	font-size: 0px;
+	display: block;
+	height: 14px;
+	width: 14px;
+	
+	background-image: url(images/SWFUpload/cancelbutton.gif);
+	background-repeat: no-repeat;
+	background-position: -14px 0px;
+	float: right;
+}
+a.progressCancel:hover 
+{
+	background-position: 0px 0px;
+}
+
+.sortablePhoto
+{
+    width: 600px;
+}
+
+.sortablePhoto li
+{
+    display: inline;
+    float: left;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    cursor: pointer; /*This is what you want*/
+    * cursor: hand;
+}

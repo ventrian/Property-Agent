@@ -1,0 +1,1103 @@
+<PropertyAgent version="1.0" type="Template">
+  <Name>Find An Attorney</Name>
+  <Description>A template for managing Attorneys.</Description>
+  <CustomFields>
+    <CustomField>
+      <Name>FirmName</Name>
+      <Caption>Firm Name</Caption>
+      <CaptionHelp>Name of Firm</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>True</Featured>
+      <Listing>True</Listing>
+      <Manager>True</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>PracticeAreas</Name>
+      <Caption>Area of Law</Caption>
+      <CaptionHelp>Select a practice area.</CaptionHelp>
+      <FieldType>DropDownList</FieldType>
+      <FieldElements>Banking Law|Bankruptcy Law|Commercial Law|Construction Law|Contracts|Criminal Law|Education Law|Entertainment and Sports Law|Environmental Law|Family Law|Immigration Law|Insurance Law|Intellectual Property|Labor and Employment Law|Personal Injury|Real Estate Law|Tax Law|Traffic Tickets|Trusts and Estates|Wills and Probate Law</FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>True</Searchable>
+      <SearchType>Multiple</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>True</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>StreetAddress</Name>
+      <Caption>Street Address</Caption>
+      <CaptionHelp>Enter the Street Address (eg 1 Main Street) </CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>True</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>UnitNumber</Name>
+      <Caption>Unit #: </Caption>
+      <CaptionHelp>Enter the Unit # or Suite # </CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>False</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>County</Name>
+      <Caption>County</Caption>
+      <CaptionHelp>Enter the County </CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>True</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>False</Featured>
+      <Listing>False</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>City</Name>
+      <Caption>City</Caption>
+      <CaptionHelp>Enter the City </CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>True</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>PostalCode</Name>
+      <Caption>Postal Code</Caption>
+      <CaptionHelp>Enter a Zip Code </CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>Integer</ValidationType>
+      <Searchable>True</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>True</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>AreaCode</Name>
+      <Caption>Area Code</Caption>
+      <CaptionHelp>Enter A Area Code</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>Integer</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>True</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>Telephone</Name>
+      <Caption>Telephone</Caption>
+      <CaptionHelp>Enter Telephone Number</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>AreaCodeFax</Name>
+      <Caption>Fax Area Code</Caption>
+      <CaptionHelp>Fax Area Code</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>False</Required>
+      <ValidationType>Integer</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>False</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>FaxNumber</Name>
+      <Caption>Fax Number</Caption>
+      <CaptionHelp>Enter Fax Number</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>False</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>FirstName</Name>
+      <Caption>First Name</Caption>
+      <CaptionHelp>Enter your name</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>False</Listing>
+      <Manager>True</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>LastName</Name>
+      <Caption>Last Name</Caption>
+      <CaptionHelp>Enter your Last Name</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>False</Featured>
+      <Listing>False</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>LawSchool</Name>
+      <Caption>Law School</Caption>
+      <CaptionHelp>Name of Law School</CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>False</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>True</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>True</Sortable>
+      <Featured>False</Featured>
+      <Listing>False</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>Website</Name>
+      <Caption>Website</Caption>
+      <CaptionHelp>Enter your Website Address </CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>False</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>IMID</Name>
+      <Caption>Instant Messenger ID</Caption>
+      <CaptionHelp>Enter your Instant Messenger (Yahoo, AOL, MSN etc) ID </CaptionHelp>
+      <FieldType>OneLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>False</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>False</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>PaymentAccepted</Name>
+      <Caption>Payments Accepted</Caption>
+      <CaptionHelp>Type of Payments Accepted</CaptionHelp>
+      <FieldType>MultiCheckBox</FieldType>
+      <FieldElements>Cash|Credit Cards|Check|Contingent Fee</FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>True</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>Languages</Name>
+      <Caption>Languages</Caption>
+      <CaptionHelp>I speak these languages.</CaptionHelp>
+      <FieldType>MultiCheckBox</FieldType>
+      <FieldElements>English|French|German|Italiano|Spanish</FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>True</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>False</Featured>
+      <Listing>True</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>BriefDescription</Name>
+      <Caption>Brief Description</Caption>
+      <CaptionHelp>Type a brief description max length is 225 characters. </CaptionHelp>
+      <FieldType>MultiLineTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>True</Featured>
+      <Listing>True</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+    <CustomField>
+      <Name>DetailedDescription</Name>
+      <Caption>Detailed Description</Caption>
+      <CaptionHelp>Type a detailed description about the case.</CaptionHelp>
+      <FieldType>RichTextBox</FieldType>
+      <FieldElements>
+      </FieldElements>
+      <DefaultValue>
+      </DefaultValue>
+      <Length>-1</Length>
+      <Required>True</Required>
+      <ValidationType>None</ValidationType>
+      <Searchable>False</Searchable>
+      <SearchType>Default</SearchType>
+      <FieldElementsFrom>
+      </FieldElementsFrom>
+      <FieldElementsTo>
+      </FieldElementsTo>
+      <Sortable>False</Sortable>
+      <Featured>True</Featured>
+      <Listing>False</Listing>
+      <Manager>False</Manager>
+      <CaptionHidden>False</CaptionHidden>
+      <Hidden>False</Hidden>
+      <LockDown>False</LockDown>
+    </CustomField>
+  </CustomFields>
+  <Settings>
+    <Setting>
+      <Name>LargeWidth</Name>
+      <Value>700</Value>
+    </Setting>
+    <Setting>
+      <Name>ImagesHighQuality</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>ListingSortFields</Name>
+      <Value>Modified,Published,Hits,CustomField,Random,Type</Value>
+    </Setting>
+    <Setting>
+      <Name>ImagesEnabled</Name>
+      <Value>True</Value>
+    </Setting>
+    <Setting>
+      <Name>TypesItemsPerRow</Name>
+      <Value>4</Value>
+    </Setting>
+    <Setting>
+      <Name>FeaturedSortDirection</Name>
+      <Value>Descending</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionLimit</Name>
+      <Value>
+      </Value>
+    </Setting>
+    <Setting>
+      <Name>ListingSortBy</Name>
+      <Value>Modified</Value>
+    </Setting>
+    <Setting>
+      <Name>TypesEnabled</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyManagerSortBy</Name>
+      <Value>Modified</Value>
+    </Setting>
+    <Setting>
+      <Name>CheckBoxItemsPerRow</Name>
+      <Value>6</Value>
+    </Setting>
+    <Setting>
+      <Name>ImagesItemsPerRow</Name>
+      <Value>2</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionViewDetail</Name>
+      <Value>Administrators;Unauthenticated Users</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionAddImages</Name>
+      <Value>Administrators</Value>
+    </Setting>
+    <Setting>
+      <Name>TypesSortBy</Name>
+      <Value>Standard</Value>
+    </Setting>
+    <Setting>
+      <Name>FeaturedEnabled</Name>
+      <Value>True</Value>
+    </Setting>
+    <Setting>
+      <Name>LockDownPropertyType</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionAutoApprove</Name>
+      <Value>Administrators</Value>
+    </Setting>
+    <Setting>
+      <Name>ListingItemsPerPage</Name>
+      <Value>10</Value>
+    </Setting>
+    <Setting>
+      <Name>Template</Name>
+      <Value>FindAnAttorney</Value>
+    </Setting>
+    <Setting>
+      <Name>MediumHeight</Name>
+      <Value>240</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionFeature</Name>
+      <Value>Administrators</Value>
+    </Setting>
+    <Setting>
+      <Name>LockDownFeatured</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>FeaturedSortBy</Name>
+      <Value>Published</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyManagerHidePublishingDetails</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>FeaturedMaxNumber</Name>
+      <Value>4</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyPluralLabel</Name>
+      <Value>Profiles</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyManagerHideAuthorDetails</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>LockDownPropertyDates</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>ContactMessageLines</Name>
+      <Value>5</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyTypeLabel</Name>
+      <Value>Directory</Value>
+    </Setting>
+    <Setting>
+      <Name>CommentWidth</Name>
+      <Value>350</Value>
+    </Setting>
+    <Setting>
+      <Name>ListingItemsPerRow</Name>
+      <Value>1</Value>
+    </Setting>
+    <Setting>
+      <Name>ListingBubbleFeatured</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>ListingUserSortable</Name>
+      <Value>True</Value>
+    </Setting>
+    <Setting>
+      <Name>MainLabel</Name>
+      <Value>Attorney Directory</Value>
+    </Setting>
+    <Setting>
+      <Name>TypesRepeatDirection</Name>
+      <Value>Horizontal</Value>
+    </Setting>
+    <Setting>
+      <Name>ListingSortDirection</Name>
+      <Value>Descending</Value>
+    </Setting>
+    <Setting>
+      <Name>ContactWidth</Name>
+      <Value>350</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyManagerSortByCustomField</Name>
+      <Value>-1</Value>
+    </Setting>
+    <Setting>
+      <Name>ContactHideEmail</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyLabel</Name>
+      <Value>Profile</Value>
+    </Setting>
+    <Setting>
+      <Name>FeaturedSortByCustomField</Name>
+      <Value>-1</Value>
+    </Setting>
+    <Setting>
+      <Name>FeaturedItemsPerRow</Name>
+      <Value>2</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyManagerItemsPerPage</Name>
+      <Value>25</Value>
+    </Setting>
+    <Setting>
+      <Name>MediumWidth</Name>
+      <Value>320</Value>
+    </Setting>
+    <Setting>
+      <Name>SearchEnabled</Name>
+      <Value>True</Value>
+    </Setting>
+    <Setting>
+      <Name>ContactHidePhone</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionLockDown</Name>
+      <Value>;Administrators</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionDetailUrl</Name>
+      <Value>
+      </Value>
+    </Setting>
+    <Setting>
+      <Name>ContactBCC</Name>
+      <Value>
+      </Value>
+    </Setting>
+    <Setting>
+      <Name>SmallWidth</Name>
+      <Value>95</Value>
+    </Setting>
+    <Setting>
+      <Name>RadioButtonItemsPerRow</Name>
+      <Value>6</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionSubscribe</Name>
+      <Value>Administrators</Value>
+    </Setting>
+    <Setting>
+      <Name>SearchWidth</Name>
+      <Value>300</Value>
+    </Setting>
+    <Setting>
+      <Name>ListingSortByCustomField</Name>
+      <Value>-1</Value>
+    </Setting>
+    <Setting>
+      <Name>SearchTypes</Name>
+      <Value>True</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionSubmit</Name>
+      <Value>Administrators</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionApprove</Name>
+      <Value>Administrators</Value>
+    </Setting>
+    <Setting>
+      <Name>SearchAgents</Name>
+      <Value>False</Value>
+    </Setting>
+    <Setting>
+      <Name>SmallHeight</Name>
+      <Value>70</Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyTypePluralLabel</Name>
+      <Value>Directories</Value>
+    </Setting>
+    <Setting>
+      <Name>LargeHeight</Name>
+      <Value>475</Value>
+    </Setting>
+    <Setting>
+      <Name>PermissionAddImagesLimit</Name>
+      <Value>
+      </Value>
+    </Setting>
+    <Setting>
+      <Name>PropertyManagerSortDirection</Name>
+      <Value>Ascending</Value>
+    </Setting>
+  </Settings>
+  <PropertyTypes>
+    <PropertyType>
+      <Name>Alabama</Name>
+      <Description>Attorney Directory Alabama</Description>
+      <SortOrder>0</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Alaska</Name>
+      <Description>Attorney Directory Alaska</Description>
+      <SortOrder>1</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Arizona</Name>
+      <Description>Attorney Directory Arizona</Description>
+      <SortOrder>2</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Arkansas</Name>
+      <Description>Attorney Directory Arkansas</Description>
+      <SortOrder>3</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>California</Name>
+      <Description>Attorney Directory California</Description>
+      <SortOrder>4</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Colorado</Name>
+      <Description>Attorney Directory Colorado</Description>
+      <SortOrder>5</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Connecticut</Name>
+      <Description>Attorney Directory Connecticut</Description>
+      <SortOrder>6</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Delaware</Name>
+      <Description>Attorney Directory Delaware</Description>
+      <SortOrder>7</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>D.C.</Name>
+      <Description>Attorney Directory District of Columbia</Description>
+      <SortOrder>8</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Florida</Name>
+      <Description>Attorney Directory Florida</Description>
+      <SortOrder>9</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Georgia</Name>
+      <Description>Attorney Directory Georgia</Description>
+      <SortOrder>10</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Hawaii</Name>
+      <Description>Attorney Directory Hawaii</Description>
+      <SortOrder>11</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Idaho</Name>
+      <Description>Attorney Directory Idaho</Description>
+      <SortOrder>12</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Illinois</Name>
+      <Description>Attorney Directory Illinois</Description>
+      <SortOrder>13</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Indiana</Name>
+      <Description>Attorney Directory Indiana</Description>
+      <SortOrder>14</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Iowa</Name>
+      <Description>Attorney Directory Iowa</Description>
+      <SortOrder>15</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Kansas</Name>
+      <Description>Attorney Directory Kansas</Description>
+      <SortOrder>16</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Kentucky</Name>
+      <Description>Attorney Directory Kentucky</Description>
+      <SortOrder>17</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Louisiana</Name>
+      <Description>Attorney Directory Louisiana</Description>
+      <SortOrder>18</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Maine</Name>
+      <Description>Attorney Directory Maine</Description>
+      <SortOrder>19</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Maryland</Name>
+      <Description>Attorney Directory Maryland</Description>
+      <SortOrder>20</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Massachusetts</Name>
+      <Description>Attorney Directory Massachusetts</Description>
+      <SortOrder>21</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Michigan</Name>
+      <Description>Attorney Directory Michigan</Description>
+      <SortOrder>22</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Minnesota</Name>
+      <Description>Attorney Directory Minnesota</Description>
+      <SortOrder>23</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Mississippi</Name>
+      <Description>Attorney Directory Mississippi</Description>
+      <SortOrder>24</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Missouri</Name>
+      <Description>Attorney Directory Missouri</Description>
+      <SortOrder>25</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Montana</Name>
+      <Description>Attorney Directory Montana</Description>
+      <SortOrder>26</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Nebraska</Name>
+      <Description>Attorney Directory Nebraska</Description>
+      <SortOrder>27</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Nevada</Name>
+      <Description>Attorney Directory Nevada</Description>
+      <SortOrder>28</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>New Hampshire</Name>
+      <Description>Attorney Directory New Hampshire</Description>
+      <SortOrder>29</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>New Jersey</Name>
+      <Description>Attorney Directory New Jersey</Description>
+      <SortOrder>30</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>New Mexico</Name>
+      <Description>Attorney Directory New Mexico</Description>
+      <SortOrder>31</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>New York</Name>
+      <Description>Attorney Directory New York</Description>
+      <SortOrder>32</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>North Carolina</Name>
+      <Description>Attorney Directory North Carolina</Description>
+      <SortOrder>33</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>North Dakota</Name>
+      <Description>Attorney Directory North Dakota</Description>
+      <SortOrder>34</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Ohio</Name>
+      <Description>Attorney Directory Ohio</Description>
+      <SortOrder>35</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Oklahoma</Name>
+      <Description>Attorney Directory Oklahoma</Description>
+      <SortOrder>36</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Oregon</Name>
+      <Description>Attorney Directory Oregon</Description>
+      <SortOrder>37</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Pennsylvania</Name>
+      <Description>Attorney Directory Pennsylvania</Description>
+      <SortOrder>38</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Puerto Rico</Name>
+      <Description>Attorney Directory Puerto Rico</Description>
+      <SortOrder>39</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Rhode Island</Name>
+      <Description>Attorney Directory Rhode Island</Description>
+      <SortOrder>40</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>South Carolina</Name>
+      <Description>Attorney Directory South Carolina</Description>
+      <SortOrder>41</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>South Dakota</Name>
+      <Description>Attorney Directory South Dakota</Description>
+      <SortOrder>42</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Tennessee</Name>
+      <Description>Attorney Directory Tennessee</Description>
+      <SortOrder>43</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Texas</Name>
+      <Description>Attorney Directory Texas</Description>
+      <SortOrder>44</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Utah</Name>
+      <Description>Attorney Directory Utah</Description>
+      <SortOrder>45</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Vermont</Name>
+      <Description>Attorney Directory Vermont</Description>
+      <SortOrder>46</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Virginia</Name>
+      <Description>Attorney Directory Virginia</Description>
+      <SortOrder>47</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Washington</Name>
+      <Description>Attorney Directory Washington</Description>
+      <SortOrder>48</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>West Virginia</Name>
+      <Description>Attorney Directory West Virginia</Description>
+      <SortOrder>49</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Wisconsin</Name>
+      <Description>Attorney Directory Wisconsin</Description>
+      <SortOrder>50</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+    <PropertyType>
+      <Name>Wyoming</Name>
+      <Description>Attorney Directory Wyoming</Description>
+      <SortOrder>51</SortOrder>
+      <PropertyTypes />
+    </PropertyType>
+  </PropertyTypes>
+</PropertyAgent>

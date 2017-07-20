@@ -1,0 +1,15 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldDelete
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldDelete
+	@CustomFieldID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[CustomFieldID] = @CustomFieldID
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO

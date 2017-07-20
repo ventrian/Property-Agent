@@ -1,0 +1,53 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactLog ADD
+	PropertyID int NULL
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactLogAdd 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactLogAdd 
+	@ModuleID	int,
+	@DateSent	datetime,
+	@SentTo		nvarchar(255),
+	@SentFrom	nvarchar(255),
+	@Subject	nvarchar(2000),
+	@Body		ntext,
+	@FieldValues ntext,
+	@PropertyID int 
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactLog (
+	[ModuleID],
+	[DateSent],
+	[SentTo],
+	[SentFrom],
+	[Subject],
+	[Body],
+	[FieldValues],
+	[PropertyID]   
+) VALUES (
+	@ModuleID,
+	@DateSent,
+	@SentTo,
+	@SentFrom,
+	@Subject,
+	@Body,
+	@FieldValues,
+	@PropertyID  
+) 
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactLogList 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactLogList 
+	@ModuleID	int,
+	@DateBegin	datetime,
+	@DateEnd	datetime
+AS
+
+SELECT     ModuleID, DateSent, SentTo, SentFrom, Subject, Body, FieldValues, PropertyID  
+FROM         {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactLog
+WHERE DateSent BETWEEN @DateBegin and @DateEnd
+ORDER BY DateSent DESC
+GO

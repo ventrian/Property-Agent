@@ -1,0 +1,279 @@
+/* Standard Styles */
+/* Photo Styles */
+
+.photo_198 {
+	border: 4px solid #FFFFFF;
+}
+
+.album-frame .topx----,
+.album-frame .top----x,
+.album-frame .botx----,
+.album-frame .bot----x {
+	height: 14px;
+	width: 14px;
+}
+
+.album-frame .top-x--- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/album-tstretch.gif);
+	text-align: left;
+	height: 14px;
+	width: auto;
+}
+.album-frame .top--x-- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/album-tstretch.gif);
+	height: 14px;
+	width: auto;
+}
+.album-frame .top---x- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/album-tstretch.gif);
+	text-align: right;
+	height: 14px;
+	width: auto;
+}
+
+.album-frame .mtpx---- {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/album-lstretch.gif);
+	vertical-align: top;
+	height: auto;
+	width: 14px;
+}
+.album-frame .mtp----x {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/album-rstretch.gif);
+	vertical-align: top;
+	height: auto;
+	width: 14px;
+}
+
+.album-frame .midx---- {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/album-lstretch.gif);
+	height: auto;
+	width: 14px;
+}
+.album-frame .mid----x {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/album-rstretch.gif);
+	height: auto;
+	width: 14px;
+}
+
+.album-frame .mbtx---- {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/album-lstretch.gif);
+	vertical-align: bottom;
+	height: auto;
+	width: 14px;
+}
+.album-frame .mbt----x {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/album-rstretch.gif);
+	vertical-align: bottom;
+	height: auto;
+	width: 14px;
+}
+
+.album-frame .bot-x--- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/album-bstretch.gif);
+	text-align: right;
+	height: 14px;
+	width: auto;
+}
+.album-frame .bot--x-- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/album-bstretch.gif);
+	height: 14px;
+	width: auto;
+}
+.album-frame .bot---x- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/album-bstretch.gif);
+	text-align: left;
+	height: 14px;
+	width: auto;
+}
+
+.photo-frame
+{
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	border-collapse: collapse;
+}
+
+.photo-frame TD {
+	margin: 0px;
+	padding: 0px;
+}
+
+.photo-frame .topx-- 
+{
+	background-repeat: no-repeat;
+	background-image: url(images/borders/frame-topx--.gif);
+	width: auto;
+	height: 4px;
+	vertical-align: top;
+}
+.photo-frame .top-x- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/frame-top-x-.gif);
+	width: auto;
+	height: 4px;
+}
+.photo-frame .top--x {
+	background-repeat: no-repeat;
+	background-image: url(images/borders/frame-top--x.gif);
+	width: auto;
+	height: 4px;
+	vertical-align: top;
+}
+
+.photo-frame .midx-- {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/frame-midx--.gif);
+	width: 4px;
+	height: auto;
+}
+
+.photo-frame .mid--x {
+	background-repeat: repeat-y;
+	background-image: url(images/borders/frame-mid--x.gif);
+	width: 4px;
+	height: auto;
+}
+
+.photo-frame .botx-- {
+	background-repeat: no-repeat;
+	background-image: url(images/borders/frame-botx--.gif);
+	width: 4px;
+	height: 4px;
+	vertical-align: top;
+}
+.photo-frame .bot-x- {
+	background-repeat: repeat-x;
+	background-image: url(images/borders/frame-bot-x-.gif);
+	width: auto;
+	height: 4px;
+}
+.photo-frame .bot--x {
+	background-repeat: no-repeat;
+	background-image: url(images/borders/frame-bot--x.gif);
+	width: 4px;
+	height: 4px;
+	vertical-align: bottom;
+}
+
+/* Lightbox */
+
+
+#lightbox{
+	position: absolute;
+	top: 40px;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	text-align: center;
+	line-height: 0;
+	}
+
+#lightbox a img{ border: none; }
+
+#outerImageContainer{
+	position: relative;
+	background-color: #fff;
+	width: 250px;
+	height: 250px;
+	margin: 0 auto;
+	}
+
+#imageContainer{
+	padding: 10px;
+	}
+
+#loading{
+	position: absolute;
+	top: 40%;
+	left: 0%;
+	height: 25%;
+	width: 100%;
+	text-align: center;
+	line-height: 0;
+	}
+	
+#loading #loadingLink{ width: 32px; height: 32px; background: url(images/lightbox/loading.gif) no-repeat;	}		
+
+#hoverNav{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 10;
+	}
+#imageContainer>#hoverNav{ left: 0;}
+#hoverNav a{ outline: none;}
+
+#prevLink, #nextLink{
+	width: 49%;
+	height: 100%;
+	background: transparent url(images/lightbox/blank.gif) no-repeat; /* Trick IE into showing hover */
+	display: block;
+	}
+#prevLink { left: 0; float: left;}
+#nextLink { right: 0; float: right;}
+#prevLink:hover, #prevLink:visited:hover { background: url(images/lightbox/prevlabel.gif) left 15% no-repeat; }
+#nextLink:hover, #nextLink:visited:hover { background: url(images/lightbox/nextlabel.gif) right 15% no-repeat; }
+
+
+#imageDataContainer{
+	font: 10px Verdana, Helvetica, sans-serif;
+	background-color: #fff;
+	margin: 0 auto;
+	line-height: 1.4em;
+	}
+
+#imageData{
+	padding:0 10px;
+	}
+#imageData #imageDetails{ width: 70%; float: left; text-align: left; }	
+#imageData #caption{ font-weight: bold;	}
+#imageData #numberDisplay{ display: block; clear: left; padding-bottom: 1.0em;	}			
+#imageData #bottomNavClose{ width: 66px; height: 22px; float: right;  padding-bottom: 0.7em; background: url(images/lightbox/closelabel.gif) no-repeat;	}			
+		
+#overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 90;
+	width: 100%;
+	height: 500px;
+	background-color: #000;
+	filter:alpha(opacity=60);
+	-moz-opacity: 0.6;
+	opacity: 0.6;
+	}
+	
+
+.clearfix:after {
+	content: "."; 
+	display: block; 
+	height: 0; 
+	clear: both; 
+	visibility: hidden;
+	}
+
+* html>body .clearfix {
+	display: inline-block; 
+	width: 100%;
+	}
+
+* html .clearfix {
+	/* Hides from IE-mac \*/
+	height: 1%;
+	/* End hide from IE-mac */
+	}	

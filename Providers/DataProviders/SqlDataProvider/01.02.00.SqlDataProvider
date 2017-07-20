@@ -1,0 +1,281 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	ADD Status int
+GO
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	SET Status = 3
+GO
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	SET Status = 1
+	WHERE IsPublished = 0
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	ADD AuthorID int
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	DROP COLUMN IsPublished
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	DROP CONSTRAINT DF_{objectQualifier}Ventrian_PropertyAgent_Property_IsApproved
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	DROP COLUMN IsApproved
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	DROP CONSTRAINT DF_{objectQualifier}Ventrian_PropertyAgent_Property_IsArchived
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+	DROP COLUMN IsArchived
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyAdd
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyAdd
+	@ModuleID int,
+	@PropertyTypeID int,
+	@IsFeatured bit,
+	@DateCreated datetime,
+	@DateModified datetime,
+	@DatePublished datetime,
+	@DateExpired datetime,
+	@ViewCount int,
+	@Status int,
+	@AuthorID int  
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property (
+	[ModuleID],
+	[PropertyTypeID],
+	[IsFeatured],
+	[DateCreated],
+	[DateModified],
+	[DatePublished],
+	[DateExpired],
+	[ViewCount],
+	[Status],
+	[AuthorID]  
+) VALUES (
+	@ModuleID,
+	@PropertyTypeID,
+	@IsFeatured,
+	@DateCreated,
+	@DateModified,
+	@DatePublished,
+	@DateExpired,
+	@ViewCount,
+	@Status,
+	@AuthorID 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyGet
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyGet
+	@PropertyID int
+AS
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsFeatured],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	p.[Status], 
+	p.[AuthorID], 
+	pt.[Name] as 'PropertyTypeName',
+	(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+	u.[UserName],
+	u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+	u.[Email]   
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u
+			ON p.AuthorID = u.UserID 
+WHERE
+	[PropertyID] = @PropertyID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+	@ModuleID int, 
+	@PropertyTypeID int,
+	@MaxCount int,
+	@Status int, 
+	@AuthorID int, 
+	@IsActive bit,
+	@IsPending bit,
+	@IsExpired bit,
+	@ShowFeaturedOnly bit,
+	@SortBy int,
+	@SortByID int,
+	@SortByIDType int,
+	@SortOrder int,
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000) 
+AS
+
+if( @MaxCount is not null )
+begin
+	SET ROWCOUNT @MaxCount 
+end
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsFeatured],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	p.[Status], 
+	p.[AuthorID], 
+	pt.[Name] as 'PropertyTypeName',
+	(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+	u.[UserName],
+	u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+	u.[Email]   
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u
+			ON p.AuthorID = u.UserID 
+WHERE
+	p.[ModuleID] = @ModuleID
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@Status is null or p.Status = @Status)
+	and
+	(@AuthorID is null or p.AuthorID = @AuthorID)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+ORDER BY 
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 1 THEN convert(varchar, p.[DateModified], 120)
+              	WHEN @SortBy = 1 and @SortOrder = 1 THEN convert(varchar, p.[DatePublished], 120)
+              	WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN convert(varchar, p.[DateModified], 120) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 0 THEN convert(varchar, p.[DateModified], 120)
+              	WHEN @SortBy = 1 and @SortOrder = 0 THEN convert(varchar, p.[DatePublished], 120)
+              	WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN convert(varchar, p.[DateModified], 120) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 1 THEN p.[ViewCount] 
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 0 THEN p.[ViewCount]
+              END ASC,
+	CASE 
+		WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN p.[ViewCount]
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(cast(CustomValue as nvarchar) as decimal) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+		WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			Case 
+				WHEN @SortByID is null THEN p.[ViewCount]
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(cast(CustomValue as nvarchar) as decimal) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyUpdate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyUpdate
+	@PropertyID int, 
+	@ModuleID int, 
+	@PropertyTypeID int, 
+	@IsFeatured bit, 
+	@DateCreated datetime, 
+	@DateModified datetime, 
+	@DatePublished datetime, 
+	@DateExpired datetime, 
+	@ViewCount int,
+	@Status int,
+	@AuthorID int 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property SET
+	[ModuleID] = @ModuleID,
+	[PropertyTypeID] = @PropertyTypeID,
+	[IsFeatured] = @IsFeatured,
+	[DateCreated] = @DateCreated,
+	[DateModified] = @DateModified,
+	[DatePublished] = @DatePublished,
+	[DateExpired] = @DateExpired,
+	[ViewCount] = @ViewCount,
+	[Status] = @Status,
+	[AuthorID] = @AuthorID 
+WHERE
+	[PropertyID] = @PropertyID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeList
+	@ModuleID	int,
+	@ShowPublishedOnly bit  
+AS
+
+SELECT
+	pt.[PropertyTypeID],
+	pt.[ModuleID],
+	pt.[Name],
+	pt.[Description],
+	pt.[SortOrder],
+	pt.[IsPublished],
+	(SELECT count(*) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p where p.PropertyTypeID = pt.PropertyTypeID and p.Status = 3) as 'PropertyCount' 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	[ModuleID] = @ModuleID
+	and
+	(@ShowPublishedOnly = 0 or pt.[IsPublished] = 1)
+ORDER BY
+	pt.[SortOrder]
+GO

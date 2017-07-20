@@ -1,0 +1,225 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType ADD
+	AllowProperties bit NOT NULL CONSTRAINT DF_{objectQualifier}Ventrian_PropertyAgent_PropertyType_AllowProperties DEFAULT 1
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeAdd
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeAdd
+	@ParentID int, 
+	@ModuleID int,
+	@Name nvarchar(50),
+	@Description ntext,
+	@ImageFile nvarchar(255),
+	@SortOrder int,
+	@IsPublished bit,
+	@AllowProperties bit
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType (
+	[ParentID], 
+	[ModuleID],
+	[Name],
+	[Description],
+	[ImageFile],
+	[SortOrder],
+	[IsPublished],
+	[AllowProperties]
+) VALUES (
+	@ParentID, 
+	@ModuleID,
+	@Name,
+	@Description,
+	@ImageFile,
+	@SortOrder,
+	@IsPublished,
+	@AllowProperties 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeListAll
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeListAll
+	@ModuleID int,
+	@Current int, 	
+	@ShowPublishedOnly bit,
+	@SortBy int,
+	@AgentFilter nvarchar(2000) 
+as
+SET NOCOUNT ON
+DECLARE @level int, @line int
+ 
+CREATE TABLE #hierarchy(HierarchyID int IDENTITY (1,1), PropertyTypeID int, level int)
+CREATE TABLE #stack (item int, level int)
+INSERT INTO #stack VALUES (@current, 1)
+SELECT @level = 1
+ 
+WHILE @level > 0
+BEGIN
+   IF EXISTS (SELECT * FROM #stack WHERE level = @level)
+      BEGIN
+         SELECT @current = item
+         FROM #stack
+         WHERE level = @level
+ 
+ 	insert into #hierarchy(PropertyTypeID, level) values(@current, @level) 
+ 
+         DELETE FROM #stack
+         WHERE level = @level
+            AND item = @current
+ 
+         INSERT #stack
+            SELECT PropertyTypeID, @level + 1
+            FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType
+            WHERE ParentID = @current and ModuleID = @ModuleID 
+     	    ORDER BY 	
+	CASE 
+              	WHEN @SortBy = 0 THEN [SortOrder]
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 1 THEN  [Name]  
+              END DESC
+
+         IF @@ROWCOUNT > 0
+            SELECT @level = @level + 1
+      END
+   ELSE
+      SELECT @level = @level - 1
+END -- WHILE
+
+IF( @AgentFilter IS NULL )
+BEGIN
+	SELECT
+		pt.[PropertyTypeID],
+		pt.[ParentID],
+		pt.[ModuleID],
+		pt.[Name],
+		pt.[Description],
+		pt.[AllowProperties],
+		CASE WHEN LEFT(LOWER(ImageFile), 6) = 'fileid' 
+			THEN
+				(SELECT Folder + FileName  
+					FROM {databaseOwner}{objectQualifier}Files 
+					WHERE 'fileid=' + convert(varchar,{databaseOwner}{objectQualifier}Files.FileID) = ImageFile
+				) 
+			ELSE 
+				ImageFile  
+			END 
+		AS ImageFile,
+		pt.[SortOrder],
+		pt.[IsPublished],
+		(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt2 where pt.PropertyTypeID = pt2.ParentID) as 'PropertyTypeCount', 
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount(pt.[PropertyTypeID], 0, GetDate(), null) as 'PropertyCount',
+		REPLICATE('.',(level-2)*2) + pt.[Name] as 'NameIndented' 
+	FROM 
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt, #hierarchy
+	WHERE 
+		#hierarchy.PropertyTypeID = pt.PropertyTypeID
+		AND
+		pt.[ModuleID] = @ModuleID
+		and
+		(@ShowPublishedOnly = 0 or pt.[IsPublished] = 1)
+	ORDER BY HierarchyID 
+END
+ELSE
+BEGIN
+	DECLARE @sqlCount nvarchar(4000)
+	SELECT @sqlCount = ''
+
+	DECLARE @i int ,@j int, @AgentID nvarchar(255) 
+	SELECT @i = 1
+
+	WHILE @i <= len(@AgentFilter)
+	BEGIN
+		SELECT    @j = CHARINDEX(',', @AgentFilter, @i)
+			if @j = 0
+			BEGIN
+				SELECT    @j = len(@AgentFilter) + 1
+			end
+			SELECT @AgentID = SUBSTRING(@AgentFilter, @i, @j - @i)
+
+			IF( @AgentID <> '' )
+			BEGIN
+				IF( @sqlCount = '' )
+				BEGIN
+					SELECT @sqlCount = '{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount(pt.[PropertyTypeID], 0, GetDate(), ' + cast(@AgentID as nvarchar(20)) + ')'
+				END
+				ELSE
+				BEGIN
+					SELECT @sqlCount = @sqlCount + ' + {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeCount(pt.[PropertyTypeID], 0, GetDate(), ' + cast(@AgentID as nvarchar(20)) + ')'
+				END
+			END
+
+			SELECT    @i = @j +1
+	END
+
+	DECLARE @sql nvarchar(2000)
+	SELECT @sql = '
+		SELECT
+			pt.[PropertyTypeID],
+			pt.[ParentID],
+			pt.[ModuleID],
+			pt.[Name],
+			pt.[Description],
+			CASE WHEN LEFT(LOWER(ImageFile), 6) = ''fileid'' 
+				THEN
+					(SELECT Folder + FileName  
+						FROM {databaseOwner}{objectQualifier}Files 
+						WHERE ''fileid='' + convert(varchar,{databaseOwner}{objectQualifier}Files.FileID) = ImageFile
+					) 
+				ELSE 
+					ImageFile  
+				END 
+			AS ImageFile,
+			pt.[SortOrder],
+			pt.[IsPublished],
+			pt.[AllowProperties],
+			(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt2 where pt.PropertyTypeID = pt2.ParentID) as ''PropertyTypeCount'', 
+			' + @sqlCount + ' as ''PropertyCount'',
+			REPLICATE(''.'',(level-2)*2) + pt.[Name] as ''NameIndented'' 
+		FROM 
+			{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt, #hierarchy
+		WHERE 
+			#hierarchy.PropertyTypeID = pt.PropertyTypeID
+			AND
+			pt.[ModuleID] = ' + convert(nvarchar, @ModuleID) + '
+			and
+			(' + convert(nvarchar, @ShowPublishedOnly) + ' = 0 or pt.[IsPublished] = 1)
+		ORDER BY HierarchyID '
+	EXEC(@SQL)
+END
+
+drop table #hierarchy
+drop table #stack
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeUpdate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeUpdate
+	@PropertyTypeID int, 
+	@ParentID int, 
+	@ModuleID int, 
+	@Name nvarchar(50), 
+	@Description ntext, 
+	@ImageFile nvarchar(255), 
+	@SortOrder int, 
+	@IsPublished bit,
+	@AllowProperties bit 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType SET
+	[ParentID] = @ParentID, 
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[Description] = @Description,
+	[ImageFile] = @ImageFile, 
+	[SortOrder] = @SortOrder,
+	[IsPublished] = @IsPublished,
+	[AllowProperties] = @AllowProperties
+WHERE
+	[PropertyTypeID] = @PropertyTypeID
+GO

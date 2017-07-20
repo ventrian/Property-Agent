@@ -1,0 +1,1015 @@
+﻿CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField (
+	[CustomFieldID] [int] IDENTITY (1, 1) NOT NULL ,
+	[ModuleID] [int] NOT NULL ,
+	[Name] [nvarchar] (255) NOT NULL ,
+	[FieldType] [int] NOT NULL ,
+	[FieldElements] [ntext] NULL ,
+	[DefaultValue] [nvarchar] (255) NULL ,
+	[Caption] [nvarchar] (255) NULL ,
+	[CaptionHelp] [nvarchar] (255) NULL ,
+	[IsInManager] [bit] NOT NULL ,
+	[IsSortable] [bit] NULL ,
+	[IsInListing] [bit] NOT NULL ,
+	[IsCaptionHidden] [bit] NOT NULL ,
+	[IsFeatured] [bit] NOT NULL ,
+	[IsPublished] [bit] NOT NULL ,
+	[IsHidden] [bit] NOT NULL ,
+	[IsSearchable] [bit] NOT NULL ,
+	[SearchType] [nvarchar] (50) NULL ,
+	[SortOrder] [int] NOT NULL ,
+	[IsRequired] [bit] NOT NULL ,
+	[ValidationType] [int] NULL 
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo (
+	[PhotoID] [int] IDENTITY (1, 1) NOT NULL ,
+	[PropertyID] [int] NOT NULL ,
+	[Title] [nvarchar] (255) NULL ,
+	[Filename] [nvarchar] (50) NOT NULL ,
+	[DateCreated] [datetime] NOT NULL ,
+	[Width] [int] NOT NULL ,
+	[Height] [int] NOT NULL ,
+	[SortOrder] [int] NOT NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property (
+	[PropertyID] [int] IDENTITY (1, 1) NOT NULL ,
+	[ModuleID] [int] NOT NULL ,
+	[PropertyTypeID] [int] NOT NULL ,
+	[IsApproved] [bit] NOT NULL ,
+	[IsFeatured] [bit] NOT NULL ,
+	[IsPublished] [bit] NOT NULL ,
+	[IsArchived] [bit] NOT NULL ,
+	[DateCreated] [datetime] NOT NULL ,
+	[DateModified] [datetime] NOT NULL ,
+	[DatePublished] [datetime] NULL ,
+	[DateExpired] [datetime] NULL ,
+	[ViewCount] [int] NOT NULL 
+) ON [PRIMARY] 
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType (
+	[PropertyTypeID] [int] IDENTITY (1, 1) NOT NULL ,
+	[ModuleID] [int] NOT NULL ,
+	[Name] [nvarchar] (50) NOT NULL ,
+	[Description] [ntext] NULL ,
+	[SortOrder] [int] NOT NULL ,
+	[IsPublished] [bit] NOT NULL 
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue (
+	[PropertyValueID] [int] IDENTITY (1, 1) NOT NULL ,
+	[PropertyID] [int] NOT NULL ,
+	[CustomFieldID] [int] NOT NULL ,
+	[CustomValue] [ntext] NOT NULL 
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template (
+	[TemplateID] [int] IDENTITY (1, 1) NOT NULL ,
+	[Title] [nvarchar] (128) NOT NULL ,
+	[Description] [nvarchar] (2000) NULL ,
+	[Folder] [nvarchar] (128) NOT NULL ,
+	[IsPremium] [bit] NOT NULL 
+) ON [PRIMARY]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortal (
+	[TemplatePortalID] [int] IDENTITY (1, 1) NOT NULL ,
+	[TemplateID] [int] NOT NULL ,
+	[PortalID] [int] NOT NULL 
+) ON [PRIMARY]
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField ADD 
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_CustomField_IsInManager] DEFAULT (0) FOR [IsInManager],
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_CustomField_IsRequired] DEFAULT (1) FOR [IsRequired],
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_CustomField_ValidationType] DEFAULT (0) FOR [ValidationType],
+	CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_CustomField] PRIMARY KEY  CLUSTERED 
+	(
+		[CustomFieldID]
+	)  ON [PRIMARY] 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo ADD 
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_Photo_SortOrder] DEFAULT (0) FOR [SortOrder],
+	CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_Photo] PRIMARY KEY  CLUSTERED 
+	(
+		[PhotoID]
+	)  ON [PRIMARY] 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property ADD 
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_Property_IsApproved] DEFAULT (0) FOR [IsApproved],
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_Property_IsFeatured] DEFAULT (0) FOR [IsFeatured],
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_Property_IsArchived] DEFAULT (0) FOR [IsArchived],
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_Property_ViewCount] DEFAULT (0) FOR [ViewCount],
+	CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_Property] PRIMARY KEY  CLUSTERED 
+	(
+		[PropertyID]
+	)  ON [PRIMARY] 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType ADD 
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_PropertyType_SortOrder] DEFAULT (0) FOR [SortOrder],
+	CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_PropertyType] PRIMARY KEY  CLUSTERED 
+	(
+		[PropertyTypeID]
+	)  ON [PRIMARY] 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue ADD 
+	CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_PropertyValue] PRIMARY KEY  CLUSTERED 
+	(
+		[PropertyValueID]
+	)  ON [PRIMARY] 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template ADD 
+	CONSTRAINT [DF_{objectQualifier}Ventrian_PropertyAgent_Template_IsPremium] DEFAULT (0) FOR [IsPremium],
+	CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_Template] PRIMARY KEY  CLUSTERED 
+	(
+		[TemplateID]
+	)  ON [PRIMARY] 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortal ADD 
+	CONSTRAINT [PK_{objectQualifier}Ventrian_PropertyAgent_TemplatePortal] PRIMARY KEY  CLUSTERED 
+	(
+		[TemplatePortalID]
+	)  ON [PRIMARY] 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo ADD 
+	CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_Photo_{objectQualifier}Ventrian_PropertyAgent_Property] FOREIGN KEY 
+	(
+		[PropertyID]
+	) REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property (
+		[PropertyID]
+	)
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property ADD 
+	CONSTRAINT [FK_{objectQualifier}Ventrian_EstateAgent_Property_{objectQualifier}Ventrian_EstateAgent_PropertyType] FOREIGN KEY 
+	(
+		[PropertyTypeID]
+	) REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType (
+		[PropertyTypeID]
+	)
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue ADD 
+	CONSTRAINT [FK_{objectQualifier}Ventrian_EstateAgent_PropertyValue_{objectQualifier}Ventrian_EstateAgent_CustomField] FOREIGN KEY 
+	(
+		[CustomFieldID]
+	) REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField (
+		[CustomFieldID]
+	),
+	CONSTRAINT [FK_{objectQualifier}Ventrian_EstateAgent_PropertyValue_{objectQualifier}Ventrian_EstateAgent_Property] FOREIGN KEY 
+	(
+		[PropertyID]
+	) REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property (
+		[PropertyID]
+	)
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortal ADD 
+	CONSTRAINT [FK_{objectQualifier}Ventrian_PropertyAgent_TemplatePortal_{objectQualifier}Ventrian_PropertyAgent_Template] FOREIGN KEY 
+	(
+		[TemplateID]
+	) REFERENCES {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template (
+		[TemplateID]
+	)
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldList
+	@ModuleID int,
+	@IsPublishedOnly bit 
+AS
+
+SELECT
+	[CustomFieldID],
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType] 
+FROM 
+	{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[ModuleID] = @ModuleID 
+	and
+	(@IsPublishedOnly = 0 or IsPublished = 1)
+ORDER BY
+	[SortOrder]
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldUpdate
+	@CustomFieldID int, 
+	@ModuleID int, 
+	@Name nvarchar(255), 
+	@FieldType int, 
+	@FieldElements ntext, 
+	@DefaultValue nvarchar(255), 
+	@Caption nvarchar(255), 
+	@CaptionHelp nvarchar(255), 
+	@IsInManager bit, 
+	@IsSortable bit, 
+	@IsInListing bit, 
+	@IsCaptionHidden bit, 
+	@IsFeatured bit, 
+	@IsPublished bit, 
+	@IsHidden bit, 
+	@IsSearchable bit, 
+	@SearchType nvarchar(50), 
+	@SortOrder int,
+	@IsRequired bit,
+	@ValidationType int 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField SET
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[FieldType] = @FieldType,
+	[FieldElements] = @FieldElements,
+	[DefaultValue] = @DefaultValue,
+	[Caption] = @Caption,
+	[CaptionHelp] = @CaptionHelp,
+	[IsInListing] = @IsInListing,
+	[IsCaptionHidden] = @IsCaptionHidden,
+	[IsInManager] = @IsInManager, 
+	[IsSortable] = @IsSortable, 
+	[IsFeatured] = @IsFeatured,
+	[IsPublished] = @IsPublished,
+	[IsHidden] = @IsHidden,
+	[IsSearchable] = @IsSearchable,
+	[SearchType] = @SearchType,
+	[SortOrder] = @SortOrder,
+	[IsRequired] = @IsRequired,
+	[ValidationType] = @ValidationType 
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoAdd
+	@PropertyID int,
+	@Title nvarchar(255),
+	@Filename nvarchar(50),
+	@DateCreated datetime,
+	@Width int,
+	@Height int,
+	@SortOrder int
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo (
+	[PropertyID],
+	[Title],
+	[Filename],
+	[DateCreated],
+	[Width],
+	[Height],
+	[SortOrder]
+) VALUES (
+	@PropertyID,
+	@Title,
+	@Filename,
+	@DateCreated,
+	@Width,
+	@Height,
+	@SortOrder
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoDelete
+	@PhotoID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo
+WHERE
+	[PhotoID] = @PhotoID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoDeleteByPropertyID
+	@PropertyID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo
+WHERE
+	[PropertyID] = @PropertyID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldAdd
+	@ModuleID int,
+	@Name nvarchar(255),
+	@FieldType int,
+	@FieldElements ntext,
+	@DefaultValue nvarchar(255),
+	@Caption nvarchar(255),
+	@CaptionHelp nvarchar(255),
+	@IsInManager bit,
+	@IsSortable bit,
+	@IsInListing bit,
+	@IsCaptionHidden bit,
+	@IsFeatured bit,
+	@IsPublished bit,
+	@IsHidden bit,
+	@IsSearchable bit,
+	@SearchType nvarchar(50),
+	@SortOrder int,
+	@IsRequired bit, 
+	@ValidationType int
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField (
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType]
+) VALUES (
+	@ModuleID,
+	@Name,
+	@FieldType,
+	@FieldElements,
+	@DefaultValue,
+	@Caption,
+	@CaptionHelp,
+	@IsInManager, 
+	@IsSortable, 
+	@IsInListing,
+	@IsCaptionHidden,
+	@IsFeatured,
+	@IsPublished,
+	@IsHidden,
+	@IsSearchable,
+	@SearchType,
+	@SortOrder,
+	@IsRequired,
+	@ValidationType 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldDelete
+	@CustomFieldID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldGet
+	@CustomFieldID int
+AS
+
+SELECT
+	[CustomFieldID],
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType] 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoGet
+	@PhotoID int
+AS
+
+SELECT
+	[PhotoID],
+	[PropertyID],
+	[Title],
+	[Filename],
+	[DateCreated],
+	[Width],
+	[Height],
+	[SortOrder]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo
+WHERE
+	[PhotoID] = @PhotoID 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoList
+	@PropertyID int
+AS
+
+SELECT
+	[PhotoID],
+	[PropertyID],
+	[Title],
+	[Filename],
+	[DateCreated],
+	[Width],
+	[Height],
+	[SortOrder]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo
+WHERE
+	[PropertyID] = @PropertyID 
+ORDER BY
+	[SortOrder]
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PhotoUpdate
+	@PhotoID int, 
+	@PropertyID int, 
+	@Title nvarchar(255), 
+	@Filename nvarchar(50), 
+	@DateCreated datetime, 
+	@Width int, 
+	@Height int, 
+	@SortOrder int 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo SET
+	[PropertyID] = @PropertyID,
+	[Title] = @Title,
+	[Filename] = @Filename,
+	[DateCreated] = @DateCreated,
+	[Width] = @Width,
+	[Height] = @Height,
+	[SortOrder] = @SortOrder
+WHERE
+	[PhotoID] = @PhotoID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyAdd
+	@ModuleID int,
+	@PropertyTypeID int,
+	@IsApproved bit,
+	@IsFeatured bit,
+	@IsPublished bit,
+	@IsArchived bit,
+	@DateCreated datetime,
+	@DateModified datetime,
+	@DatePublished datetime,
+	@DateExpired datetime,
+	@ViewCount int
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property (
+	[ModuleID],
+	[PropertyTypeID],
+	[IsApproved],
+	[IsFeatured],
+	[IsPublished],
+	[IsArchived],
+	[DateCreated],
+	[DateModified],
+	[DatePublished],
+	[DateExpired],
+	[ViewCount]
+) VALUES (
+	@ModuleID,
+	@PropertyTypeID,
+	@IsApproved,
+	@IsFeatured,
+	@IsPublished,
+	@IsArchived,
+	@DateCreated,
+	@DateModified,
+	@DatePublished,
+	@DateExpired,
+	@ViewCount
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyDelete
+	@PropertyID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+WHERE
+	[PropertyID] = @PropertyID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyDeleteByModuleID
+	@ModuleID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}ModuleSettings
+WHERE
+	ModuleID = @ModuleID 
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo
+WHERE
+	[PropertyID] in (SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property WHERE ModuleID = @ModuleID)
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[PropertyID] in (SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property WHERE ModuleID = @ModuleID)
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+WHERE
+	[ModuleID] = @ModuleID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyGet
+	@PropertyID int
+AS
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsApproved],
+	p.[IsFeatured],
+	p.[IsPublished],
+	p.[IsArchived],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	pt.[Name] as 'PropertyTypeName',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID'  
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p, {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	p.PropertyTypeID = pt.PropertyTypeID
+	and 
+	[PropertyID] = @PropertyID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+	@ModuleID int, 
+	@PropertyTypeID int,
+	@MaxCount int,
+	@IsPublished bit,
+	@IsNotPublished bit,
+	@IsActive bit,
+	@IsPending bit,
+	@IsExpired bit,
+	@ShowFeaturedOnly bit,
+	@SortBy int,
+	@SortByID int,
+	@SortOrder int 
+AS
+
+if( @MaxCount is not null )
+begin
+	SET ROWCOUNT @MaxCount 
+end
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsApproved],
+	p.[IsFeatured],
+	p.[IsPublished],
+	p.[IsArchived],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	pt.[Name] as 'PropertyTypeName',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID'  
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p, {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	p.[ModuleID] = @ModuleID
+	and 
+	p.PropertyTypeID = pt.PropertyTypeID
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@IsPublished is null or p.IsPublished = 1)
+	and
+	(@IsNotPublished is null or p.IsPublished = 0)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+ORDER BY 
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 1 THEN cast(p.[DateModified] as nvarchar)
+              	WHEN @SortBy = 1 and @SortOrder = 1 THEN cast(p.[DatePublished] as nvarchar)
+              	WHEN @SortBy = 3 and @SortOrder = 1 THEN 
+			Case 
+				WHEN @SortByID is null THEN cast(p.[DateModified] as nvarchar) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 0 THEN cast(p.[DateModified] as nvarchar)
+              	WHEN @SortBy = 1 and @SortOrder = 0 THEN cast(p.[DatePublished] as nvarchar)
+              	WHEN @SortBy = 3 and @SortOrder = 0 THEN 
+			Case 
+				WHEN @SortByID is null THEN cast(p.[DateModified] as nvarchar) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 1 THEN p.[ViewCount] 
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 0 THEN p.[ViewCount]
+              END ASC
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeAdd
+	@ModuleID int,
+	@Name nvarchar(50),
+	@Description ntext,
+	@SortOrder int,
+	@IsPublished bit
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType (
+	[ModuleID],
+	[Name],
+	[Description],
+	[SortOrder],
+	[IsPublished]
+) VALUES (
+	@ModuleID,
+	@Name,
+	@Description,
+	@SortOrder,
+	@IsPublished
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeDelete
+	@PropertyTypeID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType
+WHERE
+	[PropertyTypeID] = @PropertyTypeID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeGet
+	@PropertyTypeID int
+AS
+
+SELECT
+	[PropertyTypeID],
+	[ModuleID],
+	[Name],
+	[Description],
+	[SortOrder],
+	[IsPublished]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType
+WHERE
+	[PropertyTypeID] = @PropertyTypeID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeList
+	@ModuleID	int,
+	@ShowPublishedOnly bit  
+AS
+
+SELECT
+	pt.[PropertyTypeID],
+	pt.[ModuleID],
+	pt.[Name],
+	pt.[Description],
+	pt.[SortOrder],
+	pt.[IsPublished],
+	(SELECT count(*) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p where p.PropertyTypeID = pt.PropertyTypeID) as 'PropertyCount' 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	[ModuleID] = @ModuleID
+	and
+	(@ShowPublishedOnly = 0 or pt.[IsPublished] = 1)
+ORDER BY
+	pt.[SortOrder]
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyTypeUpdate
+	@PropertyTypeID int, 
+	@ModuleID int, 
+	@Name nvarchar(50), 
+	@Description ntext, 
+	@SortOrder int, 
+	@IsPublished bit 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType SET
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[Description] = @Description,
+	[SortOrder] = @SortOrder,
+	[IsPublished] = @IsPublished
+WHERE
+	[PropertyTypeID] = @PropertyTypeID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyUpdate
+	@PropertyID int, 
+	@ModuleID int, 
+	@PropertyTypeID int, 
+	@IsApproved bit, 
+	@IsFeatured bit, 
+	@IsPublished bit, 
+	@IsArchived bit, 
+	@DateCreated datetime, 
+	@DateModified datetime, 
+	@DatePublished datetime, 
+	@DateExpired datetime, 
+	@ViewCount int 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property SET
+	[ModuleID] = @ModuleID,
+	[PropertyTypeID] = @PropertyTypeID,
+	[IsApproved] = @IsApproved,
+	[IsFeatured] = @IsFeatured,
+	[IsPublished] = @IsPublished,
+	[IsArchived] = @IsArchived,
+	[DateCreated] = @DateCreated,
+	[DateModified] = @DateModified,
+	[DatePublished] = @DatePublished,
+	[DateExpired] = @DateExpired,
+	[ViewCount] = @ViewCount
+WHERE
+	[PropertyID] = @PropertyID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueAdd
+	@PropertyID int,
+	@CustomFieldID int,
+	@CustomValue ntext
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue (
+	[PropertyID],
+	[CustomFieldID],
+	[CustomValue]
+) VALUES (
+	@PropertyID,
+	@CustomFieldID,
+	@CustomValue
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueDelete
+	@PropertyValueID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[PropertyValueID] = @PropertyValueID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueGet
+	@PropertyValueID int
+	
+AS
+
+SELECT
+	[PropertyValueID],
+	[PropertyID],
+	[CustomFieldID],
+	[CustomValue]
+FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[PropertyValueID] = @PropertyValueID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueGetByField
+	@PropertyID int,
+	@CustomFieldID int
+	
+AS
+
+SELECT
+	[PropertyValueID],
+	[PropertyID],
+	[CustomFieldID],
+	[CustomValue]
+FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[PropertyID] = @PropertyID
+	and
+	[CustomFieldID] = @CustomFieldID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueList
+	@PropertyID int
+AS
+
+SELECT
+	[PropertyValueID],
+	[PropertyID],
+	[CustomFieldID],
+	[CustomValue]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[PropertyID] = @PropertyID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueUpdate
+	@PropertyValueID int, 
+	@PropertyID int, 
+	@CustomFieldID int, 
+	@CustomValue ntext 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue SET
+	[PropertyID] = @PropertyID,
+	[CustomFieldID] = @CustomFieldID,
+	[CustomValue] = @CustomValue
+WHERE
+	[PropertyValueID] = @PropertyValueID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplateAdd
+	@Title nvarchar(128),
+	@Description nvarchar(2000),
+	@Folder nvarchar(128),
+	@IsPremium bit
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template (
+	[Title],
+	[Description],
+	[Folder],
+	[IsPremium]
+) VALUES (
+	@Title,
+	@Description,
+	@Folder,
+	@IsPremium
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplateDelete
+	@TemplateID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template
+WHERE
+	[TemplateID] = @TemplateID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplateGet
+	@TemplateID int
+	
+AS
+
+SELECT
+	[TemplateID],
+	[Title],
+	[Description],
+	[Folder],
+	[IsPremium]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template
+WHERE
+	[TemplateID] = @TemplateID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplateGetByFolder
+	@Folder nvarchar(128) 
+	
+AS
+
+SELECT
+	[TemplateID],
+	[Title],
+	[Description],
+	[Folder],
+	[IsPremium]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template
+WHERE
+	[Folder] = @Folder
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplateList
+	@PortalID int 
+AS
+
+SELECT
+	t.[TemplateID],
+	t.[Title],
+	t.[Description],
+	t.[Folder],
+	t.[IsPremium]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template t
+WHERE
+	(@PortalID is null) OR (t.[IsPremium] = 0 or ((SELECT COUNT(*) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortal tp WHERE t.TemplateID = tp.TemplateID AND tp.PortalID = @PortalID) > 0))
+ORDER BY
+	t.[Title]
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortalAdd
+	@TemplateID int,
+	@PortalID int
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortal (
+	[TemplateID],
+	[PortalID]
+) VALUES (
+	@TemplateID,
+	@PortalID
+)
+
+select SCOPE_IDENTITY()
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortalDelete
+	@TemplateID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortal
+WHERE
+	[TemplateID] = @TemplateID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplatePortalList
+	@TemplateID int 
+AS
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_TemplateUpdate
+	@TemplateID int, 
+	@Title nvarchar(128), 
+	@Description nvarchar(2000), 
+	@Folder nvarchar(128), 
+	@IsPremium bit 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Template SET
+	[Title] = @Title,
+	[Description] = @Description,
+	[Folder] = @Folder,
+	[IsPremium] = @IsPremium
+WHERE
+	[TemplateID] = @TemplateID
+GO

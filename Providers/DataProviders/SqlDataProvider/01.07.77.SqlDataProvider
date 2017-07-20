@@ -1,0 +1,18 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic ADD
+	UserID int NULL,
+	RemoteAddress nvarchar(50) NULL
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_StatisticAdd 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_StatisticAdd 
+	@PropertyID int,
+	@UserID int,
+	@RemoteAddress nvarchar(50)  
+AS
+	INSERT INTO 
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic(PropertyID, DateCreated, UserID, RemoteAddress)
+	VALUES
+		(@PropertyID, GetDate(), @UserID, @RemoteAddress)
+GO

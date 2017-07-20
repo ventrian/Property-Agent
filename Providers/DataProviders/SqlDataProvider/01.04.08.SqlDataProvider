@@ -1,0 +1,367 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+	@ModuleID int, 
+	@PropertyTypeID int,
+	@Status int, 
+	@AuthorID int, 
+	@IsActive bit,
+	@IsPending bit,
+	@IsExpired bit,
+	@ShowFeaturedOnly bit,
+	@SortBy int,
+	@SortByID int,
+	@SortByIDType int,
+	@SortOrder int,
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000),
+	@PageNumber int, 
+	@PageSize int,
+	@BubbleFeatured bit 
+AS
+
+DECLARE @TempItems TABLE
+(
+   ID int IDENTITY,
+   PropertyID int
+)
+ 
+DECLARE @maxRow int
+DECLARE @startRowIndex int
+
+SET @startRowIndex = (@PageNumber * @PageSize)
+
+SET @maxRow = (@startRowIndex + @PageSize) - 1
+SET ROWCOUNT @maxRow
+
+if( @SortBy = 3 )
+begin
+INSERT INTO @TempItems (PropertyID)
+SELECT
+	p.[PropertyID]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u
+			ON p.AuthorID = u.UserID 
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue pv
+			ON p.PropertyID = pv.PropertyID
+WHERE
+	p.[ModuleID] = @ModuleID
+	and
+	(pv.[CustomFieldID] = @SortByID)
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@Status is null or p.Status = @Status)
+	and
+	(@AuthorID is null or p.AuthorID = @AuthorID)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+ORDER BY 
+	CASE WHEN @BubbleFeatured = 1 THEN p.[IsFeatured] 
+	END DESC,
+	CASE 
+              	WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			cast(pv.CustomValue as nvarchar)
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType <> 1 and @SortByIDType <> 3 and @SortByIDType <> 4) THEN 
+			cast(pv.CustomValue as nvarchar)
+              END ASC,
+	CASE 
+		WHEN @SortBy = 3 and @SortOrder = 1 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			cast(cast(pv.CustomValue as nvarchar) as decimal)
+              END DESC,
+	CASE 
+		WHEN @SortBy = 3 and @SortOrder = 0 and (@SortByIDType = 1 or @SortByIDType = 3 or @SortByIDType = 4) THEN 
+			cast(cast(pv.CustomValue as nvarchar) as decimal)
+              END ASC
+end
+else
+begin
+INSERT INTO @TempItems (PropertyID)
+SELECT
+	p.[PropertyID]
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u
+			ON p.AuthorID = u.UserID 
+WHERE
+	p.[ModuleID] = @ModuleID
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@Status is null or p.Status = @Status)
+	and
+	(@AuthorID is null or p.AuthorID = @AuthorID)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+ORDER BY 
+	CASE WHEN @BubbleFeatured = 1 THEN p.[IsFeatured] 
+	END DESC,
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 1 THEN convert(varchar, p.[DateModified], 120)
+              	WHEN @SortBy = 1 and @SortOrder = 1 THEN convert(varchar, p.[DatePublished], 120)
+              END DESC,
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 0 THEN convert(varchar, p.[DateModified], 120)
+              	WHEN @SortBy = 1 and @SortOrder = 0 THEN convert(varchar, p.[DatePublished], 120)
+              END ASC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 1 THEN p.[ViewCount] 
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 0 THEN p.[ViewCount]
+              END ASC,
+	CASE 
+		WHEN @SortBy = 4 THEN  CAST((rand(24701) * p.[PropertyID]) * 24701 AS int) % (DATEPART(ms, GetDate())+1) + DATEPART(ms, GetDate()) 
+			END,
+	CASE 
+              	WHEN @SortBy = 5 and @SortOrder = 1 THEN pt.[Name] 
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 5 and @SortOrder = 0 THEN pt.[Name]
+              END ASC
+end
+
+if( @PageSize > 0 )
+	SET ROWCOUNT @PageSize
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsFeatured],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	p.[Status], 
+	p.[AuthorID], 
+	pt.[Name] as 'PropertyTypeName',
+	pt.[Description] as 'PropertyTypeDescription',
+	(select count(*) from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID) as 'PhotoCount',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID',
+	u.[UserName],
+	u.[FirstName] + ' ' + u.[LastName] as 'FullName',
+	u.[Email]  
+FROM @TempItems t
+   	INNER JOIN {databaseOwner}{objectQualifier}ventrian_propertyagent_property p ON
+       		t.PropertyID = p.PropertyID
+	LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+		ON p.PropertyTypeID = pt.PropertyTypeID
+	LEFT JOIN {databaseOwner}{objectQualifier}Users u
+		ON p.AuthorID = u.UserID 
+WHERE
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	ID > @startRowIndex
+
+SET ROWCOUNT 0
+
+DECLARE @TotalRecords int 
+if( @SortBy = 3 )
+begin
+SELECT @TotalRecords = Count(*)
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u
+			ON p.AuthorID = u.UserID 
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue pv
+			ON p.PropertyID = pv.PropertyID
+WHERE
+	p.[ModuleID] = @ModuleID
+	and
+	(pv.[CustomFieldID] = @SortByID)
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@Status is null or p.Status = @Status)
+	and
+	(@AuthorID is null or p.AuthorID = @AuthorID)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+end
+else
+begin
+SELECT @TotalRecords = Count(*)
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p
+		LEFT JOIN {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+			ON p.PropertyTypeID = pt.PropertyTypeID
+		LEFT JOIN {databaseOwner}{objectQualifier}Users u
+			ON p.AuthorID = u.UserID 
+WHERE
+	p.[ModuleID] = @ModuleID
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@Status is null or p.Status = @Status)
+	and
+	(@AuthorID is null or p.AuthorID = @AuthorID)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+end
+
+    SELECT @TotalRecords as 'TotalRecords'
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueListByField
+	@CustomFieldID int
+AS
+
+SELECT
+	cast([CustomValue] as nvarchar) as 'CustomValue' 
+FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GROUP BY
+	cast([CustomValue] as nvarchar)
+GO
+
+DROP FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch
+GO
+
+CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch
+(
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000)
+)
+RETURNS @tbl table (PropertyID int)
+AS
+BEGIN
+	IF @CustomFieldIDs is null or @SearchValues is null
+	BEGIN
+		RETURN
+	END
+	
+	DECLARE @count int
+	SELECT @count = 0
+	
+	DECLARE @i int ,@j int, @CustomFieldID nvarchar(255) 
+	SELECT @i = 1
+	WHILE @i <= len(@CustomFieldIDs)
+	BEGIN
+		SELECT    @j = CHARINDEX(',', @CustomFieldIDs, @i)
+	        if @j = 0
+	        BEGIN
+	            SELECT    @j = len(@CustomFieldIDs) + 1
+	        end
+	        SELECT @CustomFieldID = SUBSTRING(@CustomFieldIDs, @i, @j - @i)
+	
+		DECLARE @valueCount int
+		SELECT @ValueCount = 0
+			DECLARE @x int ,@y int, @SearchValue nvarchar(255) 
+			SELECT @x = 1
+			WHILE @x <= len(@SearchValues)
+			BEGIN
+				SELECT    @y = CHARINDEX(',', @SearchValues, @x)
+			        if @y = 0
+			        BEGIN
+			            SELECT    @y = len(@SearchValues) + 1
+			        end
+			        SELECT @SearchValue = SUBSTRING(@SearchValues, @x, @y - @x)
+				if( @count = @valueCount )
+				BEGIN
+					-- Get Custom Field Details
+					
+					DECLARE @FieldType int 
+					DECLARE @SearchType int
+					DECLARE @ValidationType int
+					
+					SELECT 
+						@FieldType = FieldType,
+						@SearchType = SearchType,
+						@ValidationType = ValidationType
+					FROM
+						{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+					WHERE
+						CustomFieldID = @CustomFieldID 
+					
+					-- Field Types
+					-- OneLineTextBox 	= 0
+					-- MultiLineTextBox 	= 1
+					-- RichTextBox 		= 2
+					-- DropDownList 	= 3
+					-- CheckBox 		= 4
+					-- MultiCheckBox 	= 5
+					-- RadioButton 		= 6
+					
+					IF (@FieldType = 0 and (@SearchType = 0 or @SearchType = 3)) or @FieldType = 1 or @FieldType = 2
+					BEGIN
+					        INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE '%' + @SearchValue + '%'
+					END
+					
+					IF (@FieldType = 3 and @SearchType = 0) or @FieldType = 4 or (@FieldType = 6 and @SearchType = 0)
+					BEGIN
+					        INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE @SearchValue
+					END
+					
+					IF @FieldType = 5 or (@FieldType = 3 and @SearchType = 1)  or (@FieldType = 6 and @SearchType = 1)
+					BEGIN
+						INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchMulti(PropertyID, @CustomFieldID, @SearchValue) > 0 
+					END
+
+					IF (@FieldType = 0 and @SearchType = 2)
+					BEGIN
+						INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchRange(PropertyID, @CustomFieldID, @SearchValue, @ValidationType) > 0 
+					END
+				END
+			
+				SELECT @valueCount = @valueCount + 1	
+			        SELECT    @x = @y +1
+			END
+	
+		SELECT @count = @count + 1	
+	        SELECT    @i = @j +1
+	END
+
+	DELETE FROM @tbl WHERE PropertyID in (Select PropertyID from @tbl GROUP BY PropertyID HAVING Count(*) < @count)
+	
+	RETURN
+END
+GO

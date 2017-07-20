@@ -1,0 +1,33 @@
+ </tbody>
+        </table>
+        </section>
+        <div id="tablefooter">
+          <div id="tablenav">
+            	<div>
+                    <img src="/apps/sorting/images/first.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1,true)" />
+                    <img src="/apps/sorting/images/previous.gif" width="16" height="16" alt="First Page" onclick="sorter.move(-1)" />
+                    <img src="/apps/sorting/images/next.gif" width="16" height="16" alt="First Page" onclick="sorter.move(1)" />
+                    <img src="/apps/sorting/images/last.gif" width="16" height="16" alt="Last Page" onclick="sorter.move(1,true)" />
+                </div>
+                <div>
+                	<select  id="pagedropdown"></select>
+				</div>
+                <div class="btn-reset"><a class="btn btn btn-warning" href="javascript:sorter.showall()"><i class="icon-resize-vertical icon-white"></i> View All</a>
+                </div>
+            </div>
+			<div id="tablelocation">
+            <div>
+                  <select onchange="sorter.size(this.value)">
+                    <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50" selected="selected">50</option>
+                        <option value="100">100</option>
+						<option value="250">250</option>                        
+                    </select>
+                    <span class="txt-page">Entries Per Page</span>
+                </div>
+                <div class="page txt-txt">Page <span id="currentpage"></span> of <span id="totalpages"></span></div>
+            </div>
+        </div>
+    </div>

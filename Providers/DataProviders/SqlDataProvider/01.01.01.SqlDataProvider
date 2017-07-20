@@ -1,0 +1,15 @@
+﻿DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyDelete
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyDelete
+	@PropertyID int
+AS
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[PropertyID] = @PropertyID
+
+DELETE FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property
+WHERE
+	[PropertyID] = @PropertyID
+GO

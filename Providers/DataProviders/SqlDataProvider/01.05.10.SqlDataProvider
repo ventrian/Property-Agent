@@ -1,0 +1,15 @@
+﻿CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_AgentListActive
+	@ModuleID int
+AS
+
+SELECT     
+	* 
+FROM         
+	{databaseOwner}{objectQualifier}Users
+WHERE     
+	(UserID IN
+		(SELECT DISTINCT AuthorID
+			FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property WHERE ModuleID = @ModuleID))
+ORDER BY 
+    DisplayName
+GO

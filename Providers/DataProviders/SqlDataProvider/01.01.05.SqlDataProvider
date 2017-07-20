@@ -1,0 +1,504 @@
+﻿UPDATE
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType 
+SET
+	SortOrder = 0
+GO
+
+CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchRange
+(
+	@PropertyID int,
+	@CustomFieldID int,
+	@SearchValues nvarchar(255),
+	@ValidationType int 
+)
+RETURNS INT
+AS
+BEGIN
+
+	DECLARE @CustomValue nvarchar(255)
+	SELECT @CustomValue = CAST(CustomValue as nvarchar(255)) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND PropertyID = @PropertyID
+	
+	DECLARE @SearchValueFrom nvarchar(255)
+	DECLARE @SearchValueTo nvarchar(255)
+	
+	SELECT @SearchValueFrom = ''
+	SELECT @SearchValueTo = ''
+	
+	DECLARE @count int 
+	SELECT @count = 1
+	DECLARE @x int ,@y int, @SearchValue nvarchar(255) 
+	SELECT @x = 1
+	WHILE @x <= len(@SearchValues)
+	BEGIN
+		SELECT    @y = CHARINDEX('|', @SearchValues, @x)
+	        if @y = 0
+	        BEGIN
+	            SELECT    @y = len(@SearchValues) + 1
+	        end
+	
+		IF @count = 1 
+		BEGIN
+			SELECT @SearchValueFrom = SUBSTRING(@SearchValues, @x, @y - @x)
+		END
+	
+		IF @count = 2 
+		BEGIN
+			SELECT @SearchValueTo = SUBSTRING(@SearchValues, @x, @y - @x)
+		END
+	
+		SELECT @count = @count + 1
+	        SELECT    @x = @y +1
+	END
+	
+	-- @ValidationType codes
+	-- [None] = 0
+	-- [Currency] = 1
+	-- [Date] = 2
+	-- [Double] = 3
+	-- [Integer] = 4
+	
+	IF @ValidationType = 1 OR @ValidationType = 3 OR @ValidationType = 4
+	BEGIN
+		DECLARE @doAddFrom bit, @doAddTo bit
+		SELECT @doAddFrom = 0
+		SELECT @doAddTo = 0
+	
+		IF isnumeric(@CustomValue) = 1
+		BEGIN
+			IF LEN(@SearchValueFrom) > 0 
+			BEGIN
+				IF isnumeric(@SearchValueFrom) = 1 
+				BEGIN
+					IF cast(@SearchValueFrom as int) <= cast(@CustomValue as int) 
+					BEGIN
+						SELECT @doAddFrom = 1
+					END	
+				END
+			END
+			ELSE
+			BEGIN
+				SELECT @doAddFrom = 1
+			END
+	
+			IF LEN(@SearchValueTo) > 0 
+			BEGIN
+				IF isnumeric(@SearchValueTo) = 1 
+				BEGIN
+					IF cast(@SearchValueTo as int) >= cast(@CustomValue as int) 
+					BEGIN
+						SELECT @doAddTo = 1
+					END	
+				END
+			END
+			ELSE
+			BEGIN
+				SELECT @doAddTo = 1
+			END
+	
+			IF @doAddFrom = 1 AND @doAddTo = 1
+			BEGIN
+				RETURN 1
+			END
+		END
+	END
+	
+	IF @ValidationType = 2 
+	BEGIN
+		DECLARE @doAddFromDate bit, @doAddToDate bit
+		SELECT @doAddFromDate = 0
+		SELECT @doAddToDate = 0
+	
+		IF isdate(@CustomValue) = 1
+		BEGIN
+			IF LEN(@SearchValueFrom) > 0 
+			BEGIN
+				IF isdate(@SearchValueFrom) = 1 
+				BEGIN
+					IF cast(@SearchValueFrom as datetime) <= cast(@CustomValue as datetime) 
+					BEGIN
+						SELECT @doAddFromDate = 1
+					END	
+				END
+			END
+			ELSE
+			BEGIN
+				SELECT @doAddFromDate = 1
+			END
+	
+			IF LEN(@SearchValueTo) > 0 
+			BEGIN
+				IF isdate(@SearchValueTo) = 1 
+				BEGIN
+					IF cast(@SearchValueTo as datetime) >= cast(@CustomValue as datetime) 
+					BEGIN
+						SELECT @doAddToDate = 1
+					END	
+				END
+			END
+			ELSE
+			BEGIN
+				SELECT @doAddToDate = 1
+			END
+	
+			IF @doAddFromDate = 1 AND @doAddToDate = 1
+			BEGIN
+				RETURN 1
+			END
+		END
+	END
+
+	RETURN 0
+END
+GO
+
+DROP FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch
+GO
+
+CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch
+(
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000)
+)
+RETURNS @tbl table (PropertyID int)
+AS
+BEGIN
+	IF @CustomFieldIDs is null or @SearchValues is null
+	BEGIN
+		RETURN
+	END
+	
+	DECLARE @count int
+	SELECT @count = 0
+	
+	DECLARE @i int ,@j int, @CustomFieldID nvarchar(255) 
+	SELECT @i = 1
+	WHILE @i <= len(@CustomFieldIDs)
+	BEGIN
+		SELECT    @j = CHARINDEX(',', @CustomFieldIDs, @i)
+	        if @j = 0
+	        BEGIN
+	            SELECT    @j = len(@CustomFieldIDs) + 1
+	        end
+	        SELECT @CustomFieldID = SUBSTRING(@CustomFieldIDs, @i, @j - @i)
+	
+		DECLARE @valueCount int
+		SELECT @ValueCount = 0
+			DECLARE @x int ,@y int, @SearchValue nvarchar(255) 
+			SELECT @x = 1
+			WHILE @x <= len(@SearchValues)
+			BEGIN
+				SELECT    @y = CHARINDEX(',', @SearchValues, @x)
+			        if @y = 0
+			        BEGIN
+			            SELECT    @y = len(@SearchValues) + 1
+			        end
+			        SELECT @SearchValue = SUBSTRING(@SearchValues, @x, @y - @x)
+				if( @count = @valueCount )
+				BEGIN
+					-- Get Custom Field Details
+					
+					DECLARE @FieldType int 
+					DECLARE @SearchType int
+					DECLARE @ValidationType int
+					
+					SELECT 
+						@FieldType = FieldType,
+						@SearchType = SearchType,
+						@ValidationType = ValidationType
+					FROM
+						{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+					WHERE
+						CustomFieldID = @CustomFieldID 
+					
+					-- Field Types
+					-- OneLineTextBox 	= 0
+					-- MultiLineTextBox 	= 1
+					-- RichTextBox 		= 2
+					-- DropDownList 	= 3
+					-- CheckBox 		= 4
+					-- MultiCheckBox 	= 5
+					-- RadioButton 		= 6
+					
+					IF (@FieldType = 0 and @SearchType = 0) or @FieldType = 1 or @FieldType = 2
+					BEGIN
+					        INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE '%' + @SearchValue + '%'
+					END
+					
+					IF (@FieldType = 3 and @SearchType = 0) or @FieldType = 4 or (@FieldType = 6 and @SearchType = 0)
+					BEGIN
+					        INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE @SearchValue
+					END
+					
+					IF @FieldType = 5 or (@FieldType = 3 and @SearchType = 1)  or (@FieldType = 6 and @SearchType = 1)
+					BEGIN
+						INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchMulti(PropertyID, @CustomFieldID, @SearchValue) > 0 
+					END
+
+					IF (@FieldType = 0 and @SearchType = 2)
+					BEGIN
+						INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchRange(PropertyID, @CustomFieldID, @SearchValue, @ValidationType) > 0 
+					END
+				END
+			
+				SELECT @valueCount = @valueCount + 1	
+			        SELECT    @x = @y +1
+			END
+	
+		SELECT @count = @count + 1	
+	        SELECT    @i = @j +1
+	END
+
+	DELETE FROM @tbl WHERE PropertyID in (Select PropertyID from @tbl GROUP BY PropertyID HAVING Count(*) < @count)
+	
+	RETURN
+END
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField 
+	ADD SearchType2 int
+GO
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+SET SearchType2 = 0
+WHERE SearchType is null
+GO
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+SET SearchType2 = cast(SearchType as integer)
+WHERE SearchType is not null
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField 
+	DROP COLUMN SearchType
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField 
+	ADD SearchType int
+GO
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+SET SearchType = SearchType2
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField 
+	DROP COLUMN SearchType2
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField 
+	ADD FieldElementsFrom nvarchar(4000) 
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField 
+	ADD FieldElementsTo nvarchar(4000) 
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldAdd
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldAdd
+	@ModuleID int,
+	@Name nvarchar(255),
+	@FieldType int,
+	@FieldElements ntext,
+	@DefaultValue nvarchar(255),
+	@Caption nvarchar(255),
+	@CaptionHelp nvarchar(255),
+	@IsInManager bit,
+	@IsSortable bit,
+	@IsInListing bit,
+	@IsCaptionHidden bit,
+	@IsFeatured bit,
+	@IsPublished bit,
+	@IsHidden bit,
+	@IsSearchable bit,
+	@SearchType int,
+	@SortOrder int,
+	@IsRequired bit, 
+	@ValidationType int, 
+	@FieldElementsFrom nvarchar(4000),
+	@FieldElementsTo nvarchar(4000)
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField (
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType],
+	[FieldElementsFrom],
+	[FieldElementsTo] 
+) VALUES (
+	@ModuleID,
+	@Name,
+	@FieldType,
+	@FieldElements,
+	@DefaultValue,
+	@Caption,
+	@CaptionHelp,
+	@IsInManager, 
+	@IsSortable, 
+	@IsInListing,
+	@IsCaptionHidden,
+	@IsFeatured,
+	@IsPublished,
+	@IsHidden,
+	@IsSearchable,
+	@SearchType,
+	@SortOrder,
+	@IsRequired,
+	@ValidationType,
+	@FieldElementsFrom,
+	@FieldElementsTo 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldGet
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldGet
+	@CustomFieldID int
+AS
+
+SELECT
+	[CustomFieldID],
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType], 
+	[FieldElementsFrom],
+	[FieldElementsTo] 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldList
+	@ModuleID int,
+	@IsPublishedOnly bit 
+AS
+
+SELECT
+	[CustomFieldID],
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType], 
+	[FieldElementsFrom],
+	[FieldElementsTo] 
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+WHERE
+	[ModuleID] = @ModuleID 
+	and
+	(@IsPublishedOnly = 0 or IsPublished = 1)
+ORDER BY
+	[SortOrder]
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldUpdate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldUpdate
+	@CustomFieldID int, 
+	@ModuleID int, 
+	@Name nvarchar(255), 
+	@FieldType int, 
+	@FieldElements ntext, 
+	@DefaultValue nvarchar(255), 
+	@Caption nvarchar(255), 
+	@CaptionHelp nvarchar(255), 
+	@IsInManager bit, 
+	@IsSortable bit, 
+	@IsInListing bit, 
+	@IsCaptionHidden bit, 
+	@IsFeatured bit, 
+	@IsPublished bit, 
+	@IsHidden bit, 
+	@IsSearchable bit, 
+	@SearchType int, 
+	@SortOrder int,
+	@IsRequired bit,
+	@ValidationType int, 
+	@FieldElementsFrom nvarchar(4000),
+	@FieldElementsTo nvarchar(4000)
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField SET
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[FieldType] = @FieldType,
+	[FieldElements] = @FieldElements,
+	[DefaultValue] = @DefaultValue,
+	[Caption] = @Caption,
+	[CaptionHelp] = @CaptionHelp,
+	[IsInListing] = @IsInListing,
+	[IsCaptionHidden] = @IsCaptionHidden,
+	[IsInManager] = @IsInManager, 
+	[IsSortable] = @IsSortable, 
+	[IsFeatured] = @IsFeatured,
+	[IsPublished] = @IsPublished,
+	[IsHidden] = @IsHidden,
+	[IsSearchable] = @IsSearchable,
+	[SearchType] = @SearchType,
+	[SortOrder] = @SortOrder,
+	[IsRequired] = @IsRequired,
+	[ValidationType] = @ValidationType,
+	[FieldElementsFrom] = @FieldElementsFrom,
+	[FieldElementsTo] = @FieldElementsTo  
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO

@@ -1,0 +1,350 @@
+﻿CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchMulti
+(
+	@PropertyID int,
+	@CustomFieldID int,
+	@SearchValue nvarchar(255) 
+)
+RETURNS INT
+AS
+BEGIN
+
+	DECLARE @y int, @x int, @SearchVal nvarchar(255)
+	SELECT @y = 1
+	WHILE @y <= len(@SearchValue)
+	BEGIN
+		SELECT    @x = CHARINDEX('|', @SearchValue, @y)
+	        if @x = 0
+	        BEGIN
+	            SELECT    @x = len(@SearchValue) + 1
+	        end
+	        SELECT @SearchVal = SUBSTRING(@SearchValue, @y, @x - @y)
+		DECLARE @CustomValues nvarchar(4000)
+		SELECT @CustomValues = CAST(CustomValue as nvarchar(4000)) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND PropertyID = @PropertyID
+	
+		DECLARE @i int ,@j int, @CustomValue nvarchar(255) 
+		SELECT @i = 1
+		WHILE @i <= len(@CustomValues)
+		BEGIN
+			SELECT    @j = CHARINDEX('|', @CustomValues, @i)
+		        if @j = 0
+		        BEGIN
+		            SELECT    @j = len(@CustomValues) + 1
+		        end
+		        SELECT @CustomValue = SUBSTRING(@CustomValues, @i, @j - @i)
+			IF @SearchVal = @CustomValue 
+			BEGIN
+		        	RETURN 1
+			END
+		        SELECT    @i = @j +1
+		END
+	        SELECT    @y = @x +1
+	END
+
+	RETURN 0
+END
+GO
+
+CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch
+(
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000)
+)
+RETURNS @tbl table (PropertyID int)
+AS
+BEGIN
+	IF @CustomFieldIDs is null or @SearchValues is null
+	BEGIN
+		RETURN
+	END
+	
+	DECLARE @count int
+	SELECT @count = 0
+	
+	DECLARE @i int ,@j int, @CustomFieldID nvarchar(255) 
+	SELECT @i = 1
+	WHILE @i <= len(@CustomFieldIDs)
+	BEGIN
+		SELECT    @j = CHARINDEX(',', @CustomFieldIDs, @i)
+	        if @j = 0
+	        BEGIN
+	            SELECT    @j = len(@CustomFieldIDs) + 1
+	        end
+	        SELECT @CustomFieldID = SUBSTRING(@CustomFieldIDs, @i, @j - @i)
+	
+		DECLARE @valueCount int
+		SELECT @ValueCount = 0
+			DECLARE @x int ,@y int, @SearchValue nvarchar(255) 
+			SELECT @x = 1
+			WHILE @x <= len(@SearchValues)
+			BEGIN
+				SELECT    @y = CHARINDEX(',', @SearchValues, @x)
+			        if @y = 0
+			        BEGIN
+			            SELECT    @y = len(@SearchValues) + 1
+			        end
+			        SELECT @SearchValue = SUBSTRING(@SearchValues, @x, @y - @x)
+				if( @count = @valueCount )
+				BEGIN
+					-- Get Custom Field Details
+					
+					DECLARE @FieldType int 
+					DECLARE @SearchType int
+					
+					SELECT 
+						@FieldType = FieldType,
+						@SearchType = SearchType
+					FROM
+						{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+					WHERE
+						CustomFieldID = @CustomFieldID 
+					
+					-- Field Types
+					-- OneLineTextBox 	= 0
+					-- MultiLineTextBox 	= 1
+					-- RichTextBox 		= 2
+					-- DropDownList 	= 3
+					-- CheckBox 		= 4
+					-- MultiCheckBox 	= 5
+					-- RadioButton 		= 6
+					
+					IF @FieldType = 0 or @FieldType = 1 or @FieldType = 2
+					BEGIN
+					        INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE '%' + @SearchValue + '%'
+					END
+					
+					IF @FieldType = 3 or @FieldType = 4 or @FieldType = 6
+					BEGIN
+					        INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE @SearchValue
+					END
+					
+					IF @FieldType = 5
+					BEGIN
+						INSERT INTO @tbl  
+					        SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchMulti(PropertyID, @CustomFieldID, @SearchValue) > 0 
+					END
+				END
+			
+				SELECT @valueCount = @valueCount + 1	
+			        SELECT    @x = @y +1
+			END
+	
+		SELECT @count = @count + 1	
+	        SELECT    @i = @j +1
+	END
+
+	DELETE FROM @tbl WHERE PropertyID in (Select PropertyID from @tbl GROUP BY PropertyID HAVING Count(*) < @count)
+	
+	RETURN
+END
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldAdd
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldAdd
+	@ModuleID int,
+	@Name nvarchar(255),
+	@FieldType int,
+	@FieldElements ntext,
+	@DefaultValue nvarchar(255),
+	@Caption nvarchar(255),
+	@CaptionHelp nvarchar(255),
+	@IsInManager bit,
+	@IsSortable bit,
+	@IsInListing bit,
+	@IsCaptionHidden bit,
+	@IsFeatured bit,
+	@IsPublished bit,
+	@IsHidden bit,
+	@IsSearchable bit,
+	@SearchType nvarchar(50),
+	@SortOrder int,
+	@IsRequired bit, 
+	@ValidationType int
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField (
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[IsInManager], 
+	[IsSortable], 
+	[IsInListing],
+	[IsCaptionHidden],
+	[IsFeatured],
+	[IsPublished],
+	[IsHidden],
+	[IsSearchable],
+	[SearchType],
+	[SortOrder],
+	[IsRequired],
+	[ValidationType]
+) VALUES (
+	@ModuleID,
+	@Name,
+	@FieldType,
+	@FieldElements,
+	@DefaultValue,
+	@Caption,
+	@CaptionHelp,
+	@IsInManager, 
+	@IsSortable, 
+	@IsInListing,
+	@IsCaptionHidden,
+	@IsFeatured,
+	@IsPublished,
+	@IsHidden,
+	@IsSearchable,
+	@SearchType,
+	@SortOrder,
+	@IsRequired,
+	@ValidationType 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldUpdate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldUpdate
+	@CustomFieldID int, 
+	@ModuleID int, 
+	@Name nvarchar(255), 
+	@FieldType int, 
+	@FieldElements ntext, 
+	@DefaultValue nvarchar(255), 
+	@Caption nvarchar(255), 
+	@CaptionHelp nvarchar(255), 
+	@IsInManager bit, 
+	@IsSortable bit, 
+	@IsInListing bit, 
+	@IsCaptionHidden bit, 
+	@IsFeatured bit, 
+	@IsPublished bit, 
+	@IsHidden bit, 
+	@IsSearchable bit, 
+	@SearchType nvarchar(50), 
+	@SortOrder int,
+	@IsRequired bit,
+	@ValidationType int 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField SET
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[FieldType] = @FieldType,
+	[FieldElements] = @FieldElements,
+	[DefaultValue] = @DefaultValue,
+	[Caption] = @Caption,
+	[CaptionHelp] = @CaptionHelp,
+	[IsInListing] = @IsInListing,
+	[IsCaptionHidden] = @IsCaptionHidden,
+	[IsInManager] = @IsInManager, 
+	[IsSortable] = @IsSortable, 
+	[IsFeatured] = @IsFeatured,
+	[IsPublished] = @IsPublished,
+	[IsHidden] = @IsHidden,
+	[IsSearchable] = @IsSearchable,
+	[SearchType] = @SearchType,
+	[SortOrder] = @SortOrder,
+	[IsRequired] = @IsRequired,
+	[ValidationType] = @ValidationType 
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyList
+	@ModuleID int, 
+	@PropertyTypeID int,
+	@MaxCount int,
+	@IsPublished bit,
+	@IsNotPublished bit,
+	@IsActive bit,
+	@IsPending bit,
+	@IsExpired bit,
+	@ShowFeaturedOnly bit,
+	@SortBy int,
+	@SortByID int,
+	@SortOrder int,
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000) 
+AS
+
+if( @MaxCount is not null )
+begin
+	SET ROWCOUNT @MaxCount 
+end
+
+SELECT
+	p.[PropertyID],
+	p.[ModuleID],
+	p.[PropertyTypeID],
+	p.[IsApproved],
+	p.[IsFeatured],
+	p.[IsPublished],
+	p.[IsArchived],
+	p.[DateCreated],
+	p.[DateModified],
+	p.[DatePublished],
+	p.[DateExpired],
+	p.[ViewCount],
+	pt.[Name] as 'PropertyTypeName',
+	(select top 1 [PhotoID] from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Photo photo where p.PropertyID = photo.PropertyID order by SortOrder) as 'FirstPhotoID'  
+FROM 
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Property p, {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyType pt 
+WHERE
+	p.[ModuleID] = @ModuleID
+	and 
+	p.PropertyTypeID = pt.PropertyTypeID
+	and 
+	(@PropertyTypeID is null or p.PropertyTypeID = @PropertyTypeID) 
+	and
+	(@IsPublished is null or p.IsPublished = 1)
+	and
+	(@IsNotPublished is null or p.IsPublished = 0)
+	and
+	(@IsActive is null or (p.[DatePublished] < GetDate() and (p.[DateExpired] is null or p.[DateExpired] > GetDate())))
+	and
+	(@IsPending is null or (p.[DatePublished] > GetDate()))
+	and
+	(@IsExpired is null or (p.[DateExpired] is not null and p.[DateExpired] < GetDate()))
+	and
+	(@ShowFeaturedOnly is null or p.IsFeatured = 1)
+	and
+	((@CustomFieldIDs is null or @SearchValues is null) or (p.PropertyID in (select PropertyID from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch(@CustomFieldIDs, @SearchValues))))
+ORDER BY 
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 1 THEN cast(p.[DateModified] as nvarchar)
+              	WHEN @SortBy = 1 and @SortOrder = 1 THEN cast(p.[DatePublished] as nvarchar)
+              	WHEN @SortBy = 3 and @SortOrder = 1 THEN 
+			Case 
+				WHEN @SortByID is null THEN cast(p.[DateModified] as nvarchar) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END DESC,
+	CASE 
+		WHEN @SortBy = 0 and @SortOrder = 0 THEN cast(p.[DateModified] as nvarchar)
+              	WHEN @SortBy = 1 and @SortOrder = 0 THEN cast(p.[DatePublished] as nvarchar)
+              	WHEN @SortBy = 3 and @SortOrder = 0 THEN 
+			Case 
+				WHEN @SortByID is null THEN cast(p.[DateModified] as nvarchar) 
+				WHEN @SortByID is not null THEN (SELECT TOP 1 cast(CustomValue as nvarchar) FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @SortByID AND PropertyID = p.[PropertyID])
+			END
+              END ASC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 1 THEN p.[ViewCount] 
+              END DESC,
+	CASE 
+              	WHEN @SortBy = 2 and @SortOrder = 0 THEN p.[ViewCount]
+              END ASC
+GO

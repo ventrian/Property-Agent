@@ -1,0 +1,137 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactField ADD
+	CustomFieldID int NULL
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldList
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldList
+	@ModuleID int
+AS
+
+SELECT     
+	ContactFieldID, 
+	ModuleID, 
+	Name, 
+	FieldType, 
+	FieldElements, 
+	DefaultValue, 
+	Caption, 
+	CaptionHelp, 
+	SortOrder, 
+	IsRequired, 
+	Length,
+	CustomFieldID
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactField
+WHERE
+	[ModuleID] = @ModuleID 
+ORDER BY
+	[SortOrder]
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldAdd
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldAdd
+	@ModuleID int,
+	@Name nvarchar(255),
+	@FieldType int,
+	@FieldElements ntext,
+	@DefaultValue nvarchar(255),
+	@Caption nvarchar(255),
+	@CaptionHelp nvarchar(255),
+	@SortOrder int,
+	@IsRequired bit, 
+	@Length int,
+	@CustomFieldID int 
+AS
+
+INSERT INTO {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactField (
+	[ModuleID],
+	[Name],
+	[FieldType],
+	[FieldElements],
+	[DefaultValue],
+	[Caption],
+	[CaptionHelp],
+	[SortOrder],
+	[IsRequired],
+	[Length],
+	[CustomFieldID] 
+) VALUES (
+	@ModuleID,
+	@Name,
+	@FieldType,
+	@FieldElements,
+	@DefaultValue,
+	@Caption,
+	@CaptionHelp,
+	@SortOrder,
+	@IsRequired,
+	@Length,
+	@CustomFieldID 
+)
+
+select SCOPE_IDENTITY()
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldGet
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldGet
+	@ContactFieldID int
+AS
+
+SELECT     
+	ContactFieldID, 
+	ModuleID, 
+	Name, 
+	FieldType, 
+	FieldElements, 
+	DefaultValue, 
+	Caption, 
+	CaptionHelp, 
+	SortOrder, 
+	IsRequired, 
+	Length,
+	CustomFieldID 
+FROM         
+	{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactField
+WHERE
+	[ContactFieldID] = @ContactFieldID
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldUpdate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactFieldUpdate
+	@ContactFieldID int, 
+	@ModuleID int, 
+	@Name nvarchar(255), 
+	@FieldType int, 
+	@FieldElements ntext, 
+	@DefaultValue nvarchar(255), 
+	@Caption nvarchar(255), 
+	@CaptionHelp nvarchar(255), 
+	@SortOrder int,
+	@IsRequired bit,
+	@Length int,
+	@CustomFieldID int 
+AS
+
+UPDATE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_ContactField SET
+	[ModuleID] = @ModuleID,
+	[Name] = @Name,
+	[FieldType] = @FieldType,
+	[FieldElements] = @FieldElements,
+	[DefaultValue] = @DefaultValue,
+	[Caption] = @Caption,
+	[CaptionHelp] = @CaptionHelp,
+	[SortOrder] = @SortOrder,
+	[IsRequired] = @IsRequired,
+	[Length] = @Length,
+	[CustomFieldID] = @CustomFieldID 
+WHERE
+	[ContactFieldID] = @ContactFieldID
+GO

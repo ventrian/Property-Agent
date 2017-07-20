@@ -1,0 +1,2 @@
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="SubscribeForm.ascx.vb" Inherits="Ventrian.PropertyAgent.SubscribeForm" %>
+<asp:CheckBox runat="server" ID="chkSubscriber" AutoPostBack="True" Text="Subscribe"/>

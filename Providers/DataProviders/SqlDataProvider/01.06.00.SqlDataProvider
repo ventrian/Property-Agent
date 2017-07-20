@@ -1,0 +1,63 @@
+﻿CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_fnSplit(
+    @sInputList VARCHAR(8000) -- List of delimited items
+  , @sDelimiter VARCHAR(8000) = ',' -- delimiter that separates items
+) RETURNS @List TABLE ([CustomValue] VARCHAR(8000))
+
+BEGIN
+DECLARE @sItem VARCHAR(8000)
+WHILE CHARINDEX(@sDelimiter,@sInputList,0) <> 0
+ BEGIN
+ SELECT
+  @sItem=RTRIM(LTRIM(SUBSTRING(@sInputList,1,CHARINDEX(@sDelimiter,@sInputList,0)-1))),
+  @sInputList=RTRIM(LTRIM(SUBSTRING(@sInputList,CHARINDEX(@sDelimiter,@sInputList,0)+LEN(@sDelimiter),LEN(@sInputList))))
+ 
+ IF LEN(@sItem) > 0
+  INSERT INTO @List SELECT @sItem
+ END
+
+IF LEN(@sInputList) > 0
+ INSERT INTO @List SELECT @sInputList -- Put the last item in
+RETURN
+END
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueListByField
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValueListByField
+	@CustomFieldID int
+AS
+
+DECLARE @List TABLE ([CustomValue] VARCHAR(8000))
+
+DECLARE @CustomValue nvarchar(4000)
+	
+DECLARE c1 CURSOR READ_ONLY
+FOR
+SELECT
+	cast([CustomValue] as nvarchar) as 'CustomValue' 
+FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue
+WHERE
+	[CustomFieldID] = @CustomFieldID
+GROUP BY
+	cast([CustomValue] as nvarchar)
+OPEN c1
+
+FETCH NEXT FROM c1
+INTO @CustomValue
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+	INSERT INTO @List SELECT * from {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_fnSplit(@CustomValue, ';')
+
+	FETCH NEXT FROM c1
+	INTO @CustomValue
+
+END
+
+CLOSE c1
+DEALLOCATE c1
+
+SELECT * from @List order by customvalue
+GO

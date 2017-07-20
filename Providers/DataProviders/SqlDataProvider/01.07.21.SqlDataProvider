@@ -1,0 +1,136 @@
+﻿DROP FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch
+GO
+
+CREATE FUNCTION {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearch
+(
+	@CustomFieldIDs nvarchar(4000),
+	@SearchValues	nvarchar(4000)
+)
+RETURNS @tbl table (PropertyID int)
+AS
+BEGIN
+	IF @CustomFieldIDs is null or @SearchValues is null
+	BEGIN
+		RETURN
+	END
+	
+	DECLARE @count int
+	SELECT @count = 0
+	
+	DECLARE @i int ,@j int, @CustomFieldID nvarchar(255) 
+	SELECT @i = 1
+	WHILE @i <= len(@CustomFieldIDs)
+	BEGIN
+		SELECT    @j = CHARINDEX(',', @CustomFieldIDs, @i)
+	        if @j = 0
+	        BEGIN
+	            SELECT    @j = len(@CustomFieldIDs) + 1
+	        end
+	        SELECT @CustomFieldID = SUBSTRING(@CustomFieldIDs, @i, @j - @i)
+	
+		DECLARE @valueCount int
+		SELECT @ValueCount = 0
+			DECLARE @x int ,@y int, @SearchValue nvarchar(255) 
+			SELECT @x = 1
+			WHILE @x <= len(@SearchValues)
+			BEGIN
+				SELECT    @y = CHARINDEX(',', @SearchValues, @x)
+			        if @y = 0
+			        BEGIN
+			            SELECT    @y = len(@SearchValues) + 1
+			        end
+			        SELECT @SearchValue = SUBSTRING(@SearchValues, @x, @y - @x)
+				if( @count = @valueCount )
+				BEGIN
+
+					SELECT @SearchValue = Replace(@SearchValue, '^', ',')
+
+					-- Get Custom Field Details
+
+					IF( @CustomFieldID = -1 )
+					BEGIN
+						INSERT INTO @tbl  
+					    SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomValue LIKE '%' + @SearchValue + '%'
+					END
+					ELSE
+					BEGIN
+					
+						DECLARE @FieldType int 
+						DECLARE @SearchType int
+						DECLARE @ValidationType int
+						
+						SELECT 
+							@FieldType = FieldType,
+							@SearchType = SearchType,
+							@ValidationType = ValidationType
+						FROM
+							{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomField
+						WHERE
+							CustomFieldID = @CustomFieldID 
+						
+						-- Field Types
+						-- OneLineTextBox 	= 0
+						-- MultiLineTextBox = 1
+						-- RichTextBox 		= 2
+						-- DropDownList 	= 3
+						-- CheckBox 		= 4
+						-- MultiCheckBox 	= 5
+						-- RadioButton 		= 6
+						
+						IF (@FieldType = 0 and (@SearchType = 0 or @SearchType = 3)) or @FieldType = 1 or @FieldType = 2
+						BEGIN
+								INSERT INTO @tbl  
+								SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE '%' + @SearchValue + '%'
+						END
+						
+						IF (@FieldType = 3 and @SearchType = 0) or @FieldType = 4 or (@FieldType = 6 and @SearchType = 0)
+						BEGIN
+								INSERT INTO @tbl  
+								SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND CustomValue LIKE @SearchValue
+						END
+						
+						IF @FieldType = 5 or (@FieldType = 3 and @SearchType = 1)  or (@FieldType = 6 and @SearchType = 1)
+						BEGIN
+							DECLARE @TempMultiItems table (PropertyID int)
+
+							DECLARE @z int, @w int, @SearchVal nvarchar(255)
+							SELECT @z = 1
+							WHILE @z <= len(@SearchValue)
+							BEGIN
+								SELECT    @w = CHARINDEX('|', @SearchValue, @z)
+								if @w = 0
+								BEGIN
+									SELECT    @w = len(@SearchValue) + 1
+								end
+								SELECT @SearchVal = SUBSTRING(@SearchValue, @z, @w - @z)
+								INSERT INTO @TempMultiItems  
+										SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND (cast(CustomValue as varchar) = @SearchVal OR CustomValue LIKE @SearchVal + '|%' OR CustomValue LIKE '%|' + @SearchVal OR CustomValue LIKE '%|' + @SearchVal + '|%')
+								
+								SELECT    @z = @w +1
+							END
+
+							INSERT INTO @tbl
+								SELECT PropertyID FROM @TempMultiItems GROUP BY PropertyID 
+						END
+
+						IF (@FieldType = 0 and @SearchType = 2)
+						BEGIN
+							INSERT INTO @tbl  
+								SELECT PropertyID FROM {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_PropertyValue WHERE CustomFieldID = @CustomFieldID AND {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_CustomFieldSearchRange(PropertyID, @CustomFieldID, @SearchValue, @ValidationType) > 0 
+						END
+					END
+				END
+			
+				SELECT @valueCount = @valueCount + 1	
+			        SELECT    @x = @y +1
+			END
+	
+		SELECT @count = @count + 1	
+	        SELECT    @i = @j +1
+	END
+
+	DELETE FROM @tbl WHERE PropertyID in (Select PropertyID from @tbl GROUP BY PropertyID HAVING Count(*) < @count)
+	
+	RETURN
+END
+GO

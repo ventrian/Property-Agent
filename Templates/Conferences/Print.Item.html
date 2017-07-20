@@ -1,0 +1,59 @@
+<div style="background:#fff">
+  <div class="txtrt">
+    <h1>Provided By: NortheastOK.com</h1>
+  </div>
+  [ISFEATURED]
+  <div class="leftfloat p10">
+    <h5><span class="icon star"></span>IN THE SPOTLIGHT!</h5>
+  </div>
+  [/ISFEATURED]
+  <div class="rightfloat p10">[RATINGAVG]</div>
+  <div class="clearfix"></div>
+  <div class="clearfix asPhotobg">
+    <div class="leftfloat">
+      <div class="photo p5">[HASIMAGES]<img src="[PHOTOLINKMEDIUM]" alt="[CUSTOM:TITLE]-[PHOTOTITLE]" />[/HASIMAGES][HASVALUE:URL][HASNOIMAGES]<img src="http://images.w3snapshot.com/?size=s&key=f852b4046ee75f0adaa47e986dc91f95&url=[CUSTOM:URL]" />[/HASNOIMAGES][/HASVALUE:URL]</div>
+    </div>
+    <div class="leftfloat min75 max75 p5">
+      <div class="rightfloat">
+        <ul class="aslist">
+          <li><span class="icon cal"></span>Added: [DATEPUBLISHED]</li>
+          <li>[TYPEIMAGE] [TYPE]</li>
+          <li><span class="icon check"></span>[HITS] views</li>
+        </ul>
+      </div>
+      <h2>[CUSTOM:TITLE]</h2>
+      <div class="content">
+        <ul id="address" class="aslist">
+          <li><span class="icon chain"></span>[CUSTOM:URL]</li>
+          [HASVALUE:Address]
+          <li>[CUSTOM:Address]</li>
+          [/HASVALUE:Address]
+          [HASVALUE:City][HASVALUE:Zip]
+          <li>[CUSTOM:City], [CUSTOM:State], [CUSTOM:Zip]</li>
+          [/HASVALUE:Zip][/HASVALUE:City]
+          [HASVALUE:Phone]
+          <li><b>[CAPTION:Phone]:</b> [CUSTOM:Phone]</li>
+          [/HASVALUE:Phone]
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tabContent">
+    <div id="overview" class="content active">
+      <h3>Overview</h3>
+      <p class="p5">[CUSTOM:Details]</p>
+    </div>
+    <!-- Still Under Dev <div id="coupons" class="content">
+    <p>Insert Here...</p>
+  </div>-->
+  </div>
+[EXPRESSION:Map:=:Yes]
+<h5 class="p10 bgblue larger">Location:</h5>
+<div id="map_canvas"></div>
+<script type="text/javascript" src="/Resources/Shared/scripts/jquery/jquery.simplemap.js"></script>
+<script type="text/javascript">
+	$("#map_canvas").simplemap({ search: "[CUSTOM:TITLE] [HASVALUE:Address][CUSTOM:Address][/HASVALUE:Address] [HASVALUE:City][CUSTOM:City],[/HASVALUE:City] [HASVALUE:State][CUSTOM:State][/HASVALUE:State]", description: "[CUSTOM:TITLE]<br>[HASVALUE:Phone][CUSTOM:Phone][/HASVALUE:Phone]<br>[HASVALUE:Address][CUSTOM:Address][/HASVALUE:Address]<br>[HASVALUE:City][CUSTOM:City],[/HASVALUE:City] [HASVALUE:State][CUSTOM:State][/HASVALUE:State]" });
+</script>
+[/EXPRESSION:Map:=:Yes]
+  <div class="rightfloat txtdrk p10">[LINK]</div>
+</div>

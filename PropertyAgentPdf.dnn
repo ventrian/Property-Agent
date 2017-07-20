@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dotnetnuke version="3.0" type="Module">
+	<folders>
+    <folder>
+      <name>PropertyAgentPDF</name>
+      <friendlyname>Property Agent PDF</friendlyname>
+      <foldername>PropertyAgentPDF</foldername>
+      <modulename>PropertyAgentPDF</modulename>
+      <description>PDF component required for property agent.</description>
+      <version>01.00.00</version>
+      <files>
+        <file>
+          <name>Ventrian.NewsArticles.Secure.dll</name>
+        </file>
+        <file>
+          <name>ephtmltopdf.dll</name>
+        </file>
+      </files>
+    </folder>
+	</folders>
+</dotnetnuke>

@@ -573,6 +573,10 @@
 					<td class="SubHead" width="150"><dnn:label id="plPublished" runat="server" resourcekey="plPublished" suffix=":" controlname="chkPublished"></dnn:label></td>
 					<td><asp:checkbox id="chkPublished" Runat="server" Checked="False"></asp:checkbox></td>
 				</tr>
+                <tr align="top">
+					<td class="SubHead OnlyForAuthenticated" width="150"><dnn:label id="plOnlyForAuthenticated" runat="server" resourcekey="plOnlyForAuthenticated" suffix=":" controlname="chkOnlyForAuthenticated"></dnn:label></td>
+					<td class="OnlyForAuthenticated"><asp:checkbox id="chkOnlyForAuthenticated" Runat="server" Checked="True"></asp:checkbox></td>
+				</tr>
 			</table>
 		</TD>
 	</TR>

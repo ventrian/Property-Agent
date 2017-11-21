@@ -3,3 +3,20 @@
 ################################################################################
 
 /Backup
+/bin
+/obj
+/packages
+/Providers/DataProviders/SqlDataProvider/bin
+/Providers/DataProviders/SqlDataProvider/obj
+/UpgradeLog5.htm
+/UpgradeLog4.htm
+/UpgradeLog3.htm
+/UpgradeLog2.htm
+/UpgradeLog.htm
+/SyncfusionTroubleshooterErrors.log
+/Ventrian.PropertyAgent.v12.suo
+/Ventrian.PropertyAgent.v11.suo
+/Ventrian.PropertyAgent.v11.suo
+/Ventrian.PropertyAgent.v11.suo
+*.config
+/.vs/Ventrian.PropertyAgent/v14

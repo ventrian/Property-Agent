@@ -14,7 +14,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td height="5" colspan="2"></td>
+		<td colspan="2"></td>
 	</tr>
 </table>
 <asp:Panel runat="server" DefaultButton="cmdSearch">
@@ -55,12 +55,11 @@
 	</tr>
 	<tr>
 	    <td colspan="2" align="Center">
-	        <asp:linkbutton id="cmdSearch" runat="server" cssclass="CommandButton"
-		        text="Filter Properties" ResourceKey="FilterProperties" causesvalidation="False" borderstyle="none" />
+	        <asp:linkbutton id="cmdSearch" runat="server" cssclass="CommandButton" text="Filter Properties" ResourceKey="FilterProperties" causesvalidation="False" borderstyle="none" />
 	    </td>
 	</tr>
 	<tr>
-		<td colspan="2" height="5"></td>
+		<td colspan="2"></td>
 	</tr>
 </table>
 </asp:Panel>

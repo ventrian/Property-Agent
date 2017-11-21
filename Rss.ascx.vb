@@ -133,7 +133,9 @@ Namespace Ventrian.PropertyAgent
             Dim objLayoutPhoto As LayoutInfo = objLayoutController.GetLayout(Me.PropertySettings.Template, LayoutType.RSS_Photo_Html)
 
             Dim objPropertyController As New PropertyController
-            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, SortBy, SortByCustomField, SortDirection, _customFieldIDs, _searchValues, 0, Me.PropertySettings.RssMaxRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger)
+            Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+            If Me.UserId = -1 Then OnlyForAuthenticated = True
+            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, OnlyForAuthenticated, SortBy, SortByCustomField, SortDirection, _customFieldIDs, _searchValues, 0, Me.PropertySettings.RssMaxRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger)
 
             Response.Clear()
             Response.Buffer = True

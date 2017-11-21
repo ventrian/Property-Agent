@@ -153,7 +153,11 @@ Namespace Ventrian.PropertyAgent
 
             Dim objPropertyController As New PropertyController
             Dim objPropertyInfo As PropertyInfo = objPropertyController.Get(_propertyID)
-
+            If objPropertyInfo.OnlyForAuthenticated = False Then
+                If Me.UserId = -1 Then
+                    objPropertyInfo = Nothing
+                End If
+            End If
             If Not (objPropertyInfo Is Nothing) Then
 
                 If (objPropertyInfo.Status <> StatusType.Published) Then

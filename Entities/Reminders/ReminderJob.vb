@@ -161,7 +161,7 @@ Namespace Ventrian.PropertyAgent
             Dim emailsSent As Integer = 0
 
             Dim objPropertyController As New PropertyController
-            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(moduleID, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Expiry, Null.NullInteger, SortDirectionType.Ascending, Null.NullString, Null.NullString, 0, 100000, Null.NullBoolean)
+            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(moduleID, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, Null.NullBoolean, SortByType.Expiry, Null.NullInteger, SortDirectionType.Ascending, Null.NullString, Null.NullString, 0, 100000, Null.NullBoolean)
 
             For Each objProperty As PropertyInfo In objProperties
                 If (objProperty.DateExpired <> Null.NullDate) Then

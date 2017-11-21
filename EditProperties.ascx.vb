@@ -319,8 +319,10 @@ Namespace Ventrian.PropertyAgent
             End If
 
             Dim totalRecords As Integer = 0
+            Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+            If Me.UserId = -1 Then OnlyForAuthenticated = True
             Dim objStatusType As SearchStatusType = CType(System.Enum.Parse(GetType(SearchStatusType), drpStatus.SelectedValue), SearchStatusType)
-            objProperties = objPropertyController.List(Me.ModuleId, Convert.ToInt32(drpTypes.SelectedValue), objStatusType, authorID, brokerID, Null.NullBoolean, objSortByType, sortByID, objSortDirection, customFieldIDs, searchValues, _currentPage - 1, PageSize, totalRecords, False, True, Null.NullInteger, Null.NullInteger)
+            objProperties = objPropertyController.List(Me.ModuleId, Convert.ToInt32(drpTypes.SelectedValue), objStatusType, authorID, brokerID, Null.NullBoolean, OnlyForAuthenticated, objSortByType, sortByID, objSortDirection, customFieldIDs, searchValues, _currentPage - 1, PageSize, totalRecords, False, True, Null.NullInteger, Null.NullInteger)
 
             If (objProperties.Count > 0) Then
 

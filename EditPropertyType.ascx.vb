@@ -244,7 +244,7 @@ Namespace Ventrian.PropertyAgent
             Try
 
                 Dim objPropertyController As New PropertyController
-                Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.Any, Null.NullInteger, Null.NullInteger, False, SortByType.Published, Null.NullInteger, SortDirectionType.Descending, Null.NullString, Null.NullString, 0, 100000, False)
+                Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.Any, Null.NullInteger, Null.NullInteger, False, Null.NullBoolean, SortByType.Published, Null.NullInteger, SortDirectionType.Descending, Null.NullString, Null.NullString, 0, 100000, False)
 
                 For Each objProperty As PropertyInfo In objProperties
                     Dim objPhotoController As New PhotoController

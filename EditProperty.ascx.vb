@@ -254,6 +254,7 @@ Namespace Ventrian.PropertyAgent
                     End If
 
                     chkFeatured.Checked = _property.IsFeatured
+                    chkOnlyForAuthenticated.Checked = _property.OnlyForAuthenticated
 
                     If (_property.Username <> "") Then
                         lblOwner.Text = _property.DisplayName & " (" & _property.Username & ")"
@@ -621,6 +622,7 @@ Namespace Ventrian.PropertyAgent
 
             _property.Status = objStatusType
             _property.IsFeatured = chkFeatured.Checked
+            _property.OnlyForAuthenticated = chkOnlyForAuthenticated.Checked
             _property.ModifiedID = Me.UserId
 
             If (txtLatitude.Text <> "") Then

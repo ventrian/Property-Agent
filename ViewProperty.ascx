@@ -28,7 +28,7 @@ jQuery(function() {
 		</td>
 	</tr>
 	<tr>
-		<td height="5" colspan="2"></td>
+		<td colspan="2"></td>
 	</tr>
 </table>
 <div class="Normal">

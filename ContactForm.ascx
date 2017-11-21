@@ -1,6 +1,8 @@
 <%@ Control Language="vb" AutoEventWireup="false" CodeBehind="ContactForm.ascx.vb" Inherits="Ventrian.PropertyAgent.ContactForm" %>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke" Namespace="DotNetNuke.UI.WebControls" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
+<%@ Register Assembly="Menulab.FlexCaptcha" Namespace="Menulab" TagPrefix="ml" %>
+
 <asp:PlaceHolder id="phContactForm" runat="server" Visible="True">
 	<asp:Table id="tblContactForm" runat="server">
 		<asp:TableRow>
@@ -32,7 +34,7 @@
 					        <dnn:label id="plCaptcha" resourcekey="Captcha" runat="server" controlname="ctlCaptcha" suffix=":"></dnn:label>
 				        </td>
 				        <td align="left">
-					        <dnn:captchacontrol id="ctlCaptcha" captchawidth="130" captchaheight="40" cssclass="Normal" runat="server" errorstyle-cssclass="NormalRed" />
+					        <ml:FlexCaptcha ID="mlFlexCaptcha" runat="server" />
 				        </td>
 			        </tr>
 					<tr valign="top">

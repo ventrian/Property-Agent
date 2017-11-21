@@ -690,7 +690,7 @@
 				Display="Dynamic" ResourceKey="valCommentWidth.ErrorMessage" CssClass="NormalRed" />
 			<asp:CompareValidator ID="valCommentWidthIsNumber" Runat="server" ControlToValidate="txtCommentWidth"
 				Display="Dynamic" ResourceKey="valCommentWidthIsNumber.ErrorMessage" CssClass="NormalRed" Operator="DataTypeCheck"
-				Type="Integer" />
+				Type="String" />
 		</td>
 	</tr>
 	<tr>
@@ -793,7 +793,7 @@
 				Display="Dynamic" ResourceKey="valContactWidth.ErrorMessage" CssClass="NormalRed" />
 			<asp:CompareValidator ID="valContactWidthIsNumber" Runat="server" ControlToValidate="txtContactWidth"
 				Display="Dynamic" ResourceKey="valContactWidthIsNumber.ErrorMessage" CssClass="NormalRed" Operator="DataTypeCheck"
-				Type="Integer" />
+				Type="String" />
 		</td>
 	</tr>
 	<tr>

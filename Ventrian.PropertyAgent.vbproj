@@ -52,14 +52,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke, Version=7.3.3.117, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DotNetNuke, Version=8.0.4.226, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
+      <HintPath>Libraries\DotNetNuke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DotNetNuke.Web.Client, Version=6.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DotNetNuke.Web.Client, Version=8.0.4.226, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\DotNetNuke.Web.Client.dll</HintPath>
+      <HintPath>Libraries\DotNetNuke.Web.Client.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ephtmltopdf, Version=4.0.6.31734, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL" />
     <Reference Include="Menulab.FlexCaptcha, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -245,6 +246,8 @@
     <Content Include="LandingPage.ascx" />
     <Content Include="Latest.ascx" />
     <Content Include="LatestOptions.ascx" />
+    <Content Include="Libraries\DotNetNuke.dll" />
+    <Content Include="Libraries\DotNetNuke.Web.Client.dll" />
     <Content Include="Libraries\Menulab.FlexCaptcha.dll" />
     <Content Include="Libraries\Ventrian.ImageResizer.dll" />
     <Content Include="module.css" />

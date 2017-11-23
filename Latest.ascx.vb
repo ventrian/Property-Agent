@@ -281,8 +281,9 @@ Namespace Ventrian.PropertyAgent
             End If
 
             Dim totalRecords As Integer = 0
-
-            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
+            Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+            If Me.UserId = -1 Then OnlyForAuthenticated = True
+            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
 
             If (PropertySettingsLatest.ShowRelated) Then
                 Dim match As Boolean = False
@@ -292,7 +293,7 @@ Namespace Ventrian.PropertyAgent
                     End If
                 Next
                 If (match) Then
-                    objProperties = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount + 1, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
+                    objProperties = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount + 1, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
                     Dim objPropertiesUpdated As New List(Of PropertyInfo)
                     For Each objProperty As PropertyInfo In objProperties
                         If (objProperty.PropertyID <> _propertyID) Then

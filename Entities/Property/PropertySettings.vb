@@ -1334,10 +1334,10 @@ Namespace Ventrian.PropertyAgent
             End Get
         End Property
 
-        Public ReadOnly Property CommentWidth() As Integer
+        Public ReadOnly Property CommentWidth() As String
             Get
                 If (_settings.Contains(Constants.COMMENT_WIDTH_SETTING)) Then
-                    Return Convert.ToInt32(_settings(Constants.COMMENT_WIDTH_SETTING).ToString())
+                    Return _settings(Constants.COMMENT_WIDTH_SETTING).ToString()
                 Else
                     Return Constants.COMMENT_WIDTH_SETTING_DEFAULT
                 End If
@@ -1599,10 +1599,10 @@ Namespace Ventrian.PropertyAgent
             End Get
         End Property
 
-        Public ReadOnly Property ContactWidth() As Integer
+        Public ReadOnly Property ContactWidth() As String
             Get
                 If (_settings.Contains(Constants.CONTACT_WIDTH_SETTING)) Then
-                    Return Convert.ToInt32(_settings(Constants.CONTACT_WIDTH_SETTING).ToString())
+                    Return _settings(Constants.CONTACT_WIDTH_SETTING).ToString()
                 Else
                     Return Constants.CONTACT_WIDTH_SETTING_DEFAULT
                 End If

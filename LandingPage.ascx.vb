@@ -35,6 +35,7 @@ Namespace Ventrian.PropertyAgent
         Dim _customFieldIDs As String = Null.NullString
         Dim _propertyTypeID As String = Null.NullString
         Dim _propertyAgentID As String = Null.NullString
+        Dim _propertyAgentName As String = Null.NullString
         Dim _propertyBrokerID As String = Null.NullString
         Dim _location As String = Null.NullString
         Dim _searchValues As String = Null.NullString
@@ -135,7 +136,8 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub BindFeatured()
-
+            Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+            If Me.UserId = -1 Then OnlyForAuthenticated = True
             If (Me.PropertySettings.FeaturedEnabled) Then
 
                 Dim latitude As Double = Null.NullInteger
@@ -150,7 +152,7 @@ Namespace Ventrian.PropertyAgent
                 End If
 
                 Dim objPropertyController As New PropertyController
-                Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, True, Me.PropertySettings.FeaturedSortBy, Me.PropertySettings.FeaturedSortByCustomField, Me.PropertySettings.FeaturedSortDirection, Null.NullString, Null.NullString, 0, Me.PropertySettings.FeaturedMaxNumber, Null.NullInteger, False, True, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate)
+                Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, True, OnlyForAuthenticated, Me.PropertySettings.FeaturedSortBy, Me.PropertySettings.FeaturedSortByCustomField, Me.PropertySettings.FeaturedSortDirection, Null.NullString, Null.NullString, 0, Me.PropertySettings.FeaturedMaxNumber, Null.NullInteger, False, True, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate)
 
                 If (objProperties.Count = 0) Then
                     Return
@@ -888,7 +890,9 @@ Namespace Ventrian.PropertyAgent
             If Not (Request("PropertyAgentID") Is Nothing) Then
                 _propertyAgentID = Request("PropertyAgentID")
             End If
-
+            If Not (Request("PropertyAgentName") Is Nothing) Then
+                _propertyAgentName = Request("PropertyAgentName")
+            End If
             If Not (Request("PropertyBrokerID") Is Nothing) Then
                 _propertyBrokerID = Request("PropertyBrokerID")
             End If
@@ -904,7 +908,8 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub RenderCustomField(ByRef objPlaceHolder As ControlCollection, ByVal objCustomField As CustomFieldInfo)
-
+            Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+            If Me.UserId = -1 Then OnlyForAuthenticated = True
             Select Case (objCustomField.FieldType)
 
                 Case CustomFieldType.OneLineTextBox
@@ -1291,7 +1296,7 @@ Namespace Ventrian.PropertyAgent
                                 If (objCustomField.IncludeCount) Then
                                     Dim objPropertyController As New PropertyController()
                                     Dim count As Integer = 0
-                                    objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                    objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                     If (objCustomField.HideZeroCount) Then
                                         If (count > 0) Then
                                             objListControl.Items.Add(New ListItem(value & " (" & count.ToString() & ")", value))
@@ -1303,7 +1308,7 @@ Namespace Ventrian.PropertyAgent
                                     If (objCustomField.HideZeroCount) Then
                                         Dim objPropertyController As New PropertyController()
                                         Dim count As Integer = 0
-                                        objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                        objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                         If (count > 0) Then
                                             objListControl.Items.Add(value)
                                         End If
@@ -1328,7 +1333,7 @@ Namespace Ventrian.PropertyAgent
                                 If (objCustomField.IncludeCount) Then
                                     Dim objPropertyController As New PropertyController()
                                     Dim count As Integer = 0
-                                    objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                    objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                     If (objCustomField.HideZeroCount) Then
                                         If (count > 0) Then
                                             objListControl.Items.Add(New ListItem(value & " (" & count.ToString() & ")", value))
@@ -1340,7 +1345,7 @@ Namespace Ventrian.PropertyAgent
                                     If (objCustomField.HideZeroCount) Then
                                         Dim objPropertyController As New PropertyController()
                                         Dim count As Integer = 0
-                                        objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                        objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value, 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                         If (count > 0) Then
                                             objListControl.Items.Add(value)
                                         End If
@@ -1370,7 +1375,7 @@ Namespace Ventrian.PropertyAgent
                                                 If (objCustomField.IncludeCount) Then
                                                     Dim objPropertyController As New PropertyController()
                                                     Dim count As Integer = 0
-                                                    objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                    objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                     If (objCustomField.HideZeroCount) Then
                                                         If (count > 0) Then
                                                             objListControl.Items.Add(New ListItem(value.Replace(vbLf, "") & " (" & count.ToString() & ")", value.Replace(vbLf, "")))
@@ -1382,7 +1387,7 @@ Namespace Ventrian.PropertyAgent
                                                     If (objCustomField.HideZeroCount) Then
                                                         Dim objPropertyController As New PropertyController()
                                                         Dim count As Integer = 0
-                                                        objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                        objPropertyController.List(ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                         If (count > 0) Then
                                                             objListControl.Items.Add(value.Replace(vbLf, ""))
                                                         End If
@@ -1421,7 +1426,7 @@ Namespace Ventrian.PropertyAgent
                                                         If (objCustomField.IncludeCount) Then
                                                             Dim objPropertyController As New PropertyController()
                                                             Dim count As Integer = 0
-                                                            objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                            objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                             If (objCustomField.HideZeroCount) Then
                                                                 If (count > 0) Then
                                                                     objListControl.Items.Add(New ListItem(value.Replace(vbLf, "") & " (" & count.ToString() & ")", value.Replace(vbLf, "")))
@@ -1433,7 +1438,7 @@ Namespace Ventrian.PropertyAgent
                                                             If (objCustomField.HideZeroCount) Then
                                                                 Dim objPropertyController As New PropertyController()
                                                                 Dim count As Integer = 0
-                                                                objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                                objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                                 If (count > 0) Then
                                                                     objListControl.Items.Add(value.Replace(vbLf, ""))
                                                                 End If
@@ -2060,6 +2065,8 @@ Namespace Ventrian.PropertyAgent
         Protected Sub drpPropertyType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
             Try
+                Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+                If Me.UserId = -1 Then OnlyForAuthenticated = True
                 Dim drpPropertyTypes As DropDownList = CType(sender, DropDownList)
 
                 For Each objControl As Control In phProperty.Controls
@@ -2093,7 +2100,7 @@ Namespace Ventrian.PropertyAgent
                                                     If (objCustomField.IncludeCount) Then
                                                         Dim objPropertyController As New PropertyController()
                                                         Dim count As Integer = 0
-                                                        objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                        objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                         If (objCustomField.HideZeroCount) Then
                                                             If (count > 0) Then
                                                                 CType(objControl, ListControl).Items.Add(New ListItem(value.Replace(vbLf, "") & " (" & count.ToString() & ")", value.Replace(vbLf, "")))
@@ -2105,7 +2112,7 @@ Namespace Ventrian.PropertyAgent
                                                         If (objCustomField.HideZeroCount) Then
                                                             Dim objPropertyController As New PropertyController()
                                                             Dim count As Integer = 0
-                                                            objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                            objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                             If (count > 0) Then
                                                                 CType(objControl, ListControl).Items.Add(value.Replace(vbLf, ""))
                                                             End If
@@ -2146,7 +2153,8 @@ Namespace Ventrian.PropertyAgent
         Protected Sub drpLinked_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
             Try
-
+                Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+                If Me.UserId = -1 Then OnlyForAuthenticated = True
                 Dim drpLinked As DropDownList = CType(sender, DropDownList)
 
                 For Each objControl As Control In phProperty.Controls
@@ -2170,7 +2178,7 @@ Namespace Ventrian.PropertyAgent
                                                     If (objCustomField.IncludeCount) Then
                                                         Dim objPropertyController As New PropertyController()
                                                         Dim count As Integer = 0
-                                                        objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                        objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                         If (objCustomField.HideZeroCount) Then
                                                             If (count > 0) Then
                                                                 CType(objControl, ListControl).Items.Add(New ListItem(value.Replace(vbLf, "") & " (" & count.ToString() & ")", value.Replace(vbLf, "")))
@@ -2182,7 +2190,7 @@ Namespace Ventrian.PropertyAgent
                                                         If (objCustomField.HideZeroCount) Then
                                                             Dim objPropertyController As New PropertyController()
                                                             Dim count As Integer = 0
-                                                            objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
+                                                            objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortByType.Hits, Null.NullInteger, SortDirectionType.Descending, objCustomField.CustomFieldID.ToString(), value.Replace(vbLf, ""), 1, 10, count, False, False, Null.NullInteger, Null.NullInteger)
                                                             If (count > 0) Then
                                                                 CType(objControl, ListControl).Items.Add(value.Replace(vbLf, ""))
                                                             End If

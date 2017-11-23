@@ -169,7 +169,12 @@ Namespace Ventrian.PropertyAgent
             rptDetails.DataSource = ContactFormFields
             rptDetails.DataBind()
 
-            tblContactForm.Width = Unit.Pixel(PropertySettings.ContactWidth)
+            If PropertySettings.ContactWidth.Contains("%") Then
+                tblContactForm.Width = Unit.Percentage(PropertySettings.ContactWidth.Trim("%"))
+            Else
+                tblContactForm.Width = Unit.Pixel(PropertySettings.ContactWidth.Trim("px"))
+            End If
+
             cmdSubmit.Text = Localization.GetString("cmdSubmit", ResourceFile)
 
         End Sub
@@ -220,7 +225,8 @@ Namespace Ventrian.PropertyAgent
                 End If
 
                 trCaptcha.Visible = PropertySettings.ContactUseCaptcha
-                ctlCaptcha.ErrorMessage = Localization.GetString("ctlCaptcha.ErrorMessage", Me.ResourceFile)
+                'ctlCaptcha.ErrorMessage = Localization.GetString("ctlCaptcha.ErrorMessage", Me.ResourceFile)
+
 
             Catch exc As Exception
                 ProcessModuleLoadException(Me, exc)
@@ -233,8 +239,11 @@ Namespace Ventrian.PropertyAgent
             Try
 
                 lblSubmitResults.Text = String.Empty
-
-                If Page.IsValid And (ctlCaptcha.IsValid Or PropertySettings.ContactUseCaptcha = False) Then
+                If Not (mlFlexCaptcha.mlValidate()) Then
+                    lblSubmitResults.Text = Localization.GetString("ctlCaptcha.ErrorMessage", Me.ResourceFile)
+                    lblSubmitResults.CssClass = "NormalRed"
+                End If
+                If Page.IsValid AndAlso (PropertySettings.ContactUseCaptcha = False OrElse mlFlexCaptcha.mlValidate()) Then
 
                     Dim objLayoutController As New LayoutController(PortalSettings, PropertySettings, Page, Nothing, False, TabID, ModuleID, ModuleKey)
                     Dim objMailCustomFields As List(Of ContactFieldInfo) = ContactFormFields
@@ -342,13 +351,18 @@ Namespace Ventrian.PropertyAgent
 
                     If Me.MailTo <> "" AndAlso replyTo <> "" Then
                         Try
-                            DotNetNuke.Services.Mail.Mail.SendMail(replyTo, MailTo, "", contactBCC, _
-                                                                        DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                                                        subject, _
-                                                                        DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                                                                        "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(replyTo, MailTo, "", contactBCC,
+                                                                        DotNetNuke.Services.Mail.MailPriority.Normal,
+                                                                        subject,
+                                                                        DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                                                                        "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), DotNetNuke.Entities.Host.Host.SMTPPassword)
+                            'DotNetNuke.Services.Mail.Mail.SendMail(replyTo, MailTo, "", contactBCC,
+                            '                                            DotNetNuke.Services.Mail.MailPriority.Normal,
+                            '                                            subject,
+                            '                                            DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                            '                                            "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
                             lblSubmitResults.Text = Localization.GetString("EmailSent.Message", Me.ResourceFile)
-                            lblSubmitResults.CssClass = "Normal"
+                            lblSubmitResults.CssClass = "NormalRed"
                         Catch
                             lblSubmitResults.Text = Localization.GetString("EmailNotSent.Message", Me.ResourceFile)
                             lblSubmitResults.CssClass = "NormalRed"

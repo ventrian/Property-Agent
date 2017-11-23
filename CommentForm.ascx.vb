@@ -177,12 +177,17 @@ Namespace Ventrian.PropertyAgent
 
 #Region " Private Methods "
 
+
         Private Sub BindDetails()
 
             rptDetails.DataSource = CommentFormFields
             rptDetails.DataBind()
 
-            tblCommentForm.Width = Unit.Pixel(PropertySettings.CommentWidth)
+            If PropertySettings.CommentWidth.Contains("%") Then
+                tblCommentForm.Width = Unit.Percentage(PropertySettings.CommentWidth.Trim("%"))
+            Else
+                tblCommentForm.Width = Unit.Pixel(PropertySettings.CommentWidth.Trim("px"))
+            End If
             cmdSubmit.Text = Localization.GetString("cmdSubmit", ResourceFile)
 
         End Sub
@@ -227,7 +232,7 @@ Namespace Ventrian.PropertyAgent
                 End If
 
                 trCaptcha.Visible = PropertySettings.CommentUseCaptcha
-                ctlCaptcha.ErrorMessage = Localization.GetString("ctlCaptcha.ErrorMessage", Me.ResourceFile)
+                'ctlCaptcha.ErrorMessage = Localization.GetString("ctlCaptcha.ErrorMessage", Me.ResourceFile)
 
             Catch exc As Exception
                 ProcessModuleLoadException(Me, exc)
@@ -241,7 +246,7 @@ Namespace Ventrian.PropertyAgent
 
                 lblSubmitResults.Text = String.Empty
 
-                If Page.IsValid And (ctlCaptcha.IsValid Or PropertySettings.CommentUseCaptcha = False) Then
+                If Page.IsValid AndAlso (PropertySettings.CommentUseCaptcha = False OrElse mlFlexCaptcha.mlValidate()) Then
 
                     Dim objLayoutController As New LayoutController(PortalSettings, PropertySettings, Page, Nothing, False, TabID, ModuleID, ModuleKey)
                     Dim objCustomFields As ArrayList = CommentFormFields
@@ -341,7 +346,7 @@ Namespace Ventrian.PropertyAgent
                         If (PropertyAgentBase.UserId <> Null.NullInteger) Then
                             Journal.AddCommentToJournal(objProperty, objComment, PropertyAgentBase.PortalId, TabID, PropertyAgentBase.UserId, objLayoutController.GetExternalLink(objLayoutController.GetPropertyLink(objProperty, PropertyAgentBase.CustomFields)), PropertySettings.PropertyLabel)
                         End If
-                        
+
                         If (PropertySettings.CommentNotifyOwner) Then
                             If (PropertyAgentBase.UserId <> objProperty.AuthorID) Then
 
@@ -360,11 +365,11 @@ Namespace Ventrian.PropertyAgent
 
                                 If (objProperty.Email <> "") Then
                                     Try
-                                        DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, objProperty.Email, "", "", _
-                                           DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                           subject, _
-                                           DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                                           "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                                        DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, objProperty.Email, "", "",
+                                           DotNetNuke.Services.Mail.MailPriority.Normal,
+                                           subject,
+                                           DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                                           "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), DotNetNuke.Entities.Host.Host.SMTPPassword)
 
                                     Catch
                                     End Try
@@ -395,10 +400,10 @@ Namespace Ventrian.PropertyAgent
                             For Each objSubscriber As UserInfo In objSubscribers
                                 If (objSubscriber.Email <> "") Then
                                     Try
-                                        DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, objSubscriber.Email, "", "", _
-                                           DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                           subject, _
-                                           DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
+                                        DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, objSubscriber.Email, "", "",
+                                           DotNetNuke.Services.Mail.MailPriority.Normal,
+                                           subject,
+                                           DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
                                            "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
 
                                     Catch
@@ -429,10 +434,10 @@ Namespace Ventrian.PropertyAgent
 
                             If (email <> "") Then
                                 Try
-                                    DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, email, "", "", _
-                                       DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                       subject, _
-                                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
+                                    DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, email, "", "",
+                                       DotNetNuke.Services.Mail.MailPriority.Normal,
+                                       subject,
+                                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
                                        "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
 
                                 Catch

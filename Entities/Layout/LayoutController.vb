@@ -253,7 +253,7 @@ Namespace Ventrian.PropertyAgent
                     End If
 
                     Dim objPropertyController As New PropertyController
-                    _siblingSearchProperties = objPropertyController.List(_moduleID, propertyTypeID, SearchStatusType.PublishedActive, propertyAgentID, propertyBrokerID, Null.NullBoolean, objSortBy, sortCustomFieldID, objSortDirection, customFieldIDs, searchValues, 1, 3, _siblingSearchCount, _propertySettings.ListingBubbleFeatured, _propertySettings.ListingSearchSubTypes, propertyID, _searchPosition)
+                    _siblingSearchProperties = objPropertyController.List(_moduleID, propertyTypeID, SearchStatusType.PublishedActive, propertyAgentID, propertyBrokerID, Null.NullBoolean, Null.NullBoolean, objSortBy, sortCustomFieldID, objSortDirection, customFieldIDs, searchValues, 1, 3, _siblingSearchCount, _propertySettings.ListingBubbleFeatured, _propertySettings.ListingSearchSubTypes, propertyID, _searchPosition)
 
                 End If
                 Return _siblingSearchProperties
@@ -272,7 +272,7 @@ Namespace Ventrian.PropertyAgent
                 If (_siblingTypeProperties Is Nothing) Then
 
                     Dim objPropertyController As New PropertyController
-                    _siblingTypeProperties = objPropertyController.List(_moduleID, propertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, Null.NullBoolean, _propertySettings.ListingSortBy, _propertySettings.ListingSortByCustomField, _propertySettings.ListingSortDirection, Null.NullString, Null.NullString, 1, 3, _siblingTypeCount, False, False, propertyID, _typePosition)
+                    _siblingTypeProperties = objPropertyController.List(_moduleID, propertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, Null.NullBoolean, Null.NullBoolean, _propertySettings.ListingSortBy, _propertySettings.ListingSortByCustomField, _propertySettings.ListingSortDirection, Null.NullString, Null.NullString, 1, 3, _siblingTypeCount, False, False, propertyID, _typePosition)
 
                 End If
                 Return _siblingTypeProperties
@@ -3672,7 +3672,7 @@ Namespace Ventrian.PropertyAgent
 
                         Case "FIRSTTYPELINK"
                             Dim objPropertyController As New PropertyController
-                            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(_moduleID, objProperty.PropertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, _propertySettings.ListingSortBy, _propertySettings.ListingSortByCustomField, _propertySettings.ListingSortDirection, _propertySettings.ListingSortBy2, _propertySettings.ListingSortByCustomField2, _propertySettings.ListingSortDirection2, _propertySettings.ListingSortBy3, _propertySettings.ListingSortByCustomField3, _propertySettings.ListingSortDirection3, Null.NullString, Null.NullString, 0, 1, 1, _propertySettings.ListingBubbleFeatured, _propertySettings.ListingSearchSubTypes, Null.NullInteger, Null.NullInteger, Null.NullDouble, Null.NullDouble, Null.NullDate, Null.NullString, Null.NullInteger)
+                            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(_moduleID, objProperty.PropertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, False, _propertySettings.ListingSortBy, _propertySettings.ListingSortByCustomField, _propertySettings.ListingSortDirection, _propertySettings.ListingSortBy2, _propertySettings.ListingSortByCustomField2, _propertySettings.ListingSortDirection2, _propertySettings.ListingSortBy3, _propertySettings.ListingSortByCustomField3, _propertySettings.ListingSortDirection3, Null.NullString, Null.NullString, 0, 1, 1, _propertySettings.ListingBubbleFeatured, _propertySettings.ListingSearchSubTypes, Null.NullInteger, Null.NullInteger, Null.NullDouble, Null.NullDouble, Null.NullDate, Null.NullString, Null.NullInteger)
 
                             If (objProperties.Count > 0) Then
                                 Dim objLiteral As New Literal
@@ -4243,6 +4243,14 @@ Namespace Ventrian.PropertyAgent
                                 objPlaceHolder.Add(objLiteral)
                             End If
 
+                        Case "PHOTOURL"
+                            If Not (objProperty.FirstPhoto Is Nothing) Then
+                                Dim objLiteral As New Literal
+                                objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
+                                objLiteral.Text = objProperty.FirstPhoto.ExternalUrl
+                                objPlaceHolder.Add(objLiteral)
+                            End If
+
                         Case "PHOTOWIDTHSMALL"
                             ProcessPhotoWidthToken(objPlaceHolder, objProperty.FirstPhoto, iPtr, ThumbnailType.Small, False)
 
@@ -4260,6 +4268,7 @@ Namespace Ventrian.PropertyAgent
 
                         Case "PHOTOWIDTHLARGECROPPED"
                             ProcessPhotoWidthToken(objPlaceHolder, objProperty.FirstPhoto, iPtr, ThumbnailType.Large, True)
+                        Case "PHOTOURL"
 
                         Case "PHOTOS"
                             Dim objPhotoController As New PhotoController
@@ -4619,6 +4628,22 @@ Namespace Ventrian.PropertyAgent
                             objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
                             objLiteral.Text = objProperty.PropertyTypeName
                             objPlaceHolder.Add(objLiteral)
+
+                        Case "FULLTYPES"
+
+                            Dim objTypeController As New PropertyTypeController()
+                            Dim objType As PropertyTypeInfo = objTypeController.Get(_moduleID, objProperty.PropertyTypeID)
+                            If (objType IsNot Nothing) Then
+                                Dim objLiteral As New Literal
+                                objLiteral.ID = Globals.CreateValidID("PropertyAgent-Header" & "-" & iPtr.ToString())
+                                objLiteral.Text = System.Web.HttpUtility.HtmlEncode(objType.Name.ToString())
+                                While objType.ParentID <> -1
+                                    objType = objTypeController.Get(_moduleID, objType.ParentID)
+                                    objLiteral.Text = objType.Name & " - " & objLiteral.Text
+                                End While
+                                objPlaceHolder.Add(objLiteral)
+                            End If
+
 
                         Case "TYPECOUNT"
                             Dim objLiteral As New Literal
@@ -6921,6 +6946,12 @@ Namespace Ventrian.PropertyAgent
                         Case "PHOTOLINKLARGE"
                             ProcessPhotoLinkToken(objPlaceHolder, objPhoto, photoPtr & "-" & iPtr.ToString(), ThumbnailType.Large, False)
 
+                        Case "PHOTOURL"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID(_moduleKey & objPhoto.PropertyID.ToString() & "-Photo-" & objPhoto.PhotoID.ToString() & "-" & photoPtr & "-" & iPtr.ToString())
+                            objLiteral.Text = objPhoto.ExternalUrl
+                            objPlaceHolder.Add(objLiteral)
+
                         Case "PHOTOWIDTHSMALL"
                             ProcessPhotoWidthToken(objPlaceHolder, objPhoto, photoPtr & "-" & iPtr.ToString(), ThumbnailType.Small, False)
 
@@ -7095,9 +7126,15 @@ Namespace Ventrian.PropertyAgent
                                 objPlaceHolder.Add(objHyperLink)
                             End If
 
+                        Case "PIPPO"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID("PropertyAgent" & objType.PropertyTypeID.ToString() & "-" & iPtr.ToString())
+                            objLiteral.Text = "Pippo"
+                            objPlaceHolder.Add(objLiteral)
+
                         Case "FIRSTTYPELINK"
                             Dim objPropertyController As New PropertyController
-                            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(_moduleID, objType.PropertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, _propertySettings.ListingSortBy, _propertySettings.ListingSortByCustomField, _propertySettings.ListingSortDirection, _propertySettings.ListingSortBy2, _propertySettings.ListingSortByCustomField2, _propertySettings.ListingSortDirection2, _propertySettings.ListingSortBy3, _propertySettings.ListingSortByCustomField3, _propertySettings.ListingSortDirection3, Null.NullString, Null.NullString, 0, 1, 1, _propertySettings.ListingBubbleFeatured, _propertySettings.ListingSearchSubTypes, Null.NullInteger, Null.NullInteger, Null.NullDouble, Null.NullDouble, Null.NullDate, Null.NullString, Null.NullInteger)
+                            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(_moduleID, objType.PropertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, False, _propertySettings.ListingSortBy, _propertySettings.ListingSortByCustomField, _propertySettings.ListingSortDirection, _propertySettings.ListingSortBy2, _propertySettings.ListingSortByCustomField2, _propertySettings.ListingSortDirection2, _propertySettings.ListingSortBy3, _propertySettings.ListingSortByCustomField3, _propertySettings.ListingSortDirection3, Null.NullString, Null.NullString, 0, 1, 1, _propertySettings.ListingBubbleFeatured, _propertySettings.ListingSearchSubTypes, Null.NullInteger, Null.NullInteger, Null.NullDouble, Null.NullDouble, Null.NullDate, Null.NullString, Null.NullInteger)
 
                             If (objProperties.Count > 0) Then
                                 Dim objCustomFieldController As New CustomFieldController

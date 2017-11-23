@@ -7,7 +7,7 @@
 			<foldername>PropertyAgent</foldername>
 			<modulename>PropertyAgent</modulename>
 			<description>A configurable property management module.</description>
-			<version>01.08.10</version>
+			<version>01.09.00</version>
 			<businesscontrollerclass>Ventrian.PropertyAgent.PropertyController, Ventrian.PropertyAgent</businesscontrollerclass>
 			<resourcefile>Resources.zip</resourcefile>
 			<modules>
@@ -440,6 +440,9 @@
           <name>01.08.07.SqlDataProvider</name>
         </file>
         <file>
+          <name>01.09.00.SqlDataProvider</name>
+        </file>
+        <file>
           <name>Uninstall.SqlDataProvider</name>
         </file>
         <file>
@@ -462,7 +465,7 @@
       <foldername>PropertyAgentLatest</foldername>
       <modulename>PropertyAgentLatest</modulename>
       <description>An add-on module for property agent.</description>
-      <version>01.08.10</version>
+      <version>01.09.00</version>
       <resourcefile>ResourcesLatest.zip</resourcefile>
       <modules>
         <module>
@@ -496,7 +499,7 @@
       <foldername>PropertyAgentSearch</foldername>
       <modulename>PropertyAgentSearch</modulename>
       <description>An add-on module for property agent.</description>
-      <version>01.08.10</version>
+      <version>01.09.00</version>
 			<resourcefile>ResourcesSearch.zip</resourcefile>
 			<modules>
 				<module>
@@ -530,7 +533,7 @@
       <foldername>PropertyAgentTypes</foldername>
       <modulename>PropertyAgentTypes</modulename>
       <description>An add-on module for property agent.</description>
-      <version>01.08.10</version>
+      <version>01.09.00</version>
       <resourcefile>ResourcesTypes.zip</resourcefile>
       <modules>
         <module>

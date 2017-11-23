@@ -142,7 +142,7 @@ Namespace Ventrian.PropertyAgent
             Dim objLayoutItem As LayoutInfo = objLayoutController.GetLayout(Me.PropertySettings.Template, LayoutType.Export_Item_Html)
 
             Dim objPropertyController As New PropertyController
-            _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, SortBy, SortByCustomField, SortDirection, _customFieldIDs, _searchValues, 0, 1000000, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger)
+            _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, Null.NullBoolean, SortBy, SortByCustomField, SortDirection, _customFieldIDs, _searchValues, 0, 1000000, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger)
 
             Response.Clear()
             Response.Buffer = True

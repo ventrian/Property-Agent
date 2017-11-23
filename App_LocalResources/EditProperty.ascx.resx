@@ -258,6 +258,12 @@
   <data name="plPublished.Text" xml:space="preserve">
     <value>Published</value>
   </data>
+  <data name="plOnlyForAuthenticated.Help" xml:space="preserve">
+    <value>Check to show to all users.</value>
+  </data>
+    <data name="plOnlyForAuthenticated.Text" xml:space="preserve">
+    <value>Show to all users</value>
+  </data>
   <data name="plPublished.Help" xml:space="preserve">
     <value>Check to publish the property.</value>
   </data>

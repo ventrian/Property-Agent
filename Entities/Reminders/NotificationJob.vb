@@ -117,7 +117,7 @@ Namespace Ventrian.PropertyAgent
             Dim emailsSent As Integer = 0
 
             Dim objPropertyController As New PropertyController
-            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(moduleID, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortByType.Published, Null.NullInteger, SortDirectionType.Ascending, Null.NullString, Null.NullString, 0, 100000, Null.NullInteger, Null.NullBoolean, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullDouble, Null.NullDouble, datePeriod)
+            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(moduleID, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, Null.NullBoolean, SortByType.Published, Null.NullInteger, SortDirectionType.Ascending, Null.NullString, Null.NullString, 0, 100000, Null.NullInteger, Null.NullBoolean, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullDouble, Null.NullDouble, datePeriod)
 
             If (objProperties.Count > 0) Then
 

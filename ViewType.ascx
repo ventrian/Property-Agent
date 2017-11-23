@@ -14,7 +14,7 @@
 	</td>
 </tr>
 <tr>
-	<td height="5" colspan="2"></td>
+	<td colspan="2"></td>
 </tr>
 </table>
 <div align="right" id="divSort" runat="server">

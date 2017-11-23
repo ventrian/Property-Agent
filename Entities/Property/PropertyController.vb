@@ -78,31 +78,31 @@ Namespace Ventrian.PropertyAgent
 
         End Function
 
-        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByVal searchSubTypes As Boolean) As List(Of PropertyInfo)
+        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal OnlyForAuthenticated As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByVal searchSubTypes As Boolean) As List(Of PropertyInfo)
 
-            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, sortBy, sortByID, sortOrder, customFieldIDs, searchValues, pageNumber, pageSize, Null.NullInteger, False, searchSubTypes, Null.NullInteger, Null.NullInteger)
-
-        End Function
-
-        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByRef totalRecords As Integer, ByVal bubbleFeatured As Boolean, ByVal searchSubTypes As Boolean, ByVal propertyIDForNextPrev As Integer, ByRef typePosition As Integer) As List(Of PropertyInfo)
-
-            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, sortBy, sortByID, sortOrder, customFieldIDs, searchValues, pageNumber, pageSize, totalRecords, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, typePosition, Null.NullDouble, Null.NullDouble, Null.NullDate)
+            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, OnlyForAuthenticated, sortBy, sortByID, sortOrder, customFieldIDs, searchValues, pageNumber, pageSize, Null.NullInteger, False, searchSubTypes, Null.NullInteger, Null.NullInteger)
 
         End Function
 
-        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByRef totalRecords As Integer, ByVal bubbleFeatured As Boolean, ByVal searchSubTypes As Boolean, ByVal propertyIDForNextPrev As Integer, ByRef typePosition As Integer, ByVal latitude As Double, ByVal longitude As Double, ByVal startDate As DateTime) As List(Of PropertyInfo)
+        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal OnlyForAuthenticated As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByRef totalRecords As Integer, ByVal bubbleFeatured As Boolean, ByVal searchSubTypes As Boolean, ByVal propertyIDForNextPrev As Integer, ByRef typePosition As Integer) As List(Of PropertyInfo)
 
-            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, sortBy, sortByID, sortOrder, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, customFieldIDs, searchValues, pageNumber, pageSize, totalRecords, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, typePosition, latitude, longitude, startDate, Null.NullString, Null.NullInteger)
+            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, OnlyForAuthenticated, sortBy, sortByID, sortOrder, customFieldIDs, searchValues, pageNumber, pageSize, totalRecords, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, typePosition, Null.NullDouble, Null.NullDouble, Null.NullDate)
+
+        End Function
+
+        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal OnlyForAuthenticated As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByRef totalRecords As Integer, ByVal bubbleFeatured As Boolean, ByVal searchSubTypes As Boolean, ByVal propertyIDForNextPrev As Integer, ByRef typePosition As Integer, ByVal latitude As Double, ByVal longitude As Double, ByVal startDate As DateTime) As List(Of PropertyInfo)
+
+            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, OnlyForAuthenticated, sortBy, sortByID, sortOrder, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, customFieldIDs, searchValues, pageNumber, pageSize, totalRecords, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, typePosition, latitude, longitude, startDate, Null.NullString, Null.NullInteger)
 
         End Function
 
         Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByRef totalRecords As Integer, ByVal bubbleFeatured As Boolean, ByVal searchSubTypes As Boolean, ByVal propertyIDForNextPrev As Integer, ByRef typePosition As Integer, ByVal latitude As Double, ByVal longitude As Double, ByVal startDate As DateTime, ByVal agentFilter As String) As List(Of PropertyInfo)
 
-            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, sortBy, sortByID, sortOrder, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, customFieldIDs, searchValues, pageNumber, pageSize, totalRecords, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, typePosition, latitude, longitude, startDate, agentFilter, Null.NullInteger)
+            Return List(moduleID, propertyTypeID, status, authorID, brokerID, showFeaturedOnly, False, sortBy, sortByID, sortOrder, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, Null.NullInteger, customFieldIDs, searchValues, pageNumber, pageSize, totalRecords, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, typePosition, latitude, longitude, startDate, agentFilter, Null.NullInteger)
 
         End Function
 
-        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal sortBy2 As SortByTypeSecondary, ByVal sortByID2 As Integer, ByVal sortOrder2 As SortDirectionType, ByVal sortBy3 As SortByTypeSecondary, ByVal sortByID3 As Integer, ByVal sortOrder3 As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByRef totalRecords As Integer, ByVal bubbleFeatured As Boolean, ByVal searchSubTypes As Boolean, ByVal propertyIDForNextPrev As Integer, ByRef typePosition As Integer, ByVal latitude As Double, ByVal longitude As Double, ByVal startDate As DateTime, ByVal agentFilter As String, ByVal shortListID As String) As List(Of PropertyInfo)
+        Public Function List(ByVal moduleID As Integer, ByVal propertyTypeID As Integer, ByVal status As SearchStatusType, ByVal authorID As Integer, ByVal brokerID As Integer, ByVal showFeaturedOnly As Boolean, ByVal OnlyForAuthenticated As Boolean, ByVal sortBy As SortByType, ByVal sortByID As Integer, ByVal sortOrder As SortDirectionType, ByVal sortBy2 As SortByTypeSecondary, ByVal sortByID2 As Integer, ByVal sortOrder2 As SortDirectionType, ByVal sortBy3 As SortByTypeSecondary, ByVal sortByID3 As Integer, ByVal sortOrder3 As SortDirectionType, ByVal customFieldIDs As String, ByVal searchValues As String, ByVal pageNumber As Integer, ByVal pageSize As Integer, ByRef totalRecords As Integer, ByVal bubbleFeatured As Boolean, ByVal searchSubTypes As Boolean, ByVal propertyIDForNextPrev As Integer, ByRef typePosition As Integer, ByVal latitude As Double, ByVal longitude As Double, ByVal startDate As DateTime, ByVal agentFilter As String, ByVal shortListID As String) As List(Of PropertyInfo)
 
             Dim objCustomFields As List(Of CustomFieldInfo) = GetCustomFields(moduleID)
 
@@ -161,14 +161,14 @@ Namespace Ventrian.PropertyAgent
             End Select
 
             Dim objPropertyValueController As New PropertyValueController
-            Dim objPropertyList As List(Of PropertyInfo) = FillPropertyCollection(DataProvider.Instance().ListProperty(moduleID, propertyTypeID, searchStatus, authorID, brokerID, isActive, isPending, isExpired, showFeaturedOnly, sortBy, sortByID, sortByIDType, sortOrder, sortBy2, sortByID2, sortByIDType2, sortOrder2, sortBy3, sortByID3, sortByIDType3, sortOrder3, customFieldIDs, searchValues, pageNumber, pageSize, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, latitude, longitude, startDate, agentFilter, shortListID), totalRecords, typePosition)
+            Dim objPropertyList As List(Of PropertyInfo) = FillPropertyCollection(DataProvider.Instance().ListProperty(moduleID, propertyTypeID, searchStatus, authorID, brokerID, isActive, isPending, isExpired, showFeaturedOnly, OnlyForAuthenticated, sortBy, sortByID, sortByIDType, sortOrder, sortBy2, sortByID2, sortByIDType2, sortOrder2, sortBy3, sortByID3, sortByIDType3, sortOrder3, customFieldIDs, searchValues, pageNumber, pageSize, bubbleFeatured, searchSubTypes, propertyIDForNextPrev, latitude, longitude, startDate, agentFilter, shortListID), totalRecords, typePosition)
             Return objPropertyList
 
         End Function
 
         Public Function Add(ByVal objProperty As PropertyInfo) As Integer
 
-            Return CType(DataProvider.Instance().AddProperty(objProperty.ModuleID, objProperty.PropertyTypeID, objProperty.IsFeatured, objProperty.DateCreated, objProperty.DateModified, objProperty.DatePublished, objProperty.DateExpired, objProperty.ViewCount, objProperty.Status, objProperty.AuthorID, objProperty.ModifiedID, objProperty.Latitude, objProperty.Longitude), Integer)
+            Return CType(DataProvider.Instance().AddProperty(objProperty.ModuleID, objProperty.PropertyTypeID, objProperty.IsFeatured, objProperty.OnlyForAuthenticated, objProperty.DateCreated, objProperty.DateModified, objProperty.DatePublished, objProperty.DateExpired, objProperty.ViewCount, objProperty.Status, objProperty.AuthorID, objProperty.ModifiedID, objProperty.Latitude, objProperty.Longitude), Integer)
 
         End Function
 
@@ -180,7 +180,7 @@ Namespace Ventrian.PropertyAgent
 
         Public Sub Update(ByVal objProperty As PropertyInfo)
 
-            DataProvider.Instance().UpdateProperty(objProperty.PropertyID, objProperty.ModuleID, objProperty.PropertyTypeID, objProperty.IsFeatured, objProperty.DateCreated, objProperty.DateModified, objProperty.DatePublished, objProperty.DateExpired, objProperty.ViewCount, objProperty.Status, objProperty.AuthorID, objProperty.ModifiedID, objProperty.Latitude, objProperty.Longitude)
+            DataProvider.Instance().UpdateProperty(objProperty.PropertyID, objProperty.ModuleID, objProperty.PropertyTypeID, objProperty.IsFeatured, objProperty.OnlyForAuthenticated, objProperty.DateCreated, objProperty.DateModified, objProperty.DatePublished, objProperty.DateExpired, objProperty.ViewCount, objProperty.Status, objProperty.AuthorID, objProperty.ModifiedID, objProperty.Latitude, objProperty.Longitude)
 
         End Sub
 
@@ -230,7 +230,7 @@ Namespace Ventrian.PropertyAgent
                         Dim SearchItemCollection As New SearchItemInfoCollection
 
                         Dim objPropertyController As New PropertyController
-                        Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(ModInfo.ModuleID, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, Null.NullBoolean, SortByType.Published, Null.NullInteger, SortDirectionType.Descending, Null.NullString, Null.NullString, 0, 100000, Null.NullBoolean)
+                        Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(ModInfo.ModuleID, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, Null.NullBoolean, Null.NullBoolean, SortByType.Published, Null.NullInteger, SortDirectionType.Descending, Null.NullString, Null.NullString, 0, 100000, Null.NullBoolean)
 
                         For Each objProperty As PropertyInfo In objProperties
 

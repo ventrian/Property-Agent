@@ -229,7 +229,7 @@ Namespace Ventrian.PropertyAgent
         Public Const CONTACT_BCC_SETTING As String = "ContactBCC"
         Public Const CONTACT_BCC_SETTING_DEFAULT As String = ""
         Public Const CONTACT_WIDTH_SETTING As String = "ContactWidth"
-        Public Const CONTACT_WIDTH_SETTING_DEFAULT As Integer = 350
+        Public Const CONTACT_WIDTH_SETTING_DEFAULT As String = "100%"
         Public Const CONTACT_LOG_FIELD_SETTING As String = "ContactLogField"
         Public Const CONTACT_LOG_FIELD_SETTING_DEFAULT As Integer = -1
         Public Const CONTACT_MESSAGE_LINES_SETTING As String = "ContactMessageLines"
@@ -491,7 +491,7 @@ Namespace Ventrian.PropertyAgent
         Public Const SEO_CANONICAL_LINK_SETTING_DEFAULT As Boolean = True
 
         Public Const COMMENT_WIDTH_SETTING As String = "CommentWidth"
-        Public Const COMMENT_WIDTH_SETTING_DEFAULT As Integer = 350
+        Public Const COMMENT_WIDTH_SETTING_DEFAULT As String = "100%"
         Public Const COMMENT_USE_CAPTCHA_SETTING As String = "CommentUseCaptcha"
         Public Const COMMENT_USE_CAPTCHA_SETTING_DEFAULT As Boolean = False
         Public Const COMMENT_NOTIFY_OWNER_SETTING As String = "CommentNotifyOwner"

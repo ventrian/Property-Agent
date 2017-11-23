@@ -22,6 +22,7 @@ Namespace Ventrian.PropertyAgent
 
         Private _propertyTypeID As Integer = Null.NullInteger
         Private _propertyAgentID As Integer = Null.NullInteger
+        Private _propertyAgentName As String = Null.NullInteger
         Private _propertyBrokerID As Integer = Null.NullInteger
         Private _location As String = Null.NullString
 
@@ -190,7 +191,9 @@ Namespace Ventrian.PropertyAgent
             If Not (Request("PropertyAgentID") Is Nothing) Then
                 _propertyAgentID = Convert.ToInt32(Request("PropertyAgentID"))
             End If
-
+            If Not (Request("PropertyAgentName") Is Nothing) Then
+                _propertyAgentName = Request("PropertyAgentName")
+            End If
             If Not (Request("PropertyBrokerID") Is Nothing) Then
                 _propertyBrokerID = Convert.ToInt32(Request("PropertyBrokerID"))
             End If
@@ -544,6 +547,8 @@ Namespace Ventrian.PropertyAgent
 
 
                         ProcessHeaderFooter(phProperty.Controls, _objLayoutTypeFooter.Tokens)
+                    Else
+                        ProcessHeaderFooter(phProperty.Controls, _objLayoutTypeHeader.Tokens)
                     End If
 
             End Select
@@ -586,12 +591,13 @@ Namespace Ventrian.PropertyAgent
             End If
 
             Dim objPropertyController As New PropertyController
-
+            Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+            If Me.UserId = -1 Then OnlyForAuthenticated = True
             Select Case _agentType.ToLower()
 
                 Case "viewfeatured"
                     divSearch.Visible = False
-                    _objProperties = objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, True, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, Null.NullString, Null.NullString, _currentPage - 1, _pageRecords, _totalRecords, False, False, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, Null.NullString, Null.NullInteger)
+                    _objProperties = objPropertyController.List(Me.ModuleId, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, True, OnlyForAuthenticated, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, Null.NullString, Null.NullString, _currentPage - 1, _pageRecords, _totalRecords, False, False, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, Null.NullString, Null.NullInteger)
 
                 Case "viewsearch"
 
@@ -614,12 +620,25 @@ Namespace Ventrian.PropertyAgent
                     Else
                         divSearch.Visible = False
                     End If
-
-                    _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, _customFieldIDs, _searchValues, _currentPage - 1, _pageRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, Null.NullString, Null.NullInteger)
+                    If _propertyAgentName <> "-1" Then
+                        _propertyAgentID = 0
+                        Dim objAgentController As New AgentController(PortalSettings, PropertySettings, PortalId)
+                        Dim arrAgents As ArrayList
+                        arrAgents = objAgentController.ListActive(PortalId, ModuleId)
+                        For Each Agent As DotNetNuke.Entities.Users.UserInfo In arrAgents
+                            If Agent.Username = _propertyAgentName Then
+                                _propertyAgentID = Agent.UserID
+                                Exit For
+                            End If
+                        Next
+                        'Dim TheAgent As New DotNetNuke.Entities.Users.UserInfo
+                        'TheAgent = Array.Find(TheAgent, Function(c As DotNetNuke.Entities.Users.UserInfo) c.Username = _propertyAgentName)
+                    End If
+                    _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, OnlyForAuthenticated, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, _customFieldIDs, _searchValues, _currentPage - 1, _pageRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, Null.NullString, Null.NullInteger)
 
                 Case "viewtype"
                     divSearch.Visible = False
-                    _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, Null.NullString, Null.NullString, _currentPage - 1, _pageRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, Me.PropertySettings.ListingSearchSubTypes, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, _agentFilter, Null.NullInteger)
+                    _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, False, OnlyForAuthenticated, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, Null.NullString, Null.NullString, _currentPage - 1, _pageRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, Me.PropertySettings.ListingSearchSubTypes, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, _agentFilter, Null.NullInteger)
 
                 Case Else
 
@@ -638,7 +657,7 @@ Namespace Ventrian.PropertyAgent
                     Else
                         lnkNarrowThisSearch.Visible = False
                     End If
-                    _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, _customFieldIDs, _searchValues, _currentPage - 1, _pageRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, Null.NullString, Null.NullInteger)
+                    _objProperties = objPropertyController.List(Me.ModuleId, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, False, OnlyForAuthenticated, SortBy, SortByCustomField, SortDirection, PropertySettings.ListingSortBy2, PropertySettings.ListingSortByCustomField2, PropertySettings.ListingSortDirection2, PropertySettings.ListingSortBy3, PropertySettings.ListingSortByCustomField3, PropertySettings.ListingSortDirection3, _customFieldIDs, _searchValues, _currentPage - 1, _pageRecords, _totalRecords, PropertySettings.ListingBubbleFeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, Null.NullDate, Null.NullString, Null.NullInteger)
 
             End Select
 
@@ -987,6 +1006,45 @@ Namespace Ventrian.PropertyAgent
                                     objPlaceHolder.Add(objLiteral)
                                 End If
                             End If
+                        Case "TYPE"
+                            If (_agentType.ToLower() = "viewtype") Then
+                                Dim objTypeController As New PropertyTypeController()
+                                Dim objType As PropertyTypeInfo = objTypeController.Get(Me.ModuleId, _propertyTypeID)
+                                If (objType IsNot Nothing) Then
+                                    Dim objLiteral As New Literal
+                                    objLiteral.ID = Globals.CreateValidID("PropertyAgent-Header" & "-" & iPtr.ToString())
+                                    objLiteral.Text = System.Web.HttpUtility.HtmlEncode(objType.Name.ToString())
+                                    objPlaceHolder.Add(objLiteral)
+                                End If
+                            End If
+                        Case "FULLTYPES"
+                            If (_agentType.ToLower() = "viewtype") Then
+                                Dim objTypeController As New PropertyTypeController()
+                                Dim objType As PropertyTypeInfo = objTypeController.Get(Me.ModuleId, _propertyTypeID)
+                                If (objType IsNot Nothing) Then
+                                    Dim objLiteral As New Literal
+                                    objLiteral.ID = Globals.CreateValidID("PropertyAgent-Header" & "-" & iPtr.ToString())
+                                    objLiteral.Text = System.Web.HttpUtility.HtmlEncode(objType.Name.ToString())
+                                    While objType.ParentID <> -1
+                                        objType = objTypeController.Get(ModuleId, objType.ParentID)
+                                        objLiteral.Text = objType.Name & " - " & objLiteral.Text
+                                    End While
+                                    objPlaceHolder.Add(objLiteral)
+                                End If
+                            End If
+                        Case "TYPEIMAGELINK"
+                            If (_agentType.ToLower() = "viewtype") Then
+                                Dim objTypeController As New PropertyTypeController()
+                                Dim objType As PropertyTypeInfo = objTypeController.Get(Me.ModuleId, _propertyTypeID)
+                                If (objType IsNot Nothing) Then
+                                    Dim objLiteral As New Literal
+                                    objLiteral.ID = Globals.CreateValidID("PropertyAgent-Header" & "-" & iPtr.ToString())
+                                    If objType.ImageFile.ToString() <> "" Then
+                                        objLiteral.Text = PortalSettings.HomeDirectory & System.Web.HttpUtility.HtmlEncode(objType.ImageFile.ToString())
+                                        objPlaceHolder.Add(objLiteral)
+                                    End If                                   
+                                End If
+                            End If
 
                         Case Else
 
@@ -1016,6 +1074,10 @@ Namespace Ventrian.PropertyAgent
 
             If (_propertyAgentID <> Null.NullInteger) Then
                 params.Add("PropertyAgentID=" & _propertyAgentID.ToString())
+            End If
+
+            If (_propertyAgentName <> Null.NullString) Then
+                params.Add("PropertyAgentName=" & _propertyAgentName.ToString())
             End If
 
             If (_propertyBrokerID <> Null.NullInteger) Then
@@ -1345,7 +1407,7 @@ Namespace Ventrian.PropertyAgent
 
         Private Sub rptTypes_ItemDataBound(ByVal sender As System.Object, ByVal e As System.Web.UI.WebControls.RepeaterItemEventArgs)
 
-            If (e.Item.ItemType = ListItemType.Item Or e.Item.ItemType = ListItemType.AlternatingItem) Then
+            If (e.Item.ItemType = ListItemType.Item Or e.Item.ItemType = ListItemType.Header Or e.Item.ItemType = ListItemType.AlternatingItem) Then
                 Dim objType As PropertyTypeInfo = CType(e.Item.DataItem, PropertyTypeInfo)
                 _layoutController.ProcessType(e.Item.Controls, Me._objLayoutType.Tokens, objType, Null.NullString)
             End If

@@ -13,6 +13,7 @@ Namespace Ventrian.PropertyAgent
         Dim _propertyTypeID As Integer
         Dim _isApproved As Boolean
         Dim _isFeatured As Boolean
+        Dim _OnlyForAuthenticated As Boolean
         Dim _isPublished As Boolean
         Dim _isArchived As Boolean
         Dim _dateCreated As DateTime
@@ -92,6 +93,15 @@ Namespace Ventrian.PropertyAgent
             End Get
             Set(ByVal Value As Boolean)
                 _isFeatured = Value
+            End Set
+        End Property
+
+        Public Property OnlyForAuthenticated() As Boolean
+            Get
+                Return _OnlyForAuthenticated
+            End Get
+            Set(ByVal Value As Boolean)
+                _OnlyForAuthenticated = Value
             End Set
         End Property
 

@@ -8,12 +8,13 @@ Namespace Ventrian.PropertyAgent.Mapping
     Public Class Geocoder
         ' Methods
         Public Shared Function GeoCode(ByVal location As String, ByVal objPropertySettings As PropertySettings) As GeocodeInfo
+            Dim tmpKey As String = objPropertySettings.MapKey
             Dim tmpLocation As String = objPropertySettings.DistanceExpression.Replace("[LOCATION]", location)
-            Dim request As HttpWebRequest = DirectCast(WebRequest.Create(("https://maps.googleapis.com/maps/api/geocode/xml?address=" & HttpUtility.UrlEncode(tmpLocation) & "&sensor=false")), HttpWebRequest)
+            Dim request As HttpWebRequest = DirectCast(WebRequest.Create(("https://maps.googleapis.com/maps/api/geocode/xml?address=" & HttpUtility.UrlEncode(tmpLocation) & "&sensor=false&key=" & tmpKey)), HttpWebRequest)
             Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
-            Dim objGeoCodeInfo As New GeocodeInfo With { _
-                .Latitude = 0, _
-                .Longitude = 0 _
+            Dim objGeoCodeInfo As New GeocodeInfo With {
+                .Latitude = 0,
+                .Longitude = 0
             }
             If (response.StatusCode = HttpStatusCode.OK) Then
                 Dim reader As New StreamReader(response.GetResponseStream)
@@ -42,7 +43,7 @@ Namespace Ventrian.PropertyAgent.Mapping
     '        Dim tmpKey As String = objPropertySettings.MapKey
 
     '        Dim tmpLatLong As String = "0,0"
-    '        Dim url As String = "http://maps.google.com/maps/geo?q=" & Replace(objPropertySettings.DistanceExpression.Replace("[LOCATION]", location), " ", "+") & "&output=xml&key=" & tmpKey
+    '        Dim url As String = "https://maps.google.com/maps/geo?q=" & Replace(objPropertySettings.DistanceExpression.Replace("[LOCATION]", location), " ", "+") & "&output=xml&key=" & tmpKey
 
     '        Dim request As HttpWebRequest = WebRequest.Create(url)
     '        Dim response As HttpWebResponse = request.GetResponse

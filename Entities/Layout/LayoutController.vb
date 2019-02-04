@@ -3435,6 +3435,16 @@ Namespace Ventrian.PropertyAgent
                 If iPtr < layoutArray.Length - 1 Then
                     Select Case layoutArray(iPtr + 1).ToUpper()
 
+                        Case "QUADRA-APERTA"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
+                            objLiteral.Text = "["
+                            objPlaceHolder.Add(objLiteral)
+                        Case "QUADRA-CHIUSA"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
+                            objLiteral.Text = "]"
+                            objPlaceHolder.Add(objLiteral)
                         Case "APPROVALLINK"
                             Dim objLiteral As New Literal
                             objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())

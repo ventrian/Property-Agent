@@ -281,6 +281,26 @@ Namespace Ventrian.PropertyAgent
                                             Next
                                             objContactField.DefaultValue = vals
                                         End If
+
+                                        If (objContactField.FieldType = ContactFieldType.CheckBox) Then
+                                            Dim vals As String = ""
+
+                                            If CType(objControl, CheckBox).Checked Then
+                                                objContactField.DefaultValue = objContactField.Caption & " - true"
+                                            Else
+                                                objContactField.DefaultValue = objContactField.Caption & " - false"
+                                            End If
+
+                                            If objContactField.IsRequired Then
+                                                If Not (CType(objControl, CheckBox).Checked) Then
+                                                    lblSubmitResults.Text = objContactField.Name + Localization.GetString("valRequired", Me.ResourceFile)
+                                                    lblSubmitResults.CssClass = "NormalRed"
+                                                    Exit Sub
+                                                End If
+                                            End If
+
+                                        End If
+
                                     End If
                                 Next
                             End If
@@ -563,6 +583,53 @@ Namespace Ventrian.PropertyAgent
                             Next
 
                             phValue.Controls.Add(objCheckBoxList)
+
+                        Case ContactFieldType.CheckBox
+                            Dim objCheckBox As New CheckBox
+                            objCheckBox.CssClass = "Normal"
+                            objCheckBox.ID = objContactField.ContactFieldID.ToString()
+                            Dim values As String() = objContactField.FieldElements.Split(Convert.ToChar("|"))
+                            For Each value As String In values
+
+                                Dim objListItem As New ListItem
+                                objListItem.Text = value
+                                objListItem.Value = value
+                                If (objContactField.DefaultValue <> "") Then
+                                    For Each v As String In objContactField.DefaultValue.Split("|"c)
+                                        If (v.Trim() = value.Trim()) Then
+                                            objListItem.Selected = True
+                                            Exit For
+                                        End If
+                                    Next
+                                End If
+                            Next
+
+                            phValue.Controls.Add(objCheckBox)
+
+                            If (objContactField.IsRequired) Then
+                                Dim valRequired As New CustomValidator
+
+                                'valRequired.ControlToValidate = objCheckBox.ID
+                                valRequired.ErrorMessage = Localization.GetString("valRequired", Me.ResourceFile)
+                                valRequired.CssClass = "NormalRed"
+                                valRequired.Display = ValidatorDisplay.Dynamic
+                                valRequired.IsValid = objCheckBox.Checked
+                                valRequired.ValidationGroup = ModuleKey
+                                valRequired.SetFocusOnError = True
+                                'valRequired.ClientValidationFunction = "ValidateCheckBox"
+                                phValue.Controls.Add(valRequired)
+
+                                'Dim popupScript As String = "<script language='javascript'>" &
+                                '    "function ValidateCheckBox(sender, args) {" &
+                                '    "if (document.getElementById('<%=" & objCheckBox.ClientID & "%>').checked == True) {" &
+                                '    "page.IsValid = true;" &
+                                '    "} else {" &
+                                '    "page.IsValid = false;" &
+                                '    "}" &
+                                '    "}" &
+                                '    "</script>"
+                                'Page.RegisterStartupScript("PopupScript", popupScript)
+                            End If
 
                         Case ContactFieldType.CustomField
 

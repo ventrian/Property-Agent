@@ -568,6 +568,8 @@ Namespace Ventrian.PropertyAgent
                     BindTypes()
                     BindSortFields()
 
+                    ckkPropertyIDinURL.Checked = Me.PropertySettingsLatest.PropertyIDinURL
+
                     chkBubbleFeatured.Checked = Me.PropertySettingsLatest.Bubblefeatured
 
                     If Not (drpTypes.Items.FindByValue(Me.PropertySettingsLatest.TypeID.ToString()) Is Nothing) Then
@@ -687,6 +689,7 @@ Namespace Ventrian.PropertyAgent
                     End If
                 End If
 
+                objModuleController.UpdateModuleSetting(ModuleId, Constants.LATEST_PROPERTY_ID_IN_URL_SETTING, ckkPropertyIDinURL.Checked.ToString())
                 objModuleController.UpdateModuleSetting(ModuleId, Constants.LATEST_BUBBLE_FEATURED_SETTING, chkBubbleFeatured.Checked.ToString())
 
                 objModuleController.UpdateModuleSetting(ModuleId, Constants.LATEST_TYPE_ID_SETTING, drpTypes.SelectedValue)

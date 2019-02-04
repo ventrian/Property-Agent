@@ -744,7 +744,16 @@ Namespace Ventrian.PropertyAgent
 
                 If iPtr < layoutArray.Length - 1 Then
                     Select Case layoutArray(iPtr + 1)
-
+                        Case "QUADRA-APERTA"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID("PropertyAgent-Header" & "-" & iPtr.ToString())
+                            objLiteral.Text = "["
+                            objPlaceHolder.Add(objLiteral)
+                        Case "QUADRA-CHIUSA"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID("PropertyAgent-Header" & "-" & iPtr.ToString())
+                            objLiteral.Text = "]"
+                            objPlaceHolder.Add(objLiteral)
                         Case "CURRENTPAGE"
                             Dim objLiteral As New Literal
                             objLiteral.ID = Globals.CreateValidID("PropertyAgent-Header" & "-" & iPtr.ToString())

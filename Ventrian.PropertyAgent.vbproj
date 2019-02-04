@@ -67,7 +67,8 @@
       <HintPath>packages\Menulab.FlexCaptcha.1.1\lib\Menulab.FlexCaptcha.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpZipLib, Version=0.81.0.1407, Culture=neutral">
+    <Reference Include="SharpZipLib">
+      <HintPath>Libraries\SharpZipLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

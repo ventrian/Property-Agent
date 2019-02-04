@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke" Namespace="DotNetNuke.UI.WebControls" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register Assembly="Menulab.FlexCaptcha" Namespace="Menulab" TagPrefix="ml" %>
-
+ 
 <asp:PlaceHolder id="phContactForm" runat="server" Visible="True">
 	<asp:Table id="tblContactForm" runat="server">
 		<asp:TableRow>

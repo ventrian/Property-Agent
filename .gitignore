@@ -21,3 +21,5 @@
 *.config
 /.vs/Ventrian.PropertyAgent/v14
 /.vs/Ventrian.PropertyAgent/v15
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json

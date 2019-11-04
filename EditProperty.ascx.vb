@@ -1062,7 +1062,8 @@ Namespace Ventrian.PropertyAgent
 
         Protected Function GetMapUrl() As String
 
-            Return "http://maps.google.com/maps?file=api&amp;v=2&amp;key=" & PropertySettings.MapKey
+            Return "https://maps.google.com/maps?file=api&amp;v=2&amp;key=" & PropertySettings.MapKey
+            'Return "https://maps.googleapis.com/maps/api/js?key=" & PropertySettings.MapKey & "&callback=initMap"
 
         End Function
 

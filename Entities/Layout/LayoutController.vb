@@ -4112,8 +4112,8 @@ Namespace Ventrian.PropertyAgent
                                 Dim objImage As New Image
                                 objImage.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
                                 objImage.AlternateText = ""
-                                'objImage.ImageUrl = "http://maps.google.com/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&markers=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & ",red&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&key=" & _propertySettings.MapKey
-                                objImage.ImageUrl = "http://maps.google.com/maps/api/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&markers=size:mid|color:red|label:A|" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&sensor=false"
+                                'objImage.ImageUrl = "https://maps.google.com/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&markers=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & ",red&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&key=" & _propertySettings.MapKey
+                                objImage.ImageUrl = "https://maps.google.com/maps/api/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&markers=size:mid|color:red|label:A|" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&sensor=false" & "&key=" & _propertySettings.MapKey
                                 objPlaceHolder.Add(objImage)
                             End If
 
@@ -5532,6 +5532,21 @@ Namespace Ventrian.PropertyAgent
                                 isRendered = True
 
                             End If
+
+                            'If (layoutArray(iPtr + 1).ToUpper().StartsWith("SPACIALCHAR:")) Then
+                            '    Dim field As String = layoutArray(iPtr + 1).Substring(8, layoutArray(iPtr + 1).Length - 12)
+
+
+                            '    Dim objLiteral As New Literal
+                            '    objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString() & "-" & 0)
+                            '    objLiteral.Text = field
+                            '    objLiteral.EnableViewState = False
+                            '    objPlaceHolder.Add(objLiteral)
+
+                            '    isRendered = True
+
+                            'End If
+
 
                             If (layoutArray(iPtr + 1).ToUpper().StartsWith("CONTACTFORM:")) Then
                                 Dim field As String = layoutArray(iPtr + 1).Substring(12, layoutArray(iPtr + 1).Length - 12)

@@ -1,177 +1,244 @@
 Imports DotNetNuke.Common
 Imports DotNetNuke.Common.Utilities
+Imports DotNetNuke.Entities.Modules
+Imports DotNetNuke.Entities.Tabs
 Imports DotNetNuke.Security
 Imports DotNetNuke.Services.Exceptions
 Imports DotNetNuke.Services.Localization
-
-Imports System.IO
-Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
+Imports Microsoft.VisualBasic.CompilerServices
+Imports System
+Imports System.Collections
+Imports System.Runtime.CompilerServices
+Imports System.Web.UI.WebControls
+Imports Ventrian.PropertyAgent.Controls
 
 Namespace Ventrian.PropertyAgent
-
-    Partial Public Class EditPhotos
+    Public Class EditPhotos
         Inherits PropertyAgentBase
-
-#Region " Private Members "
-
-        Private _propertyID As Integer = Null.NullInteger
-        Private _returnUrl As String = Null.NullString
-
-        Private _photos As ArrayList
-
-#End Region
-
-#Region " Private Methods "
-
-        Private Sub ReadQueryString()
-
-            Dim propertyParam As String = PropertySettings.SEOPropertyID
-            If (Request(propertyParam) = "") Then
-                propertyParam = "PropertyID"
-            End If
-            If Not (Request(propertyParam) Is Nothing) Then
-                _propertyID = Convert.ToInt32(Request(propertyParam))
-            End If
-
-            If Not (Request("ReturnUrl") Is Nothing) Then
-                _returnUrl = Server.UrlDecode(Request("ReturnUrl"))
-            End If
-
-        End Sub
-
-        Private Sub CheckSecurity()
-
-            If (IsEditable = False And (PortalSecurity.IsInRoles(PropertySettings.PermissionSubmit) = False OrElse PortalSecurity.IsInRoles(PropertySettings.PermissionAddImages) = False)) Then
-                If (_propertyID = Null.NullInteger OrElse PortalSecurity.IsInRoles(PropertySettings.PermissionApprove) = False) Then
-                    Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=AccessDenied"), True)
-                End If
-            End If
-
-            If (IsEditable = False And PortalSecurity.IsInRoles(PropertySettings.PermissionSubmit) = True And PortalSecurity.IsInRoles(PropertySettings.PermissionApprove) = False) Then
-                If (_propertyID <> Null.NullInteger) Then
-                    Dim objPropertyController As New PropertyController
-                    Dim objProperty As PropertyInfo = objPropertyController.Get(_propertyID)
-
-                    If Not (objProperty Is Nothing) Then
-                        If (objProperty.AuthorID <> UserId) Then
-                            Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=AccessDenied"), True)
-                        End If
-                    Else
-                        Response.Redirect(NavigateURL(), True)
-                    End If
-                End If
-            End If
-
+        ' Methods
+        Public Sub New()
+            AddHandler MyBase.Init, New EventHandler(AddressOf Me.Page_Init)
+            Me._propertyID = Null.NullInteger
+            Me._returnUrl = Null.NullString
         End Sub
 
         Private Sub BindCrumbs()
-
-            Dim crumbs As New ArrayList
-
-            Dim objCrumbMain As New CrumbInfo
-            objCrumbMain.Caption = PropertySettings.MainLabel
-            objCrumbMain.Url = NavigateURL()
-            crumbs.Add(objCrumbMain)
-
-            Dim objCrumbPropertyManager As New CrumbInfo
-            objCrumbPropertyManager.Caption = GetResourceString("PropertyManager")
-            objCrumbPropertyManager.Url = NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=PropertyManager")
-            crumbs.Add(objCrumbPropertyManager)
-
-            If (_propertyID <> Null.NullInteger) Then
-                Dim objCrumbProperty As New CrumbInfo
-                objCrumbProperty.Caption = GetResourceString("EditProperty")
-                objCrumbProperty.Url = NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditProperty", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString())
-                crumbs.Add(objCrumbProperty)
+            Dim list As New ArrayList
+            Dim info As New CrumbInfo With {
+                .Caption = MyBase.PropertySettings.MainLabel,
+                .Url = Globals.NavigateURL
+            }
+            list.Add(info)
+            Dim info2 As New CrumbInfo With {
+                .Caption = MyBase.GetResourceString("PropertyManager")
+            }
+            Dim additionalParameters As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=PropertyManager")}
+            info2.Url = Globals.NavigateURL(MyBase.TabId, "", additionalParameters)
+            list.Add(info2)
+            If (Me._propertyID <> Null.NullInteger) Then
+                Dim info4 As New CrumbInfo With {
+                    .Caption = MyBase.GetResourceString("EditProperty")
+                }
+                Dim textArray2 As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=EditProperty"), (MyBase.PropertySettings.SEOPropertyID & "=" & Me._propertyID.ToString)}
+                info4.Url = Globals.NavigateURL(MyBase.TabId, "", textArray2)
+                list.Add(info4)
             Else
-                Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditProperty"), True)
+                Dim textArray3 As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=EditProperty")}
+                MyBase.Response.Redirect(Globals.NavigateURL(MyBase.TabId, "", textArray3), True)
             End If
-
-            Dim objCrumbEditPhotos As New CrumbInfo
-            objCrumbEditPhotos.Caption = Localization.GetString("EditPhotos", LocalResourceFile)
-            objCrumbEditPhotos.Url = NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditPhotos", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString())
-            crumbs.Add(objCrumbEditPhotos)
-
-            If (PropertySettings.BreadcrumbPlacement = BreadcrumbType.Portal) Then
-                For i As Integer = 0 To crumbs.Count - 1
-                    Dim objCrumb As CrumbInfo = crumbs(i)
+            Dim info3 As New CrumbInfo With {
+                .Caption = Localization.GetString("EditPhotos", MyBase.LocalResourceFile)
+            }
+            Dim textArray4 As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=EditPhotos"), (MyBase.PropertySettings.SEOPropertyID & "=" & Me._propertyID.ToString)}
+            info3.Url = Globals.NavigateURL(MyBase.TabId, "", textArray4)
+            list.Add(info3)
+            If (MyBase.PropertySettings.BreadcrumbPlacement = BreadcrumbType.Portal) Then
+                Dim num As Integer = (list.Count - 1)
+                Dim i As Integer = 0
+                Do While (i <= num)
+                    Dim info5 As CrumbInfo = DirectCast(list.Item(i), CrumbInfo)
                     If (i > 0) Then
-                        Dim objTab As New DotNetNuke.Entities.Tabs.TabInfo
-                        objTab.TabID = -8888 + i
-                        objTab.TabName = objCrumb.Caption
-                        objTab.Url = objCrumb.Url
-                        PortalSettings.ActiveTab.BreadCrumbs.Add(objTab)
+                        Dim info6 As New TabInfo With {
+                            .TabID = (-8888 + i),
+                            .TabName = info5.Caption,
+                            .Url = info5.Url
+                        }
+                        MyBase.PortalSettings.ActiveTab.BreadCrumbs.Add(info6)
                     End If
-                Next
+                    i += 1
+                Loop
             End If
-
-            If (PropertySettings.BreadcrumbPlacement = BreadcrumbType.Module) Then
-                rptBreadCrumbs.DataSource = crumbs
-                rptBreadCrumbs.DataBind()
+            If (MyBase.PropertySettings.BreadcrumbPlacement = BreadcrumbType.Module) Then
+                Me.rptBreadCrumbs.DataSource = list
+                Me.rptBreadCrumbs.DataBind()
             End If
-
         End Sub
 
-#End Region
+        Private Sub CheckSecurity()
+            If ((Not MyBase.IsEditable And (Not PortalSecurity.IsInRoles(MyBase.PropertySettings.PermissionSubmit) OrElse Not PortalSecurity.IsInRoles(MyBase.PropertySettings.PermissionAddImages))) AndAlso ((Me._propertyID = Null.NullInteger) OrElse Not PortalSecurity.IsInRoles(MyBase.PropertySettings.PermissionApprove))) Then
+                Dim additionalParameters As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=AccessDenied")}
+                MyBase.Response.Redirect(Globals.NavigateURL(MyBase.TabId, "", additionalParameters), True)
+            End If
+            If (((Not MyBase.IsEditable And PortalSecurity.IsInRoles(MyBase.PropertySettings.PermissionSubmit)) And Not PortalSecurity.IsInRoles(MyBase.PropertySettings.PermissionApprove)) AndAlso (Me._propertyID <> Null.NullInteger)) Then
+                Dim info As PropertyInfo = New PropertyController().Get(Me._propertyID)
+                If (Not info Is Nothing) Then
+                    If (info.AuthorID <> MyBase.UserId) Then
+                        Dim textArray2 As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=AccessDenied")}
+                        MyBase.Response.Redirect(Globals.NavigateURL(MyBase.TabId, "", textArray2), True)
+                    End If
+                Else
+                    MyBase.Response.Redirect(Globals.NavigateURL, True)
+                End If
+            End If
+        End Sub
 
-#Region " Public Methods "
+        Private Sub cmdReturnToEditProperty_Click(ByVal sender As Object, ByVal e As EventArgs)
+            Try
+                If (Me._returnUrl <> "") Then
+                    Dim additionalParameters As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=EditProperty"), (MyBase.PropertySettings.SEOPropertyID & "=" & Me._propertyID.ToString), ("ReturnUrl=" & MyBase.Server.UrlEncode(Me._returnUrl))}
+                    MyBase.Response.Redirect(Globals.NavigateURL(MyBase.TabId, "", additionalParameters), True)
+                Else
+                    Dim textArray2 As String() = New String() {(MyBase.PropertySettings.SEOAgentType & "=EditProperty"), (MyBase.PropertySettings.SEOPropertyID & "=" & Me._propertyID.ToString)}
+                    MyBase.Response.Redirect(Globals.NavigateURL(MyBase.TabId, "", textArray2), True)
+                End If
+            Catch exception1 As Exception
+                ProjectData.SetProjectError(exception1)
+                Dim exc As Exception = exception1
+                Exceptions.ProcessModuleLoadException(DirectCast(Me, PortalModuleBase), exc)
+                ProjectData.ClearProjectError()
+            End Try
+        End Sub
+
+        Private Sub Page_Init(ByVal sender As Object, ByVal e As EventArgs)
+            Try
+                Me.ReadQueryString()
+                Me.CheckSecurity()
+                Me.cmdReturnToEditProperty.Text = MyBase.GetResourceString("cmdReturnToEditProperty")
+                Me.cmdReturnToEditProperty.CssClass = MyBase.PropertySettings.ButtonClass
+                If Not Me.Page.IsPostBack Then
+                    Me.BindCrumbs()
+                    Me.EditPropertyPhotos1.BindPhotos()
+                    Me.UploadPhotoStandard1.Visible = (MyBase.PropertySettings.UploadMode = UploadType.Standard)
+                    Me.UploadPhotoSWF1.Visible = (MyBase.PropertySettings.UploadMode = UploadType.Flash)
+                End If
+            Catch exception1 As Exception
+                ProjectData.SetProjectError(exception1)
+                Dim exc As Exception = exception1
+                Exceptions.ProcessModuleLoadException(DirectCast(Me, PortalModuleBase), exc)
+                ProjectData.ClearProjectError()
+            End Try
+        End Sub
+
+        Private Sub ReadQueryString()
+            Dim sEOPropertyID As String = MyBase.PropertySettings.SEOPropertyID
+            If (MyBase.Request.Item(sEOPropertyID) = "") Then
+                sEOPropertyID = "PropertyID"
+            End If
+            If (Not MyBase.Request.Item(sEOPropertyID) Is Nothing) Then
+                Me._propertyID = Convert.ToInt32(MyBase.Request.Item(sEOPropertyID))
+            End If
+            If (Not MyBase.Request.Item("ReturnUrl") Is Nothing) Then
+                Me._returnUrl = MyBase.Server.UrlDecode(MyBase.Request.Item("ReturnUrl"))
+            End If
+        End Sub
 
         Public Sub RefreshPhotos()
-
-            EditPropertyPhotos1.BindPhotos()
-
+            Me.EditPropertyPhotos1.BindPhotos()
         End Sub
 
-#End Region
 
-#Region " Event Handlers "
-
-        Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
-
-            Try
-
-                ReadQueryString()
-                CheckSecurity()
-
-                cmdReturnToEditProperty.Text = GetResourceString("cmdReturnToEditProperty")
-                cmdReturnToEditProperty.CssClass = PropertySettings.ButtonClass
-
-                If (Page.IsPostBack = False) Then
-
-                    BindCrumbs()
-                    EditPropertyPhotos1.BindPhotos()
-
-                    UploadPhotoStandard1.Visible = (Me.PropertySettings.UploadMode = UploadType.Standard)
-                    UploadPhotoSWF1.Visible = (Me.PropertySettings.UploadMode = UploadType.Flash)
-
+        ' Properties
+        Protected Overridable Property cmdReturnToEditProperty As LinkButton
+            <CompilerGenerated>
+            Get
+                Return Me._cmdReturnToEditProperty
+            End Get
+            <MethodImpl(MethodImplOptions.Synchronized), CompilerGenerated>
+            Set(ByVal WithEventsValue As LinkButton)
+                Dim handler As EventHandler = New EventHandler(AddressOf Me.cmdReturnToEditProperty_Click)
+                Dim button As LinkButton = Me._cmdReturnToEditProperty
+                If (Not button Is Nothing) Then
+                    RemoveHandler button.Click, handler
                 End If
-
-            Catch exc As Exception    'Module failed to load
-                ProcessModuleLoadException(Me, exc)
-            End Try
-
-        End Sub
-
-        Private Sub cmdReturnToEditProperty_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReturnToEditProperty.Click
-
-            Try
-
-                If (_returnUrl <> "") Then
-                    Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditProperty", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString(), "ReturnUrl=" & Server.UrlEncode(_returnUrl)), True)
-                Else
-                    Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditProperty", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString()), True)
+                Me._cmdReturnToEditProperty = WithEventsValue
+                button = Me._cmdReturnToEditProperty
+                If (Not button Is Nothing) Then
+                    AddHandler button.Click, handler
                 End If
+            End Set
+        End Property
 
-            Catch exc As Exception    'Module failed to load
-                ProcessModuleLoadException(Me, exc)
-            End Try
+        Protected Overridable Property EditPropertyPhotos1 As EditPropertyPhotos
+            <CompilerGenerated>
+            Get
+                Return Me._EditPropertyPhotos1
+            End Get
+            <MethodImpl(MethodImplOptions.Synchronized), CompilerGenerated>
+            Set(ByVal WithEventsValue As EditPropertyPhotos)
+                Me._EditPropertyPhotos1 = WithEventsValue
+            End Set
+        End Property
 
-        End Sub
+        Protected Overridable Property Options1 As Options
+            <CompilerGenerated>
+            Get
+                Return Me._Options1
+            End Get
+            <MethodImpl(MethodImplOptions.Synchronized), CompilerGenerated>
+            Set(ByVal WithEventsValue As Options)
+                Me._Options1 = WithEventsValue
+            End Set
+        End Property
 
-#End Region
+        Protected Overridable Property rptBreadCrumbs As Repeater
+            <CompilerGenerated>
+            Get
+                Return Me._rptBreadCrumbs
+            End Get
+            <MethodImpl(MethodImplOptions.Synchronized), CompilerGenerated>
+            Set(ByVal WithEventsValue As Repeater)
+                Me._rptBreadCrumbs = WithEventsValue
+            End Set
+        End Property
 
+        Protected Overridable Property UploadPhotoStandard1 As UploadPhotoStandard
+            <CompilerGenerated>
+            Get
+                Return Me._UploadPhotoStandard1
+            End Get
+            <MethodImpl(MethodImplOptions.Synchronized), CompilerGenerated>
+            Set(ByVal WithEventsValue As UploadPhotoStandard)
+                Me._UploadPhotoStandard1 = WithEventsValue
+            End Set
+        End Property
+
+        Protected Overridable Property UploadPhotoSWF1 As UploadPhotoSWF
+            <CompilerGenerated>
+            Get
+                Return Me._UploadPhotoSWF1
+            End Get
+            <MethodImpl(MethodImplOptions.Synchronized), CompilerGenerated>
+            Set(ByVal WithEventsValue As UploadPhotoSWF)
+                Me._UploadPhotoSWF1 = WithEventsValue
+            End Set
+        End Property
+
+
+        ' Fields
+        <CompilerGenerated, AccessedThroughProperty("cmdReturnToEditProperty")>
+        Private _cmdReturnToEditProperty As LinkButton
+        <CompilerGenerated, AccessedThroughProperty("EditPropertyPhotos1")>
+        Private _EditPropertyPhotos1 As EditPropertyPhotos
+        <CompilerGenerated, AccessedThroughProperty("Options1")>
+        Private _Options1 As Options
+        Private _photos As ArrayList
+        Private _propertyID As Integer
+        Private _returnUrl As String
+        <CompilerGenerated, AccessedThroughProperty("rptBreadCrumbs")>
+        Private _rptBreadCrumbs As Repeater
+        <CompilerGenerated, AccessedThroughProperty("UploadPhotoStandard1")>
+        Private _UploadPhotoStandard1 As UploadPhotoStandard
+        <CompilerGenerated, AccessedThroughProperty("UploadPhotoSWF1")>
+        Private _UploadPhotoSWF1 As UploadPhotoSWF
     End Class
-
 End Namespace

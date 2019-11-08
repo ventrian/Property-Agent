@@ -3,6 +3,8 @@ Imports DotNetNuke.Common.Utilities
 Imports DotNetNuke.Entities.Modules
 Imports DotNetNuke.Security
 Imports DotNetNuke.Services.Localization
+Imports DotNetNuke.Security.Permissions
+
 
 Namespace Ventrian.PropertyAgent
 
@@ -155,7 +157,7 @@ Namespace Ventrian.PropertyAgent
         Public ReadOnly Property PropertySettings(ByVal forceRefresh As Boolean) As PropertySettings
             Get
                 Dim objModuleController As New ModuleController
-                _propertySettings = New PropertySettings(objModuleController.GetModuleSettings(Me.ModuleId))
+                _propertySettings = New PropertySettings(objModuleController.GetModuleSettings(ModuleId))
                 Return _propertySettings
             End Get
         End Property
@@ -173,10 +175,12 @@ Namespace Ventrian.PropertyAgent
 
         Protected ReadOnly Property IsEditor() As Boolean
             Get
-                Return _
-                        (PortalSecurity.IsInRoles(Me.ModuleConfiguration.AuthorizedEditRoles) = True) Or _
-                        (PortalSecurity.IsInRoles(PortalSettings.ActiveTab.AdministratorRoles) = True) Or _
-                        (PortalSecurity.IsInRoles(PortalSettings.AdministratorRoleName) = True)
+                Return (ModulePermissionController.HasModuleAccess(SecurityAccessLevel.Edit, "EDIT", MyBase.ModuleConfiguration) Or ModulePermissionController.HasModuleAccess(SecurityAccessLevel.Admin, Null.NullString, MyBase.ModuleConfiguration))
+                'Return PortalSecurity.IsInRoles(PortalSettings.AdministratorRoleName)
+                'Return _
+                '        (PortalSecurity.IsInRoles(Me.ModuleConfiguration.AuthorizedEditRoles) = True) Or
+                '        (PortalSecurity.IsInRoles(PortalSettings.ActiveTab.AdministratorRoles) = True) Or
+                '        (PortalSecurity.IsInRoles(PortalSettings.AdministratorRoleName) = True)
             End Get
         End Property
 

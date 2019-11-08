@@ -108,7 +108,7 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub cmdSubmit_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdSubmit.Click
-
+            Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             Try
 
                 lblSubmitResults.Text = String.Empty
@@ -172,7 +172,7 @@ Namespace Ventrian.PropertyAgent
                     End If
 
                     Dim objController As New ReviewController()
-                    Dim reviewID As Integer = objController.Add(CurrentProperty.PropertyID, UserController.GetCurrentUserInfo.UserID, DateTime.Now, Not requireReview)
+                    Dim reviewID As Integer = objController.Add(CurrentProperty.PropertyID, UserController.Instance.GetCurrentUserInfo.UserID, DateTime.Now, Not requireReview)
 
                     For Each objReviewField As ReviewFieldInfo In objReviewFields
                         objController.AddValue(reviewID, objReviewField.ReviewFieldID, objReviewField.DefaultValue)
@@ -199,7 +199,7 @@ Namespace Ventrian.PropertyAgent
                             objRating.ReviewID = reviewID
                             objRating.PropertyID = CurrentProperty.PropertyID
                             objRating.CreateDate = DateTime.Now
-                            objRating.UserID = UserController.GetCurrentUserInfo.UserID
+                            objRating.UserID = UserController.Instance.GetCurrentUserInfo.UserID
                             objRating.Rating = averageRating
 
                             Dim objRatingController As New RatingController()
@@ -233,11 +233,11 @@ Namespace Ventrian.PropertyAgent
 
                             For Each email As String In PropertySettings.ReviewEmail.Split(","c)
                                 Try
-                                    DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, email, "", "", _
-                                       DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                       subject, _
-                                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                                       "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                                    DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, email, "", "",
+                                       DotNetNuke.Services.Mail.MailPriority.Normal,
+                                       subject,
+                                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                                       "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
 
                                 Catch
                                 End Try

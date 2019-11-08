@@ -162,7 +162,7 @@ Namespace Ventrian.PropertyAgent
                 For Each objUser As UserInfo In arrUsersToAdd
                     If Not objUser Is Nothing Then
                         'TODO: understand why I have to tho this, for "Membership.Approved" return the REAL value
-                        Dim objUserAux As UserInfo = UserController.GetUser(_portalID, objUser.UserID, True)
+                        Dim objUserAux As UserInfo = UserController.GetUserById(_portalID, objUser.UserID)
                         If Not objUserAux Is Nothing Then ' just in case, to avoid unlikely Object reference not set to an instance of an object
                             'If objUserAux.Membership.Approved Then
                             Dim addUser As Boolean = True

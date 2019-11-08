@@ -223,11 +223,11 @@ Namespace Ventrian.PropertyAgent
                     Dim mailTo As String = toEmail
                     If mailTo <> "" AndAlso replyTo <> "" Then
                         For Each mailItem As String In mailTo.Split(","c)
-                            DotNetNuke.Services.Mail.Mail.SendMail(replyTo, mailItem, "", contactBCC, _
-                                DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                subject, _
-                                DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                                "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(replyTo, mailItem, "", contactBCC,
+                                DotNetNuke.Services.Mail.MailPriority.Normal,
+                                subject,
+                                DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                                "", DotNetNuke.Entities.Host.Host.SMTPServer, DotNetNuke.Entities.Host.Host.SMTPAuthentication, DotNetNuke.Entities.Host.Host.SMTPUsername, DotNetNuke.Entities.Host.Host.SMTPPassword)
                         Next
                         lblSubmitResults.Text = Localization.GetString("EmailSent.Message", Me.ResourceFile)
                         lblSubmitResults.CssClass = "Normal"

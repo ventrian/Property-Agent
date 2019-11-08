@@ -572,7 +572,7 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub Update()
-
+            Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             If (_propertyID = Null.NullInteger) Then
                 _property = New PropertyInfo
                 _property.ModuleID = Me.ModuleId
@@ -729,11 +729,11 @@ Namespace Ventrian.PropertyAgent
 
                     If (Me.PropertySettings.NotificationEmail <> "") Then
                         Try
-                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, Me.PropertySettings.NotificationEmail, "", "", _
-                               DotNetNuke.Services.Mail.MailPriority.Normal, _
-                               subject, _
-                               DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                               "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, Me.PropertySettings.NotificationEmail, "", "",
+                               DotNetNuke.Services.Mail.MailPriority.Normal,
+                               subject,
+                               DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                               "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
                         Catch
                         End Try
                     End If
@@ -752,11 +752,11 @@ Namespace Ventrian.PropertyAgent
 
                         For Each item As DictionaryEntry In emails
                             Try
-                                DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, item.Value.ToString(), "", "", _
-                                  DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                  subject, _
-                                  DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                                  "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                                DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, item.Value.ToString(), "", "",
+                                  DotNetNuke.Services.Mail.MailPriority.Normal,
+                                  subject,
+                                  DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                                  "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
                             Catch
                             End Try
                         Next
@@ -786,11 +786,11 @@ Namespace Ventrian.PropertyAgent
 
                     If (_property.Email <> "") Then
                         Try
-                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.Email, "", "", _
-                        DotNetNuke.Services.Mail.MailPriority.Normal, _
-                        subject, _
-                        DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                        "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.Email, "", "",
+                        DotNetNuke.Services.Mail.MailPriority.Normal,
+                        subject,
+                        DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                        "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
 
                         Catch
                         End Try
@@ -818,11 +818,11 @@ Namespace Ventrian.PropertyAgent
 
                     If (_property.BrokerEmail <> "") Then
                         Try
-                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.BrokerEmail, "", "", _
-                       DotNetNuke.Services.Mail.MailPriority.Normal, _
-                       subject, _
-                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                       "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.BrokerEmail, "", "",
+                       DotNetNuke.Services.Mail.MailPriority.Normal,
+                       subject,
+                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                       "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
                         Catch
                         End Try
                     End If

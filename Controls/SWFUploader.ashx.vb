@@ -133,8 +133,10 @@ Namespace Ventrian.PropertyAgent.Controls
 
 
             Me._context = context
-                context.Response.ContentType = "text/plain"
+
+            context.Response.ContentType = "text/plain"
             Try
+                'issue to check the first time PropertySettins is called give an exception
                 Dim largeWidth2 As Integer = Me.PropertySettings.LargeWidth
             Catch ex As Exception
 

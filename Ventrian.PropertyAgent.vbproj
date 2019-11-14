@@ -55,12 +55,12 @@
   <ItemGroup>
     <Reference Include="DotNetNuke, Version=7.4.2.216, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\DNN92\DesktopModules\PropertyAgentSource\Libraries\DotNetNuke.dll</HintPath>
+      <HintPath>Libraries\DotNetNuke.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web.Client, Version=7.4.2.216, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\DNN92\bin\DotNetNuke.Web.Client.dll</HintPath>
+      <HintPath>Libraries\DotNetNuke.Web.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ephtmltopdf, Version=4.0.6.31734, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL" />

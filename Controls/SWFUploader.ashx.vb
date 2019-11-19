@@ -62,51 +62,70 @@ Namespace Ventrian.PropertyAgent.Controls
 
         Public Function CheckLimit(ByVal context As HttpContext, ByVal permission As String, ByVal permissionLimit As String) As Boolean
             Try
+
+                'Dim objUser As UserInfo = UserController.GetCurrentUserInfo()
+
+                'Dim objRoleController As New RoleController
+                'Dim userRoles As String() = objRoleController.GetRolesByUser(objUser.UserID, objUser.PortalID)
                 Dim objUser As UserInfo = UserController.Instance.GetCurrentUserInfo()
-                'Dim userById As UserInfo = UserController.GetUserById(Me._portalID, Me._userID)
                 Dim userRoles As List(Of UserRoleInfo) = DirectCast(New RoleController().GetUserRoles(objUser, True), List(Of UserRoleInfo))
-                Dim nullInteger As Integer = Null.NullInteger
-                Dim separator As Char() = New Char() {";"c}
-                Dim str As String
-                For Each str In permission.Split(separator)
-                    If (str <> "") Then
-                        Dim str2 As String = str
-                        Dim chArray2 As Char() = New Char() {":"c}
-                        If (str2.Split(chArray2).Length > 1) Then
-                            Dim chArray3 As Char() = New Char() {":"c}
-                            str2 = str2.Split(chArray3)(0)
+
+                Dim limit As Integer = Null.NullInteger
+
+                For Each role As String In permission.Split(";"c)
+
+                    If (role <> "") Then
+
+                        Dim actualRole As String = role
+
+                        If (actualRole.Split(":"c).Length > 1) Then
+                            actualRole = actualRole.Split(":"c)(0)
                         End If
-                        Dim info2 As UserRoleInfo
-                        For Each info2 In userRoles
-                            If (str.ToLower = info2.RoleName.ToLower) Then
-                                Dim flag2 As Boolean = False
+
+
+                        For Each userRole As UserRoleInfo In userRoles
+                            If (role.ToLower() = userRole.RoleName.ToLower()) Then
+
+                                Dim found As Boolean = False
+
                                 If (permissionLimit = "") Then
-                                    Return (Null.NullInteger > 0)
+                                    Return Null.NullInteger
                                 End If
-                                Dim chArray4 As Char() = New Char() {";"c}
-                                Dim str3 As String
-                                For Each str3 In permissionLimit.Split(chArray4)
-                                    Dim chArray5 As Char() = New Char() {":"c}
-                                    Dim str4 As String = str3.Split(chArray5)(0)
-                                    Dim chArray6 As Char() = New Char() {":"c}
-                                    Dim num4 As Integer = Convert.ToInt32(str3.Split(chArray6)(1))
-                                    If (str2 = str4) Then
-                                        If (nullInteger < num4) Then
-                                            nullInteger = num4
+
+                                For Each item As String In permissionLimit.Split(";"c)
+                                    Dim r As String = item.Split(":"c)(0)
+                                    Dim v As Integer = Convert.ToInt32(item.Split(":"c)(1))
+
+                                    If (actualRole = r) Then
+                                        If (limit < v) Then
+                                            limit = v
                                         End If
-                                        flag2 = True
+                                        found = True
                                     End If
                                 Next
-                                If Not flag2 Then
-                                    Return (Null.NullInteger > 0)
+
+                                If (found = False) Then
+                                    Return Null.NullInteger
                                 End If
+
                             End If
                         Next
+
                     End If
+
                 Next
-                If ((nullInteger <> Null.NullInteger) AndAlso (New PhotoController().List(Me._propertyID, Me._propertyGuid).Count >= nullInteger)) Then
-                    Return False
+
+                If (limit <> Null.NullInteger) Then
+
+                    Dim objPhotoController As New PhotoController()
+                    Dim objPhotos As ArrayList = objPhotoController.List(_propertyID, _propertyGuid)
+
+                    If (objPhotos.Count >= limit) Then
+                        Return False
+                    End If
+
                 End If
+
                 Return True
 
             Catch ex As Exception

@@ -101,7 +101,7 @@
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data">
       <Name>Microsoft.ApplicationBlocks.Data</Name>
-      <HintPath>..\..\..\..\..\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <HintPath>..\..\..\Libraries\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">

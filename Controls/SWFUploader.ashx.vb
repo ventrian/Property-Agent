@@ -151,7 +151,7 @@ Namespace Ventrian.PropertyAgent.Controls
 
 
 
-            Me._context = context
+            _context = context
 
             context.Response.ContentType = "text/plain"
             Try
@@ -260,9 +260,9 @@ Namespace Ventrian.PropertyAgent.Controls
                     Dim targetFile As String = (path & objPhoto.Filename)
                     ImageManager.getBestInstance.BuildImage((path & objPhoto.Filename), targetFile, queryString, watermark)
                     controller.Update(objPhoto)
-                    Me._context.Response.Write("200")
-                    Me._context.Response.End()
-                End If
+                _context.Response.Write("200")
+                _context.Response.End()
+            End If
 
         End Sub
 

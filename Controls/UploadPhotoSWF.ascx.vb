@@ -20,12 +20,12 @@ Namespace Ventrian.PropertyAgent.Controls
     Public Class UploadPhotoSWF
         Inherits PropertyAgentControl
         ' Methods
-        Public Sub New()
-            AddHandler MyBase.Load, New EventHandler(AddressOf Me.Page_Load)
-            Me._imageType = ""
-            Me._propertyID = Null.NullInteger
-            Me._propertyGuid = Null.NullString
-        End Sub
+        'Public Sub New()
+        '    AddHandler MyBase.Load, New EventHandler(AddressOf Me.Page_Load)
+        '    Me._imageType = ""
+        '    Me._propertyID = Null.NullInteger
+        '    Me._propertyGuid = Null.NullString
+        'End Sub
 
         Protected Sub cmdAttachPhoto_Click(ByVal sender As Object, ByVal e As EventArgs)
             Try
@@ -64,7 +64,7 @@ Namespace Ventrian.PropertyAgent.Controls
                                 Exit Select
                         End Select
                         controller.Update(objPhoto)
-                        imageByUrl.Dispose
+                        imageByUrl.Dispose()
                         Me.txtExternalUrl.Text = ""
                         If TypeOf Me.Parent Is EditPhotos Then
                             DirectCast(Me.Parent, EditPhotos).RefreshPhotos()
@@ -179,7 +179,7 @@ Namespace Ventrian.PropertyAgent.Controls
             Return Me.Page.ResolveUrl(("~/DesktopModules/PropertyAgent/Controls/SWFUploader.ashx?PortalID=" & MyBase.PropertyAgentBase.PortalId.ToString))
         End Function
 
-        Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs)
+        Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
             ClientResourceManager.RegisterStyleSheet(Me.Page, MyBase.ResolveUrl("~/DesktopModules/PropertyAgent/JS/fileuploader/jquery.fileuploader.min.css"), 100)
             ClientResourceManager.RegisterStyleSheet(Me.Page, MyBase.ResolveUrl("~/DesktopModules/PropertyAgent/JS/fileuploader/font/font-fileuploader.css"), 100)
             ClientResourceManager.RegisterScript(Me.Page, MyBase.ResolveUrl("~/DesktopModules/PropertyAgent/JS/fileuploader/jquery.fileuploader.min.js"), 100)

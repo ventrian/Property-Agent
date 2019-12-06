@@ -56,15 +56,12 @@
     <Reference Include="DotNetNuke, Version=9.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DotNetNuke.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetNuke.Abstractions, Version=9.4.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libraries\DotNetNuke.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web.Client, Version=9.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DotNetNuke.Web.Client.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ephtmltopdf, Version=4.0.6.31734, Culture=neutral, PublicKeyToken=5b5f377bc08a4d32, processorArchitecture=MSIL" />
     <Reference Include="Menulab.FlexCaptcha, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">

@@ -34,5 +34,3 @@
 	<asp:linkbutton id="cmdReturnToEditProperty" BorderStyle="none" Text="Return to Edit Property" CssClass="CommandButton"
 		runat="server"></asp:linkbutton>
 </p>
-
-

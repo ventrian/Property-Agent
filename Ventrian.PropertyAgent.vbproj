@@ -53,12 +53,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke, Version=9.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DotNetNuke, Version=7.4.2.216, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DotNetNuke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DotNetNuke.Web.Client, Version=9.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DotNetNuke.Web.Client, Version=7.4.2.216, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DotNetNuke.Web.Client.dll</HintPath>
       <Private>False</Private>
@@ -217,6 +217,7 @@
     <Content Include="ChangeTemplate.ascx" />
     <Content Include="CommentForm.ascx" />
     <Content Include="ContactForm.ascx" />
+    <Content Include="Controls\UploadPhotoSWF.ascx" />
     <Content Include="Default.ascx" />
     <Content Include="DeleteComment.ascx" />
     <Content Include="EditBrokers.ascx" />
@@ -315,7 +316,7 @@
     <Content Include="Controls\EditPropertyPhotos.ascx" />
     <Content Include="Controls\Sortable.asmx" />
     <Content Include="Controls\UploadPhotoStandard.ascx" />
-    <Content Include="Controls\UploadPhotoSWF.ascx" />
+    <Content Include="Controls\UploadPhotoHTML5.ascx" />
     <Content Include="ApproveReviews.ascx" />
     <Content Include="EditContactField.ascx" />
     <Content Include="EditContactFields.ascx" />
@@ -1658,6 +1659,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\LinkButtonDefault.vb" />
+    <Compile Include="Controls\UploadPhotoSWF.ascx.designer.vb">
+      <DependentUpon>UploadPhotoSWF.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UploadPhotoSWF.ascx.vb">
+      <DependentUpon>UploadPhotoSWF.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controls\Sortable.asmx.vb">
       <DependentUpon>Sortable.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -1672,8 +1680,8 @@
       <DependentUpon>UploadPhotoStandard.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\UploadPhotoSWF.ascx.vb">
-      <DependentUpon>UploadPhotoSWF.ascx</DependentUpon>
+    <Compile Include="Controls\UploadPhotoHTML5.ascx.vb">
+      <DependentUpon>UploadPhotoHTML5.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ApproveReviews.ascx.designer.vb">

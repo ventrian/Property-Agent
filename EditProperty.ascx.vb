@@ -1111,13 +1111,24 @@ Namespace Ventrian.PropertyAgent
 
                 If (PropertySettings.ImagesEnabled AndAlso ((IsEditable = True OrElse PortalSecurity.IsInRoles(PropertySettings.PermissionAddImages) = True OrElse PortalSecurity.IsInRoles(PropertySettings.PermissionApprove) = True))) Then
                     If (PropertySettings.UploadPlacement = UploadPlacementType.InlineTop) Then
-                        phTop.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
-                        phTop.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
+                        If PropertySettings.UploadMode = 2 Then
+                            phTop.Controls.Add(Me.LoadControl("Controls/UploadPhotoHTML5.ascx"))
+                            phTop.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
+                        Else
+                            phTop.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
+                            phTop.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
+                        End If
+
                     End If
 
                     If (PropertySettings.UploadPlacement = UploadPlacementType.InlineBottom) Then
-                        phBottom.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
-                        phBottom.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
+                        If PropertySettings.UploadMode = 2 Then
+                            phBottom.Controls.Add(Me.LoadControl("Controls/UploadPhotoHTML5.ascx"))
+                            phBottom.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
+                        Else
+                            phBottom.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
+                            phBottom.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
+                        End If
                     End If
                 End If
 
@@ -1143,18 +1154,29 @@ Namespace Ventrian.PropertyAgent
                             ViewState.Add("PropertyAgentGuid", Guid.NewGuid.ToString())
                         End If
                         If (phTop.Controls.Count = 2) Then
-                            CType(phTop.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
-                            CType(phTop.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            If PropertySettings.UploadMode = 2 Then
+                                CType(phTop.Controls(0), Controls.UploadPhotoHTML5).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                CType(phTop.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            Else
+                                CType(phTop.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                CType(phTop.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            End If
+
                         End If
-                    End If
+                        End If
 
                     If (PropertySettings.UploadPlacement = UploadPlacementType.InlineBottom) Then
                         If (ViewState("PropertyAgentGuid") Is Nothing) Then
                             ViewState.Add("PropertyAgentGuid", Guid.NewGuid.ToString())
                         End If
                         If (phBottom.Controls.Count = 2) Then
-                            CType(phBottom.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
-                            CType(phBottom.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            If PropertySettings.UploadMode = 2 Then
+                                CType(phBottom.Controls(0), Controls.UploadPhotoHTML5).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                CType(phBottom.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            Else
+                                CType(phBottom.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                CType(phBottom.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            End If
                         End If
                     End If
                 End If

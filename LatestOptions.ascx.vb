@@ -69,8 +69,8 @@ Namespace Ventrian.PropertyAgent
             If Not (objDesktopModuleInfo Is Nothing) Then
 
                 Dim objTabController As New TabController()
-                Dim objTabs As IList = objTabController.GetTabsByPortal(PortalId)
-                For Each objTab As DotNetNuke.Entities.Tabs.TabInfo In objTabs
+                Dim objTabs As TabCollection = TabController.Instance.GetTabsByPortal(PortalId)
+                For Each objTab As DotNetNuke.Entities.Tabs.TabInfo In objTabs.Values
                     If Not (objTab Is Nothing) Then
                         If (objTab.IsDeleted = False) Then
                             Dim objModules As New ModuleController

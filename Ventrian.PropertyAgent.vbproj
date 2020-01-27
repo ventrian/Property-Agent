@@ -217,6 +217,7 @@
     <Content Include="ChangeTemplate.ascx" />
     <Content Include="CommentForm.ascx" />
     <Content Include="ContactForm.ascx" />
+    <Content Include="Controls\UploadPhotoHTML5.ascx" />
     <Content Include="Controls\UploadPhotoSWF.ascx" />
     <Content Include="Default.ascx" />
     <Content Include="DeleteComment.ascx" />
@@ -316,7 +317,6 @@
     <Content Include="Controls\EditPropertyPhotos.ascx" />
     <Content Include="Controls\Sortable.asmx" />
     <Content Include="Controls\UploadPhotoStandard.ascx" />
-    <Content Include="Controls\UploadPhotoHTML5.ascx" />
     <Content Include="ApproveReviews.ascx" />
     <Content Include="EditContactField.ascx" />
     <Content Include="EditContactFields.ascx" />
@@ -1659,6 +1659,10 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\LinkButtonDefault.vb" />
+    <Compile Include="Controls\UploadPhotoHTML5.ascx.vb">
+      <DependentUpon>UploadPhotoHTML5.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controls\UploadPhotoSWF.ascx.designer.vb">
       <DependentUpon>UploadPhotoSWF.ascx</DependentUpon>
     </Compile>
@@ -1678,10 +1682,6 @@
     </Compile>
     <Compile Include="Controls\UploadPhotoStandard.ascx.vb">
       <DependentUpon>UploadPhotoStandard.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\UploadPhotoHTML5.ascx.vb">
-      <DependentUpon>UploadPhotoHTML5.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ApproveReviews.ascx.designer.vb">

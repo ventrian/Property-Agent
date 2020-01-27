@@ -120,6 +120,7 @@ Namespace Ventrian.PropertyAgent
                     Me.EditPropertyPhotos1.BindPhotos()
                     Me.UploadPhotoStandard1.Visible = (MyBase.PropertySettings.UploadMode = UploadType.Standard)
                     Me.UploadPhotoSWF1.Visible = (MyBase.PropertySettings.UploadMode = UploadType.Flash)
+                    Me.UploadPhotoHTML51.Visible = (MyBase.PropertySettings.UploadMode = UploadType.HTML5)
                 End If
             Catch exception1 As Exception
                 ProjectData.SetProjectError(exception1)
@@ -223,6 +224,16 @@ Namespace Ventrian.PropertyAgent
             End Set
         End Property
 
+        Protected Overridable Property UploadPhotoHTML51 As UploadPhotoHTML5
+            <CompilerGenerated>
+            Get
+                Return Me._UploadPhotoHTML51
+            End Get
+            <MethodImpl(MethodImplOptions.Synchronized), CompilerGenerated>
+            Set(ByVal WithEventsValue As UploadPhotoHTML5)
+                Me._UploadPhotoHTML51 = WithEventsValue
+            End Set
+        End Property
 
         ' Fields
         <CompilerGenerated, AccessedThroughProperty("cmdReturnToEditProperty")>
@@ -240,5 +251,7 @@ Namespace Ventrian.PropertyAgent
         Private _UploadPhotoStandard1 As UploadPhotoStandard
         <CompilerGenerated, AccessedThroughProperty("UploadPhotoSWF1")>
         Private _UploadPhotoSWF1 As UploadPhotoSWF
+        <CompilerGenerated, AccessedThroughProperty("UploadPhotoHTML51")>
+        Private _UploadPhotoHTML51 As UploadPhotoHTML5
     End Class
 End Namespace

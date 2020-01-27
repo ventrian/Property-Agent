@@ -16,16 +16,23 @@ Imports System.Web.UI.HtmlControls
 Imports System.Web.UI.WebControls
 Imports Ventrian.PropertyAgent
 
+
+
 Namespace Ventrian.PropertyAgent.Controls
+
     Public Class UploadPhotoHTML5
         Inherits PropertyAgentControl
-        ' Methods
-        'Public Sub New()
-        '    AddHandler MyBase.Load, New EventHandler(AddressOf Me.Page_Load)
-        '    Me._imageType = ""
-        '    Me._propertyID = Null.NullInteger
-        '    Me._propertyGuid = Null.NullString
-        'End Sub
+
+#Region " Public Properties "
+
+        ReadOnly Property GetMaximumFileSize() As String
+            Get
+                Return "1024"
+            End Get
+        End Property
+
+#End Region
+
 
         Protected Sub cmdAttachPhoto_Click(ByVal sender As Object, ByVal e As EventArgs)
             Try
@@ -148,9 +155,7 @@ Namespace Ventrian.PropertyAgent.Controls
             Return Nothing
         End Function
 
-        Protected Function GetMaximumFileSize() As String
-            Return "10240"
-        End Function
+
 
         Protected Function GetPostBackReference() As String
             Return Me.Page.ClientScript.GetPostBackEventReference(Me.cmdRefreshPhotos, "Refresh")

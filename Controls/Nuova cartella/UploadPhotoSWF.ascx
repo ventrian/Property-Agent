@@ -1,13 +1,10 @@
-﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="UploadPhotoHTML5.ascx.vb" Inherits="Ventrian.PropertyAgent.Controls.UploadPhotoHTML5" %>
+﻿<%@ Control Language="vb" AutoEventWireup="false" CodeBehind="UploadPhotoSWF.ascx.vb" Inherits="Ventrian.PropertyAgent.Controls.UploadPhotoSWF" %>
 <%@ Register TagPrefix="Ventrian" Assembly="Ventrian.PropertyAgent" Namespace="Ventrian.PropertyAgent" %>
 <%@ Register TagPrefix="dnn" TagName="SectionHead" Src="~/controls/SectionHeadControl.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 
-
-
 <script type="text/javascript">
-    
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
         //UploadPropertyAgentImages();
         $('#propertyagentfiles').fileuploader({
             fileMaxSize: <%= GetMaximumFileSize() %>,
@@ -44,12 +41,10 @@
         });
     });
 </script>
-
 <span class="button">
     <asp:Label ID="lblSelectImages" runat="server" EnableViewState="False" /></span>
 <dnn:sectionhead id="dshUploadPhoto" cssclass="Head" runat="server" text="Upload Photo" section="tblUploadPhoto"
     resourcekey="UploadPhoto" includerule="True"></dnn:sectionhead>
-
 <table id="tblUploadPhoto" cellspacing="0" cellpadding="2" width="100%" summary="Property Photos Design Table"
     border="0" runat="server">
     <tr>
@@ -63,19 +58,14 @@
             <dnn:label id="plImage" runat="server" suffix=":"></dnn:label>
         </td>
         <td>
-
-
             <div id="pa_upload_container">
                 <div>
                     <input id="propertyagentfiles" type="file" name="files">
                     <span id="spanButtonPlaceholder"></span>
                 </div>
             </div>
-
-                
         </td>
     </tr>
-
     <tr id="trImageCategories" runat="server">
         <td width="25"></td>
         <td class="SubHead" width="150">
@@ -93,7 +83,6 @@
     </tr>
 </table>
 <br />
-
 <dnn:sectionhead id="dshExternalPhoto" cssclass="Head" runat="server" text="Upload External Photo" section="tblUploadExternalPhoto"
     resourcekey="UploadExternalPhoto" includerule="True"></dnn:sectionhead>
 <table id="tblUploadExternalPhoto" cellspacing="0" cellpadding="2" width="100%" summary="Property Photos Design Table"

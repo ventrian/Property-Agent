@@ -5,6 +5,7 @@
 <%@ Register src="Controls/EditPropertyPhotos.ascx" tagname="EditPropertyPhotos" tagprefix="uc1" %>
 <%@ Register src="Controls/UploadPhotoStandard.ascx" tagname="UploadPhotoStandard" tagprefix="uc1" %>
 <%@ Register src="Controls/UploadPhotoSWF.ascx" tagname="UploadPhotoSWF" tagprefix="uc1" %>
+<%@ Register src="Controls/UploadPhotoHTML5.ascx" tagname="UploadPhotoHTML5" tagprefix="uc1" %>
 <table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
 		<td align="left">
@@ -27,6 +28,7 @@
 		<td height="5" colspan="2"></td>
 	</tr>
 </table>
+<uc1:UploadPhotoHTML5 ID="UploadPhotoHTML51" runat="server" />
 <uc1:UploadPhotoSWF ID="UploadPhotoSWF1" runat="server" />
 <uc1:UploadPhotoStandard ID="UploadPhotoStandard1" runat="server" Visible="false" />
 <uc1:EditPropertyPhotos ID="EditPropertyPhotos1" runat="server" />

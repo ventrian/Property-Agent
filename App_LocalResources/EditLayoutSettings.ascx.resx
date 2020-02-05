@@ -297,6 +297,9 @@
   <data name="Standard.Text" xml:space="preserve">
     <value>Standard</value>
   </data>
+  <data name="HTML5.Text" xml:space="preserve">
+    <value>HTML5</value>
+  </data>
   <data name="Name.Text" xml:space="preserve">
     <value>Name</value>
   </data>

@@ -3,7 +3,8 @@
 <%@ Register TagPrefix="dnn" TagName="SectionHead" Src="~/controls/SectionHeadControl.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 
-
+<script type="text/javascript" src='<%= ResolveUrl("~/DesktopModules/PropertyAgent/JS/SWFUpload/swfupload.01.07.33.js") %>'></script>
+<script type="text/javascript" src='<%= ResolveUrl("~/DesktopModules/PropertyAgent/JS/SWFUpload/handlers.01.08.05.js") %>'></script>
 
 <script type="text/javascript">
     

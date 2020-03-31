@@ -23,6 +23,7 @@ Namespace Ventrian.PropertyAgent.Controls
     Public Class UploadPhotoHTML5
         Inherits PropertyAgentControl
 
+
 #Region " Public Properties "
 
         ReadOnly Property GetMaximumFileSize() As String
@@ -30,6 +31,8 @@ Namespace Ventrian.PropertyAgent.Controls
                 Return "1024"
             End Get
         End Property
+
+
 
 #End Region
 
@@ -196,7 +199,7 @@ Namespace Ventrian.PropertyAgent.Controls
                 If MyBase.Request.IsAuthenticated Then
                     Me.litTicketID.Text = MyBase.Request.Cookies.Item(FormsAuthentication.FormsCookieName).Value
                 End If
-                Me.litPropertyGuid.Text = Me.PropertyGuid.ToString
+                'Me.litPropertyGuid.Text = Me.PropertyGuid.ToString
                 If Not MyBase.IsPostBack Then
                     If (MyBase.PropertyAgentBase.PropertySettings.ImageCategories <> "") Then
                         Dim separator As Char() = New Char() {";"c}

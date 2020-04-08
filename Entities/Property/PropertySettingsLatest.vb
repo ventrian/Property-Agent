@@ -79,6 +79,16 @@ Namespace Ventrian.PropertyAgent
             End Get
         End Property
 
+        Public ReadOnly Property SearchValuesInURL() As Boolean
+            Get
+                If (_settings.Contains(Constants.LATEST_SEARCH_VALUES_IN_URL_SETTING)) Then
+                    Return Convert.ToBoolean(_settings(Constants.LATEST_SEARCH_VALUES_IN_URL_SETTING).ToString())
+                Else
+                    Return Constants.LATEST_SEARCH_VALUES_IN_URL_SETTING_DEFAULT
+                End If
+            End Get
+        End Property
+
         Public ReadOnly Property FeaturedOnly() As Boolean
             Get
                 If (_settings.Contains(Constants.LATEST_FEATURED_ONLY_SETTING)) Then

@@ -11,9 +11,9 @@ Option Strict On
 Option Explicit On
 
 Namespace Ventrian.PropertyAgent
-
+    
     Partial Public Class EditProperty
-
+        
         '''<summary>
         '''rptBreadCrumbs control.
         '''</summary>
@@ -22,7 +22,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents rptBreadCrumbs As Global.System.Web.UI.WebControls.Repeater
-
+        
         '''<summary>
         '''Options1 control.
         '''</summary>
@@ -31,7 +31,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents Options1 As Global.Ventrian.PropertyAgent.Options
-
+        
         '''<summary>
         '''phTop control.
         '''</summary>
@@ -40,7 +40,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phTop As Global.System.Web.UI.WebControls.PlaceHolder
-
+        
         '''<summary>
         '''pnlUpdate control.
         '''</summary>
@@ -49,7 +49,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents pnlUpdate As Global.System.Web.UI.WebControls.Panel
-
+        
         '''<summary>
         '''dshPropertyDetails control.
         '''</summary>
@@ -58,7 +58,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents dshPropertyDetails As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''tblPropertyDetails control.
         '''</summary>
@@ -67,7 +67,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents tblPropertyDetails As Global.System.Web.UI.HtmlControls.HtmlTable
-
+        
         '''<summary>
         '''lblPropertyDetailsHelp control.
         '''</summary>
@@ -76,7 +76,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblPropertyDetailsHelp As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''trType control.
         '''</summary>
@@ -85,7 +85,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents trType As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
+        
         '''<summary>
         '''plType control.
         '''</summary>
@@ -94,7 +94,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plType As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''drpTypes control.
         '''</summary>
@@ -103,7 +103,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpTypes As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''valPropertyType control.
         '''</summary>
@@ -112,7 +112,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents valPropertyType As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
+        
         '''<summary>
         '''rptDetails control.
         '''</summary>
@@ -121,7 +121,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents rptDetails As Global.System.Web.UI.WebControls.Repeater
-
+        
         '''<summary>
         '''phLocation control.
         '''</summary>
@@ -130,7 +130,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phLocation As Global.System.Web.UI.WebControls.PlaceHolder
-
+        
         '''<summary>
         '''dshLocation control.
         '''</summary>
@@ -139,7 +139,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents dshLocation As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''tblLocationDetails control.
         '''</summary>
@@ -148,7 +148,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents tblLocationDetails As Global.System.Web.UI.HtmlControls.HtmlTable
-
+        
         '''<summary>
         '''lblLocationDetails control.
         '''</summary>
@@ -157,7 +157,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblLocationDetails As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''FindAddress control.
         '''</summary>
@@ -166,7 +166,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents FindAddress As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''txtAddress control.
         '''</summary>
@@ -175,7 +175,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtAddress As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''lblLatitude control.
         '''</summary>
@@ -184,7 +184,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblLatitude As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''txtLatitude control.
         '''</summary>
@@ -193,7 +193,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtLatitude As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''lblLongitude control.
         '''</summary>
@@ -202,7 +202,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblLongitude As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''txtLongitude control.
         '''</summary>
@@ -211,7 +211,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtLongitude As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''litMapCenter control.
         '''</summary>
@@ -220,7 +220,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents litMapCenter As Global.System.Web.UI.WebControls.Literal
-
+        
         '''<summary>
         '''phMapLoad control.
         '''</summary>
@@ -229,7 +229,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phMapLoad As Global.System.Web.UI.WebControls.PlaceHolder
-
+        
         '''<summary>
         '''phPublishingDetails control.
         '''</summary>
@@ -238,7 +238,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phPublishingDetails As Global.System.Web.UI.WebControls.PlaceHolder
-
+        
         '''<summary>
         '''dshPublishDetails control.
         '''</summary>
@@ -247,7 +247,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents dshPublishDetails As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''tblPublishDetails control.
         '''</summary>
@@ -256,7 +256,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents tblPublishDetails As Global.System.Web.UI.HtmlControls.HtmlTable
-
+        
         '''<summary>
         '''lblPublishDetails control.
         '''</summary>
@@ -265,7 +265,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblPublishDetails As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''trOwner control.
         '''</summary>
@@ -274,7 +274,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents trOwner As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
+        
         '''<summary>
         '''plOwner control.
         '''</summary>
@@ -283,7 +283,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plOwner As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''drpOwner control.
         '''</summary>
@@ -292,7 +292,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpOwner As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''lblOwner control.
         '''</summary>
@@ -301,7 +301,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblOwner As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''cmdChange control.
         '''</summary>
@@ -310,7 +310,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdChange As Global.System.Web.UI.WebControls.LinkButton
-
+        
         '''<summary>
         '''plCreationDate control.
         '''</summary>
@@ -319,7 +319,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plCreationDate As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''drpCreationTimeHour control.
         '''</summary>
@@ -328,7 +328,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpCreationTimeHour As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''drpCreationTimeMinute control.
         '''</summary>
@@ -337,7 +337,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpCreationTimeMinute As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''txtCreationDate control.
         '''</summary>
@@ -346,7 +346,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtCreationDate As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''cmdCreationDate control.
         '''</summary>
@@ -355,7 +355,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdCreationDate As Global.System.Web.UI.WebControls.HyperLink
-
+        
         '''<summary>
         '''valCreationDateRequired control.
         '''</summary>
@@ -364,7 +364,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents valCreationDateRequired As Global.System.Web.UI.WebControls.RequiredFieldValidator
-
+        
         '''<summary>
         '''valCreationDate control.
         '''</summary>
@@ -373,7 +373,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents valCreationDate As Global.System.Web.UI.WebControls.CompareValidator
-
+        
         '''<summary>
         '''plPublishDate control.
         '''</summary>
@@ -382,7 +382,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plPublishDate As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''drpPublishTimeHour control.
         '''</summary>
@@ -391,7 +391,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpPublishTimeHour As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''drpPublishTimeMinute control.
         '''</summary>
@@ -400,7 +400,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpPublishTimeMinute As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''txtPublishDate control.
         '''</summary>
@@ -409,7 +409,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtPublishDate As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''cmdPublishDate control.
         '''</summary>
@@ -418,7 +418,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdPublishDate As Global.System.Web.UI.WebControls.HyperLink
-
+        
         '''<summary>
         '''valPublishDate control.
         '''</summary>
@@ -427,7 +427,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents valPublishDate As Global.System.Web.UI.WebControls.CompareValidator
-
+        
         '''<summary>
         '''plExpiryDate control.
         '''</summary>
@@ -436,7 +436,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plExpiryDate As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''drpExpiryTimeHour control.
         '''</summary>
@@ -445,7 +445,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpExpiryTimeHour As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''drpExpiryTimeMinute control.
         '''</summary>
@@ -454,7 +454,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents drpExpiryTimeMinute As Global.System.Web.UI.WebControls.DropDownList
-
+        
         '''<summary>
         '''txtExpiryDate control.
         '''</summary>
@@ -463,7 +463,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents txtExpiryDate As Global.System.Web.UI.WebControls.TextBox
-
+        
         '''<summary>
         '''cmdExpiryDate control.
         '''</summary>
@@ -472,7 +472,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdExpiryDate As Global.System.Web.UI.WebControls.HyperLink
-
+        
         '''<summary>
         '''valExpiryDate control.
         '''</summary>
@@ -481,7 +481,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents valExpiryDate As Global.System.Web.UI.WebControls.CompareValidator
-
+        
         '''<summary>
         '''trFeatured control.
         '''</summary>
@@ -490,7 +490,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents trFeatured As Global.System.Web.UI.HtmlControls.HtmlTableRow
-
+        
         '''<summary>
         '''plFeatured control.
         '''</summary>
@@ -499,7 +499,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plFeatured As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''chkFeatured control.
         '''</summary>
@@ -508,7 +508,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents chkFeatured As Global.System.Web.UI.WebControls.CheckBox
-
+        
         '''<summary>
         '''plApproved control.
         '''</summary>
@@ -517,7 +517,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plApproved As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''chkApproved control.
         '''</summary>
@@ -526,7 +526,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents chkApproved As Global.System.Web.UI.WebControls.CheckBox
-
+        
         '''<summary>
         '''plPublished control.
         '''</summary>
@@ -535,7 +535,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plPublished As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''chkPublished control.
         '''</summary>
@@ -544,7 +544,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents chkPublished As Global.System.Web.UI.WebControls.CheckBox
-
+        
         '''<summary>
         '''plOnlyForAuthenticated control.
         '''</summary>
@@ -553,7 +553,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plOnlyForAuthenticated As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''chkOnlyForAuthenticated control.
         '''</summary>
@@ -562,7 +562,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents chkOnlyForAuthenticated As Global.System.Web.UI.WebControls.CheckBox
-
+        
         '''<summary>
         '''phAuthorDetails control.
         '''</summary>
@@ -571,7 +571,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phAuthorDetails As Global.System.Web.UI.WebControls.PlaceHolder
-
+        
         '''<summary>
         '''dshAuthorDetails control.
         '''</summary>
@@ -580,7 +580,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents dshAuthorDetails As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''tblAuthorDetails control.
         '''</summary>
@@ -589,7 +589,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents tblAuthorDetails As Global.System.Web.UI.HtmlControls.HtmlTable
-
+        
         '''<summary>
         '''lblAuthorDetails control.
         '''</summary>
@@ -598,7 +598,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblAuthorDetails As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''plUsername control.
         '''</summary>
@@ -607,7 +607,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plUsername As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''lblUsername control.
         '''</summary>
@@ -616,7 +616,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblUsername As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''plDisplayName control.
         '''</summary>
@@ -625,7 +625,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plDisplayName As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''lblDisplayName control.
         '''</summary>
@@ -634,7 +634,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblDisplayName As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''plEmail control.
         '''</summary>
@@ -643,7 +643,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents plEmail As Global.System.Web.UI.UserControl
-
+        
         '''<summary>
         '''lblEmail control.
         '''</summary>
@@ -652,7 +652,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents lblEmail As Global.System.Web.UI.WebControls.Label
-
+        
         '''<summary>
         '''phBottom control.
         '''</summary>
@@ -661,7 +661,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents phBottom As Global.System.Web.UI.WebControls.PlaceHolder
-
+        
         '''<summary>
         '''cmdUpdate control.
         '''</summary>
@@ -670,7 +670,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdUpdate As Global.System.Web.UI.WebControls.LinkButton
-
+        
         '''<summary>
         '''cmdUpdateEditPhotos control.
         '''</summary>
@@ -679,7 +679,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdUpdateEditPhotos As Global.System.Web.UI.WebControls.LinkButton
-
+        
         '''<summary>
         '''cmdClone control.
         '''</summary>
@@ -688,7 +688,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdClone As Global.System.Web.UI.WebControls.LinkButton
-
+        
         '''<summary>
         '''cmdCancel control.
         '''</summary>
@@ -697,7 +697,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdCancel As Global.System.Web.UI.WebControls.LinkButton
-
+        
         '''<summary>
         '''cmdDelete control.
         '''</summary>
@@ -706,7 +706,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents cmdDelete As Global.System.Web.UI.WebControls.LinkButton
-
+        
         '''<summary>
         '''valPropertyTypeSubmission control.
         '''</summary>
@@ -715,7 +715,7 @@ Namespace Ventrian.PropertyAgent
         '''To modify move field declaration from designer file to code-behind file.
         '''</remarks>
         Protected WithEvents valPropertyTypeSubmission As Global.System.Web.UI.WebControls.CustomValidator
-
+        
         '''<summary>
         '''ValidationSummary1 control.
         '''</summary>

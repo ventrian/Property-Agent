@@ -90,7 +90,7 @@
 			<td class="SubHead" width="150"><dnn:label id="FindAddress" runat="server" controlname="txtAddress" suffix=":"></dnn:label></td>
 			<td>
 			    <asp:TextBox ID="txtAddress" runat="server" onkeydown="if(event.keyCode==13) {showAddress(this.value);}" Width="300px" />
-			    <input type="button" value="Find Address!" onclick="showAddress(<%= txtAddress.ClientID %>.value);" />
+			    <input type="button" value="Find Address!" id="findaddressbutton" />
 			</td>
 		</tr>
 		<tr valign="middle">
@@ -107,130 +107,78 @@
 		</tr>
 		<tr>
 		    <td colspan="2">
-                <script src="<%= GetMapUrl() %>" type="text/javascript"></script>
-
-                <div align="center" id="map" style="width: 600px; height: 400px"><br/></div>
+                <script async defer src="<%= GetMapUrl() %>" type="text/javascript"></script>
+<asp:literal id="litMapCenter" runat="server" />
+       <div align="center" id="map" style="width: 100%; height: 400px"></div>         
                 		    
-                <script type="text/javascript">
-
-                    function KeyDownHandler()
-                    {
-                    
-                        // process only the Enter key
-                        if (event.keyCode == 13)
-                        {
-                            alert(event.keyCode);
-                            // cancel the default submit
-                            event.returnValue=false;
-                            event.cancel = true;
-                            
-                           showAddress(address.value);
-                        }
-                    }
+               
+			   <asp:placeholder id="phMapLoad" runat="server">
+			   </asp:placeholder>
+			    <script type="text/javascript">
 
                     function load() {
-                        if (GBrowserIsCompatible()) {
-                            var map = new GMap2(document.getElementById("map"));
-                            map.addControl(new GSmallMapControl());
-                            map.addControl(new GMapTypeControl());
-                            
-                            geocoder = new GClientGeocoder();
-                            
-                            <asp:literal id="litMapCenter" runat="server" />
-                            <asp:placeholder id="phMapLoad" runat="server">
-                            var marker = new GMarker(center, {draggable: true});  
-                            map.addOverlay(marker);
-                            document.getElementById("<%= txtLatitude.ClientID %>").value = center.lat().toFixed(5);
-                            document.getElementById("<%= txtLongitude.ClientID %>").value = center.lng().toFixed(5);
+					
+                        // The location of Uluru
+                        var uluru = { lat: parseFloat(document.getElementById("<%= txtLatitude.ClientID %>").value), lng: parseFloat(document.getElementById("<%= txtLongitude.ClientID %>").value) };
+                        
+                        // The map, centered at Uluru
+                        var map = new google.maps.Map(
+                            document.getElementById('map'), { zoom: 18, center: uluru });
 
-	                      GEvent.addListener(marker, "dragend", function() {
-                           var point = marker.getPoint();
-	                          map.panTo(point);
-                           document.getElementById("<%= txtLatitude.ClientID %>").innerHTML = point.lat().toFixed(5);
-                           document.getElementById("<%= txtLongitude.ClientID %>").innerHTML = point.lng().toFixed(5);
+                        // The marker, positioned at Uluru
+                        var marker = new google.maps.Marker({
+                            position: uluru,
+                            map: map,
+                            title: 'Client Address',
+                            draggable: true
+                        });
+
+
+                        var geocoder = new google.maps.Geocoder();
+
+                        google.maps.event.addListener(marker, 'dragend', function (marker) {
+                            var latLng = marker.latLng;
+                       
+                            document.getElementById("<%= txtLatitude.ClientID %>").value = latLng.lat();
+                            document.getElementById("<%= txtLongitude.ClientID %>").value = latLng.lng();
+
 
                         });
 
-                        GEvent.addListener(map, "moveend", function() {
-                            map.clearOverlays();
-                            var center = map.getCenter();
-                            var marker = new GMarker(center, {draggable: true});
-                            map.addOverlay(marker);
-                            document.getElementById("<%= txtLatitude.ClientID %>").value = center.lat().toFixed(5);
-                            document.getElementById("<%= txtLongitude.ClientID %>").value = center.lng().toFixed(5);
+                        
 
-                            GEvent.addListener(marker, "dragend", function() {
-                                var point =marker.getPoint();
-                                map.panTo(point);
-                                document.getElementById("<%= txtLatitude.ClientID %>").value = point.lat().toFixed(5);
-                                document.getElementById("<%= txtLongitude.ClientID %>").value = point.lng().toFixed(5);
-                            });
+                        document.getElementById('findaddressbutton').addEventListener('click', function () {
+                            geocodeAddress(geocoder, map, marker);
                         });
 
-                            </asp:placeholder>
-                      }
                     }
 
-	                   function showAddress(address) {
-	                   var map = new GMap2(document.getElementById("map"));
-                       map.addControl(new GSmallMapControl());
-                       map.addControl(new GMapTypeControl());
-                       if (geocoder) {
-                        geocoder.getLatLng(
-                          address,
-                          function(point) {
-                            if (!point) {
-                              alert(address + " not found");
+                    function geocodeAddress(geocoder, resultsMap, marker) {
+                        var address = document.getElementById('<%= txtAddress.ClientID %>').value;
+                        geocoder.geocode({ 'address': address }, function (results, status) {
+                            if (status === 'OK') {
+                                resultsMap.setCenter(results[0].geometry.location);
+
+                                var latitude = results[0].geometry.location.lat();
+                                var longitude = results[0].geometry.location.lng();
+
+                                document.getElementById("<%= txtLatitude.ClientID %>").value = latitude;
+                                document.getElementById("<%= txtLongitude.ClientID %>").value = longitude;
+                               // alert(latitude);
+                                marker.setPosition(results[0].geometry.location);
+                                map.panTo(new google.maps.LatLng(latitude, longitude));
+                                
+                               // var marker = new google.maps.Marker({map: resultsMap, position: results[0].geometry.location});
                             } else {
-		                  document.getElementById("<%= txtLatitude.ClientID %>").value = point.lat().toFixed(5);
-	                   document.getElementById("<%= txtLongitude.ClientID %>").value = point.lng().toFixed(5);
-		                 map.clearOverlays()
-			                map.setCenter(point, 14);
-                   var marker = new GMarker(point, {draggable: true});  
-		                 map.addOverlay(marker);
-
-		                GEvent.addListener(marker, "dragend", function() {
-                      var pt = marker.getPoint();
-	                     map.panTo(pt);
-                      document.getElementById("<%= txtLatitude.ClientID %>").value = pt.lat().toFixed(5);
-	                     document.getElementById("<%= txtLongitude.ClientID %>").value = pt.lng().toFixed(5);
-                        });
-
-
-	                 GEvent.addListener(map, "moveend", function() {
-		                  map.clearOverlays();
-                    var center = map.getCenter();
-		                  var marker = new GMarker(center, {draggable: true});
-		                  map.addOverlay(marker);
-		                  document.getElementById("<%= txtLatitude.ClientID %>").value = center.lat().toFixed(5);
-	                   document.getElementById("<%= txtLongitude.ClientID %>").value = center.lng().toFixed(5);
-
-	                 GEvent.addListener(marker, "dragend", function() {
-                     var pt = marker.getPoint();
-	                    map.panTo(pt);
-                    document.getElementById("<%= txtLatitude.ClientID %>").value = pt.lat().toFixed(5);
-	                   document.getElementById("<%= txtLongitude.ClientID %>").value = pt.lng().toFixed(5);
-                        });
-                 
-                        });
-
+                                alert('Geocode was not successful for the following reason: ' + status);
                             }
-                          }
-                        );
-                      }
+                        });
                     }
-                    
-                    if (window.addEventListener)
-                    {
-                        window.addEventListener("load", load, false);
-                        window.attachEvent("onunload", GUnload); 
-                    }
-                    else if (window.attachEvent)
-                    {
-                        window.attachEvent("onload", load);
-                        //window.addEventListener("unload", GUnload, false);
-                    }
-                    </script>
+
+
+     </script>
+			   
+			   
 		        </td>
 		    </tr>
 		</table>

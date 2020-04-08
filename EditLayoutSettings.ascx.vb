@@ -1,5 +1,6 @@
 Imports DotNetNuke.Common
 Imports DotNetNuke.Common.Utilities
+Imports DotNetNuke.Entities.Tabs
 Imports DotNetNuke.Services.Exceptions
 Imports DotNetNuke.Services.Localization
 
@@ -188,7 +189,7 @@ Namespace Ventrian.PropertyAgent
 
         Private Sub BindPages()
 
-            drpRedirectPage.DataSource = GetPortalTabs(PortalSettings.DesktopTabs, TabId, True, True, False, True, True)
+            drpRedirectPage.DataSource = TabController.GetPortalTabs(PortalId, TabId, True, False)
             drpRedirectPage.DataBind()
 
         End Sub

@@ -235,7 +235,7 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub cmdSubmit_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdSubmit.Click
-
+            Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             Try
 
                 lblSubmitResults.Text = String.Empty
@@ -375,7 +375,7 @@ Namespace Ventrian.PropertyAgent
                                                                         DotNetNuke.Services.Mail.MailPriority.Normal,
                                                                         subject,
                                                                         DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
-                                                                        "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), DotNetNuke.Entities.Host.Host.SMTPPassword)
+                                                                        "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), DotNetNuke.Entities.Host.Host.SMTPPassword)
                             'DotNetNuke.Services.Mail.Mail.SendMail(replyTo, MailTo, "", contactBCC,
                             '                                            DotNetNuke.Services.Mail.MailPriority.Normal,
                             '                                            subject,

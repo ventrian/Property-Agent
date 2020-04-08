@@ -195,7 +195,7 @@ Namespace Ventrian.PropertyAgent
                     End If
 
                     If (txtLatitude.Text <> "" And txtLongitude.Text <> "") Then
-                        litMapCenter.Text = "var center = new GLatLng(" & txtLatitude.Text & ", " & txtLongitude.Text & ");map.setCenter(center, 15);"
+
                         phMapLoad.Visible = True
                     Else
                         phMapLoad.Visible = False
@@ -572,7 +572,7 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub Update()
-
+            Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             If (_propertyID = Null.NullInteger) Then
                 _property = New PropertyInfo
                 _property.ModuleID = Me.ModuleId
@@ -729,11 +729,11 @@ Namespace Ventrian.PropertyAgent
 
                     If (Me.PropertySettings.NotificationEmail <> "") Then
                         Try
-                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, Me.PropertySettings.NotificationEmail, "", "", _
-                               DotNetNuke.Services.Mail.MailPriority.Normal, _
-                               subject, _
-                               DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                               "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, Me.PropertySettings.NotificationEmail, "", "",
+                               DotNetNuke.Services.Mail.MailPriority.Normal,
+                               subject,
+                               DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                               "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
                         Catch
                         End Try
                     End If
@@ -752,11 +752,11 @@ Namespace Ventrian.PropertyAgent
 
                         For Each item As DictionaryEntry In emails
                             Try
-                                DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, item.Value.ToString(), "", "", _
-                                  DotNetNuke.Services.Mail.MailPriority.Normal, _
-                                  subject, _
-                                  DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                                  "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                                DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, item.Value.ToString(), "", "",
+                                  DotNetNuke.Services.Mail.MailPriority.Normal,
+                                  subject,
+                                  DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                                  "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
                             Catch
                             End Try
                         Next
@@ -786,11 +786,11 @@ Namespace Ventrian.PropertyAgent
 
                     If (_property.Email <> "") Then
                         Try
-                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.Email, "", "", _
-                        DotNetNuke.Services.Mail.MailPriority.Normal, _
-                        subject, _
-                        DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                        "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.Email, "", "",
+                        DotNetNuke.Services.Mail.MailPriority.Normal,
+                        subject,
+                        DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                        "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
 
                         Catch
                         End Try
@@ -818,11 +818,11 @@ Namespace Ventrian.PropertyAgent
 
                     If (_property.BrokerEmail <> "") Then
                         Try
-                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.BrokerEmail, "", "", _
-                       DotNetNuke.Services.Mail.MailPriority.Normal, _
-                       subject, _
-                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body, _
-                       "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                            DotNetNuke.Services.Mail.Mail.SendMail(PortalSettings.Email, _property.BrokerEmail, "", "",
+                       DotNetNuke.Services.Mail.MailPriority.Normal,
+                       subject,
+                       DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
+                       "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
                         Catch
                         End Try
                     End If
@@ -1062,7 +1062,7 @@ Namespace Ventrian.PropertyAgent
 
         Protected Function GetMapUrl() As String
 
-            Return "https://maps.google.com/maps?file=api&amp;v=2&amp;key=" & PropertySettings.MapKey
+            Return "https://maps.googleapis.com/maps/api/js?key=" & PropertySettings.MapKey & "&callback=load"
             'Return "https://maps.googleapis.com/maps/api/js?key=" & PropertySettings.MapKey & "&callback=initMap"
 
         End Function
@@ -1111,12 +1111,39 @@ Namespace Ventrian.PropertyAgent
 
                 If (PropertySettings.ImagesEnabled AndAlso ((IsEditable = True OrElse PortalSecurity.IsInRoles(PropertySettings.PermissionAddImages) = True OrElse PortalSecurity.IsInRoles(PropertySettings.PermissionApprove) = True))) Then
                     If (PropertySettings.UploadPlacement = UploadPlacementType.InlineTop) Then
-                        phTop.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
-                        phTop.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
-                    End If
+                        Select Case PropertySettings.UploadMode
+                                'Case 0
+                                'Standard
+                                'NOT SUPPORTED IN INLINE MODE
+                            Case 0
+                                'Standard
+                                phTop.Controls.Add(Me.LoadControl("Controls/UploadPhotoStandard.ascx"))
 
-                    If (PropertySettings.UploadPlacement = UploadPlacementType.InlineBottom) Then
-                        phBottom.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
+                            Case 1
+                                'Flash
+                                phTop.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
+
+                            Case 2
+                                'HTML5
+                                phTop.Controls.Add(Me.LoadControl("Controls/UploadPhotoHTML5.ascx"))
+
+                        End Select
+                        phTop.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
+                    ElseIf (PropertySettings.UploadPlacement = UploadPlacementType.InlineBottom) Then
+                        Select Case PropertySettings.UploadMode
+                            Case 0
+                                'Standard
+                                phBottom.Controls.Add(Me.LoadControl("Controls/UploadPhotoStandard.ascx"))
+
+                            Case 1
+                                'Flash
+                                phBottom.Controls.Add(Me.LoadControl("Controls/UploadPhotoSWF.ascx"))
+
+                            Case 2
+                                'HTML5
+                                phBottom.Controls.Add(Me.LoadControl("Controls/UploadPhotoHTML5.ascx"))
+
+                        End Select
                         phBottom.Controls.Add(Me.LoadControl("Controls/EditPropertyPhotos.ascx"))
                     End If
                 End If
@@ -1143,8 +1170,16 @@ Namespace Ventrian.PropertyAgent
                             ViewState.Add("PropertyAgentGuid", Guid.NewGuid.ToString())
                         End If
                         If (phTop.Controls.Count = 2) Then
-                            CType(phTop.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
-                            CType(phTop.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            Select Case PropertySettings.UploadMode
+                                Case 0
+                                    CType(phTop.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                Case 1
+                                    CType(phTop.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                    CType(phTop.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                Case 2
+                                    CType(phTop.Controls(0), Controls.UploadPhotoHTML5).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                    CType(phTop.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            End Select
                         End If
                     End If
 
@@ -1153,8 +1188,16 @@ Namespace Ventrian.PropertyAgent
                             ViewState.Add("PropertyAgentGuid", Guid.NewGuid.ToString())
                         End If
                         If (phBottom.Controls.Count = 2) Then
-                            CType(phBottom.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
-                            CType(phBottom.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            Select Case PropertySettings.UploadMode
+                                Case 0
+                                    CType(phBottom.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                Case 1
+                                    CType(phBottom.Controls(0), Controls.UploadPhotoSWF).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                    CType(phBottom.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                Case 2
+                                    CType(phBottom.Controls(0), Controls.UploadPhotoHTML5).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                                    CType(phBottom.Controls(1), Controls.EditPropertyPhotos).PropertyGuid = ViewState("PropertyAgentGuid").ToString()
+                            End Select
                         End If
                     End If
                 End If

@@ -174,7 +174,7 @@ Namespace Ventrian.PropertyAgent
             Dim objCustomFieldController As New CustomFieldController
             Dim objCustomFields As List(Of CustomFieldInfo) = objCustomFieldController.List(objProperty.ModuleID, True)
 
-            Dim objUser As UserInfo = UserController.GetUser(portalID, objProperty.AuthorID, False)
+            Dim objUser As UserInfo = UserController.GetUserById(portalID, objProperty.AuthorID)
 
             Dim delimStr As String = "[]"
             Dim delimiter As Char() = delimStr.ToCharArray()

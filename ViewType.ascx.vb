@@ -723,7 +723,7 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub ProcessHeaderFooter(ByRef objPlaceHolder As ControlCollection, ByVal layoutArray As String())
-
+            Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             Dim searchValueQuery As String = ""
             Dim customFieldIDsQuery As String = ""
 
@@ -949,7 +949,7 @@ Namespace Ventrian.PropertyAgent
                                 If (Request(PropertySettings.SEOAgentType) <> "") Then
                                     If (Request(PropertySettings.SEOAgentType).ToLower() = "viewtype") Then
                                         If (PropertySettings.SEOViewTypeTitle <> "") Then
-                                            If DotNetNuke.Entities.Host.HostSettings.GetHostSetting("UseFriendlyUrls") = "Y" Then
+                                            If hostSettings("UseFriendlyUrls") = "Y" Then
                                                 If (PropertySettings.SEOViewTypeTitle <> "") Then
 
                                                     Dim objTypeController As New PropertyTypeController()

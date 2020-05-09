@@ -177,10 +177,14 @@ Namespace Ventrian.PropertyAgent.Controls
         End Function
 
         Protected Function GetUploadLimit() As String
-            If (MyBase.PropertyAgentBase.GetLimit(MyBase.PropertySettings.PermissionAddImages, MyBase.PropertySettings.PermissionAddImagesLimit) = Null.NullInteger) Then
+            Dim limit As Integer = PropertyAgentBase.GetLimit(PropertySettings.PermissionAddImages, PropertySettings.PermissionAddImagesLimit)
+
+            If (limit = Null.NullInteger) Then
                 Return "0"
+            Else
+                Return limit
             End If
-            Return "1"
+
         End Function
 
         Protected Function GetUploadUrl() As String

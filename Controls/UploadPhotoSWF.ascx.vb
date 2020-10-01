@@ -7,7 +7,7 @@ Imports DotNetNuke.Services.Localization
 
 Namespace Ventrian.PropertyAgent.Controls
 
-    Partial Public Class UploadPhotoSWF
+    Public Class UploadPhotoSWF
         Inherits PropertyAgentControl
 
 #Region " Private Members "

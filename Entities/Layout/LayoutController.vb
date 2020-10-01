@@ -18,6 +18,8 @@ Imports DotNetNuke.Entities.Tabs
 Imports System.Globalization
 Imports System.Xml.XPath
 Imports DotNetNuke.Web.Client.ClientResourceManagement
+Imports Microsoft.VisualBasic.CompilerServices
+
 
 Namespace Ventrian.PropertyAgent
 
@@ -371,7 +373,7 @@ Namespace Ventrian.PropertyAgent
         End Function
 
         Public Function GetPropertyLink(ByVal objProperty As PropertyInfo, ByVal objCustomFields As List(Of CustomFieldInfo)) As String
-
+            Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             Dim params As New List(Of String)
 
             params.Add(_propertySettings.SEOAgentType & "=View")
@@ -409,10 +411,10 @@ Namespace Ventrian.PropertyAgent
 
             End If
 
-            If DotNetNuke.Entities.Host.HostSettings.GetHostSetting("UseFriendlyUrls") = "Y" Then
+            If hostSettings("UseFriendlyUrls") = "Y" Then
 
                 Dim strURL As String = ApplicationURL(_tabID)
-                Dim settings As PortalSettings = PortalController.GetCurrentPortalSettings
+                Dim settings As PortalSettings = PortalController.Instance.GetCurrentPortalSettings()
 
                 For Each p As String In params
                     strURL = strURL & "&" & p
@@ -1292,7 +1294,7 @@ Namespace Ventrian.PropertyAgent
                 End If
 
                 objLayout.Tokens = objLayout.Template.Split(delimiter)
-                DataCache.SetCache(cacheKey, objLayout, New CacheDependency(path))
+                'DataCache.SetCache(cacheKey, objLayout, New CacheDependency(path))
 
             End If
 
@@ -1421,12 +1423,12 @@ Namespace Ventrian.PropertyAgent
             End If
 
             If (_agent Is Nothing) Then
-                _agent = UserController.GetUser(_portalID, authorID, True)
+                _agent = UserController.GetUserById(_portalID, authorID)
             Else
                 If (_agent.UserID = authorID) Then
                     Return _agent
                 Else
-                    _agent = UserController.GetUser(_portalID, authorID, True)
+                    _agent = UserController.GetUserById(_portalID, authorID)
                 End If
             End If
 
@@ -1441,12 +1443,12 @@ Namespace Ventrian.PropertyAgent
             End If
 
             If (_modified Is Nothing) Then
-                _modified = UserController.GetUser(_portalID, modifiedID, True)
+                _modified = UserController.GetUserById(_portalID, modifiedID)
             Else
                 If (_modified.UserID = modifiedID) Then
                     Return _modified
                 Else
-                    _modified = UserController.GetUser(_portalID, modifiedID, True)
+                    _modified = UserController.GetUserById(_portalID, modifiedID)
                 End If
             End If
 
@@ -1461,12 +1463,12 @@ Namespace Ventrian.PropertyAgent
             End If
 
             If (_broker Is Nothing) Then
-                _broker = UserController.GetUser(_portalID, brokerID, True)
+                _broker = UserController.GetUserById(_portalID, brokerID)
             Else
                 If (_broker.UserID = brokerID) Then
                     Return _broker
                 Else
-                    _broker = UserController.GetUser(_portalID, brokerID, True)
+                    _broker = UserController.GetUserById(_portalID, brokerID)
                 End If
             End If
 
@@ -3435,6 +3437,16 @@ Namespace Ventrian.PropertyAgent
                 If iPtr < layoutArray.Length - 1 Then
                     Select Case layoutArray(iPtr + 1).ToUpper()
 
+                        Case "QUADRA-APERTA"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
+                            objLiteral.Text = "["
+                            objPlaceHolder.Add(objLiteral)
+                        Case "QUADRA-CHIUSA"
+                            Dim objLiteral As New Literal
+                            objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
+                            objLiteral.Text = "]"
+                            objPlaceHolder.Add(objLiteral)
                         Case "APPROVALLINK"
                             Dim objLiteral As New Literal
                             objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
@@ -4102,8 +4114,8 @@ Namespace Ventrian.PropertyAgent
                                 Dim objImage As New Image
                                 objImage.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
                                 objImage.AlternateText = ""
-                                'objImage.ImageUrl = "http://maps.google.com/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&markers=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & ",red&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&key=" & _propertySettings.MapKey
-                                objImage.ImageUrl = "http://maps.google.com/maps/api/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&markers=size:mid|color:red|label:A|" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&sensor=false"
+                                'objImage.ImageUrl = "https://maps.google.com/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&markers=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & ",red&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&key=" & _propertySettings.MapKey
+                                objImage.ImageUrl = "https://maps.google.com/maps/api/staticmap?center=" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&zoom=" & _propertySettings.MapZoom.ToString() & "&size=" & _propertySettings.MapWidth.ToString() & "x" & _propertySettings.MapHeight.ToString() & "&markers=size:mid|color:red|label:A|" & objProperty.Latitude.ToString().Replace(","c, ".") & "," & objProperty.Longitude.ToString().Replace(","c, ".") & "&sensor=false" & "&key=" & _propertySettings.MapKey
                                 objPlaceHolder.Add(objImage)
                             End If
 
@@ -5523,6 +5535,21 @@ Namespace Ventrian.PropertyAgent
 
                             End If
 
+                            'If (layoutArray(iPtr + 1).ToUpper().StartsWith("SPACIALCHAR:")) Then
+                            '    Dim field As String = layoutArray(iPtr + 1).Substring(8, layoutArray(iPtr + 1).Length - 12)
+
+
+                            '    Dim objLiteral As New Literal
+                            '    objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString() & "-" & 0)
+                            '    objLiteral.Text = field
+                            '    objLiteral.EnableViewState = False
+                            '    objPlaceHolder.Add(objLiteral)
+
+                            '    isRendered = True
+
+                            'End If
+
+
                             If (layoutArray(iPtr + 1).ToUpper().StartsWith("CONTACTFORM:")) Then
                                 Dim field As String = layoutArray(iPtr + 1).Substring(12, layoutArray(iPtr + 1).Length - 12)
 
@@ -6076,7 +6103,8 @@ Namespace Ventrian.PropertyAgent
                                 Dim field As String = layoutArray(iPtr + 1).Substring(14, layoutArray(iPtr + 1).Length - 14)
 
                                 Dim objRoleController As New DotNetNuke.Security.Roles.RoleController
-                                Dim objRoles() As String = objRoleController.GetRolesByUser(objProperty.AuthorID, _portalID)
+                                Dim objUser As UserInfo = UserController.GetUserById(_portalID, objProperty.AuthorID)
+                                Dim objRoles() As String = objRoleController.GetUserRoles(objUser, True)
 
                                 Dim roleFound As Boolean = False
                                 For Each role As String In objRoles
@@ -6108,7 +6136,8 @@ Namespace Ventrian.PropertyAgent
                                 Dim field As String = layoutArray(iPtr + 1).Substring(17, layoutArray(iPtr + 1).Length - 17)
 
                                 Dim objRoleController As New DotNetNuke.Security.Roles.RoleController
-                                Dim objRoles() As String = objRoleController.GetRolesByUser(objProperty.AuthorID, _portalID)
+                                Dim objUser As UserInfo = UserController.GetUserById(_portalID, objProperty.AuthorID)
+                                Dim objRoles() As String = objRoleController.GetUserRoles(objUser, True)
 
                                 Dim roleFound As Boolean = False
                                 For Each role As String In objRoles
@@ -7060,10 +7089,10 @@ Namespace Ventrian.PropertyAgent
                 Next
             End If
 
-            If DotNetNuke.Entities.Host.HostSettings.GetHostSetting("UseFriendlyUrls") = "Y" Then
+            If DotNetNuke.Entities.Controllers.HostController.Instance.GetString("UseFriendlyUrls") = "Y" Then
 
                 Dim strURL As String = ApplicationURL(_tabID)
-                Dim settings As PortalSettings = PortalController.GetCurrentPortalSettings
+                Dim settings As PortalSettings = PortalController.Instance.GetCurrentPortalSettings
 
                 For Each p As String In objTypesParam
                     strURL = strURL & "&" & p

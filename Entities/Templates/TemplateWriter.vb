@@ -12,6 +12,7 @@ Imports ICSharpCode.SharpZipLib.Zip
 Imports ICSharpCode.SharpZipLib.Checksums
 Imports ICSharpCode.SharpZipLib.GZip
 
+
 Namespace Ventrian.PropertyAgent
 
     Public Class TemplateWriter

@@ -252,8 +252,12 @@ Namespace Ventrian.PropertyAgent.Controls
                 objPhotoController.Update(objPhoto)
 
                 txtTitle.Text = ""
+                If (TypeOf Parent Is EditPhotos) Then
+                    CType(Parent, EditPhotos).RefreshPhotos()
+                Else
+                    CType(Parent.Parent, EditProperty).RefreshPhotos()
+                End If
 
-                CType(Parent, EditPhotos).RefreshPhotos()
 
             End If
 

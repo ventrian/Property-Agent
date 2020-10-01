@@ -176,6 +176,21 @@ Namespace Ventrian.PropertyAgent
 
         End Sub
 
+        Protected Function GetPropertyID() As String
+
+            Dim propertyID As Integer = Null.NullInteger
+            Dim propertyIDParam As String = PropertySettings.SEOPropertyID
+            If (Request(propertyIDParam) = "") Then
+                propertyIDParam = "PropertyID"
+            End If
+            If Not (Request(propertyIDParam) Is Nothing) Then
+                propertyID = Convert.ToInt32(Request(propertyIDParam))
+            End If
+
+            Return propertyID.ToString()
+
+        End Function
+
         Private Sub BindLatest()
 
             Dim customFieldFilters As String = PropertySettingsLatest.CustomFieldFilters
@@ -209,6 +224,10 @@ Namespace Ventrian.PropertyAgent
             Else
                 _propertyTypeID = Null.NullInteger
             End If
+
+
+
+
 
             If (PropertySettingsLatest.TypeID <> Null.NullInteger) Then
                 _propertyTypeID = PropertySettingsLatest.TypeID
@@ -280,36 +299,53 @@ Namespace Ventrian.PropertyAgent
                 End If
             End If
 
+
+
+
+
             Dim totalRecords As Integer = 0
             Dim OnlyForAuthenticated As Boolean = Null.NullBoolean
+            Dim objProperties As New List(Of PropertyInfo)
             If Me.UserId = -1 Then OnlyForAuthenticated = True
-            Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
 
-            If (PropertySettingsLatest.ShowRelated) Then
-                Dim match As Boolean = False
-                For Each objProperty As PropertyInfo In objProperties
-                    If (objProperty.PropertyID = _propertyID) Then
-                        match = True
-                    End If
-                Next
-                If (match) Then
-                    objProperties = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount + 1, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
-                    Dim objPropertiesUpdated As New List(Of PropertyInfo)
+
+
+            If (Me.PropertySettingsLatest.PropertyIDinURL) Then
+                Dim PropID As Integer = GetPropertyID()
+                If PropID <> -1 Then
+                    objProperties.Add(objPropertyController.Get(PropID))
+                End If
+            Else
+                objProperties = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
+
+                If (PropertySettingsLatest.ShowRelated) Then
+                    Dim match As Boolean = False
                     For Each objProperty As PropertyInfo In objProperties
-                        If (objProperty.PropertyID <> _propertyID) Then
-                            objPropertiesUpdated.Add(objProperty)
+                        If (objProperty.PropertyID = _propertyID) Then
+                            match = True
                         End If
                     Next
-                    objProperties = objPropertiesUpdated
+                    If (match) Then
+                        objProperties = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount + 1, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
+                        Dim objPropertiesUpdated As New List(Of PropertyInfo)
+                        For Each objProperty As PropertyInfo In objProperties
+                            If (objProperty.PropertyID <> _propertyID) Then
+                                objPropertiesUpdated.Add(objProperty)
+                            End If
+                        Next
+                        objProperties = objPropertiesUpdated
+                    End If
+                End If
+
+                If (objProperties.Count = 0) Then
+                    If (Me.PropertySettingsLatest.LayoutMode = LatestLayoutMode.CustomLayout) Then
+                        ProcessEmpty(phProperty.Controls, _objLayoutLatestEmpty.Tokens)
+                    End If
+                    Return
                 End If
             End If
 
-            If (objProperties.Count = 0) Then
-                If (Me.PropertySettingsLatest.LayoutMode = LatestLayoutMode.CustomLayout) Then
-                    ProcessEmpty(phProperty.Controls, _objLayoutLatestEmpty.Tokens)
-                End If
-                Return
-            End If
+
 
             ProcessHeaderFooter(phProperty.Controls, _objLayoutLatestHeader.Tokens)
 
@@ -482,7 +518,14 @@ Namespace Ventrian.PropertyAgent
 
                 If iPtr < layoutArray.Length - 1 Then
                     Select Case layoutArray(iPtr + 1)
-
+                        Case "QUADRA-APERTA"
+                            Dim objLiteral As New Literal
+                            objLiteral.Text = "["
+                            objPlaceHolder.Add(objLiteral)
+                        Case "QUADRA-CHIUSA"
+                            Dim objLiteral As New Literal
+                            objLiteral.Text = "]"
+                            objPlaceHolder.Add(objLiteral)
                         Case "PROPERTYLABEL"
                             Dim objLiteral As New Literal
                             objLiteral.Text = PropertySettings.PropertyLabel

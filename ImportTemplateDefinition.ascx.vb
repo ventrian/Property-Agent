@@ -184,7 +184,7 @@ Namespace Ventrian.PropertyAgent
 
             Try
 
-                Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditTemplateDefinitions"), True)
+                Response.Redirect(NavigateURL(TabId, "", PropertySettings.SEOAgentType & "=EditTemplateDefinitions"), True)
 
             Catch exc As Exception    'Module failed to load
                 ProcessModuleLoadException(Me, exc)

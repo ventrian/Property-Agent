@@ -9,6 +9,12 @@
 				CssClass="NormalTextBox" AutoPostBack="True"></asp:dropdownlist>
 		</td>
 	</tr>
+    <tr>
+		<td class="SubHead" width="150">Enable ?PropertyID= in URL</td>
+		<td valign="bottom">
+			<asp:CheckBox ID="ckkPropertyIDinURL" Runat="server" />
+		</td>
+	</tr>
 	<tr>
 		<td class="SubHead" width="150"><dnn:label id="plBubbleFeatured" runat="server" controlname="chkBubbleFeatured" suffix=":"></dnn:label></td>
 		<td valign="bottom">

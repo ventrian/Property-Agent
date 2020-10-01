@@ -241,7 +241,7 @@ Namespace Ventrian.PropertyAgent
         End Sub
 
         Private Sub cmdSubmit_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdSubmit.Click
-
+            Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             Try
 
                 lblSubmitResults.Text = String.Empty
@@ -278,7 +278,7 @@ Namespace Ventrian.PropertyAgent
                     Dim objComment As New CommentInfo()
 
                     If (Me.Page.User.Identity.IsAuthenticated) Then
-                        objComment.UserID = UserController.GetCurrentUserInfo.UserID
+                        objComment.UserID = UserController.Instance.GetCurrentUserInfo.UserID
                     Else
                         objComment.UserID = Null.NullInteger
                     End If
@@ -369,7 +369,7 @@ Namespace Ventrian.PropertyAgent
                                            DotNetNuke.Services.Mail.MailPriority.Normal,
                                            subject,
                                            DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
-                                           "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), DotNetNuke.Entities.Host.Host.SMTPPassword)
+                                           "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), DotNetNuke.Entities.Host.Host.SMTPPassword)
 
                                     Catch
                                     End Try
@@ -404,7 +404,7 @@ Namespace Ventrian.PropertyAgent
                                            DotNetNuke.Services.Mail.MailPriority.Normal,
                                            subject,
                                            DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
-                                           "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                                           "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
 
                                     Catch
                                     End Try
@@ -438,7 +438,7 @@ Namespace Ventrian.PropertyAgent
                                        DotNetNuke.Services.Mail.MailPriority.Normal,
                                        subject,
                                        DotNetNuke.Services.Mail.MailFormat.Text, System.Text.Encoding.UTF8, body,
-                                       "", PortalSettings.HostSettings("SMTPServer"), PortalSettings.HostSettings("SMTPAuthentication"), PortalSettings.HostSettings("SMTPUsername"), PortalSettings.HostSettings("SMTPPassword"))
+                                       "", hostSettings("SMTPServer"), hostSettings("SMTPAuthentication"), hostSettings("SMTPUsername"), hostSettings("SMTPPassword"))
 
                                 Catch
                                 End Try

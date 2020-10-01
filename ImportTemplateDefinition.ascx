@@ -20,6 +20,8 @@
 </table>
 <dnn:sectionhead id="dshImportTemplate" cssclass="Head" runat="server" text="Import Template" section="tblImportTemplate"
 	resourcekey="ImportTemplate" includerule="True"></dnn:sectionhead>
+<asp:updatepanel id="UpdatePanel1" runat="server">
+<contenttemplate>
 <TABLE id="tblImportTemplate" cellSpacing="0" cellPadding="2" width="100%" summary="Import Template Design Table"
 	border="0" runat="server">
 	<TR>
@@ -31,7 +33,8 @@
 		<TD width="25"><IMG height=1 src='<%= Page.ResolveUrl("~/Images/Spacer.gif") %>' width=25></TD>
 		<TD class="SubHead" noWrap width="150"><dnn:label id="plFile" runat="server" resourcekey="File" suffix=":" controlname="txtFolder"></dnn:label></TD>
 		<TD align="left" width="100%">
-			<INPUT id="cmdBrowse" type="file" size="50" name="cmdBrowse" runat="server">
+			        <INPUT id="cmdBrowse" type="file" size="50" name="cmdBrowse" runat="server">
+                    
 			<asp:CustomValidator id="valFile" runat="server" resourcekey="valFile.ErrorMessage" CssClass="NormalRed"
 				ErrorMessage="You Must Upload A File" Display="Dynamic"></asp:CustomValidator>
 			<asp:CustomValidator id="valType" runat="server" resourcekey="valType.ErrorMessage" CssClass="NormalRed"
@@ -48,3 +51,9 @@
 	<asp:linkbutton id="cmdCancel" resourcekey="cmdCancel" runat="server" cssclass="CommandButton" text="Cancel"
 		causesvalidation="False" borderstyle="none" />
 </p>
+</contenttemplate>
+    <triggers>
+        <asp:postbacktrigger controlid="cmdUploadFile">
+        </asp:postbacktrigger>
+    </triggers>
+</asp:updatepanel>

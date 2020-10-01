@@ -4,6 +4,7 @@
 
         Standard = 0
         Flash = 1
+        HTML5 = 2
 
     End Enum
 

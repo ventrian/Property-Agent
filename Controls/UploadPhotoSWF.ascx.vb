@@ -159,9 +159,9 @@ Namespace Ventrian.PropertyAgent.Controls
             Dim limit As Integer = PropertyAgentBase.GetLimit(PropertySettings.PermissionAddImages, PropertySettings.PermissionAddImagesLimit)
 
             If (limit = Null.NullInteger) Then
-                Return "0"
+                Return 0
             Else
-                Return "1"
+                Return limit
             End If
 
         End Function

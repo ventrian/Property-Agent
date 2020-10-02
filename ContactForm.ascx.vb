@@ -473,7 +473,7 @@ Namespace Ventrian.PropertyAgent
                                 valRequired.ControlToValidate = objTextBox.ID
                                 valRequired.ErrorMessage = Localization.GetString("valRequired", Me.ResourceFile)
                                 valRequired.CssClass = "NormalRed"
-                                valRequired.Display = ValidatorDisplay.Dynamic
+                                valRequired.Display = ValidatorDisplay.Static
                                 valRequired.ValidationGroup = ModuleKey
                                 valRequired.SetFocusOnError = True
                                 phValue.Controls.Add(valRequired)
@@ -484,7 +484,7 @@ Namespace Ventrian.PropertyAgent
                                 valRequiredEmail.ControlToValidate = objTextBox.ID
                                 valRequiredEmail.ErrorMessage = Localization.GetString("valValidateEmail", Me.ResourceFile)
                                 valRequiredEmail.CssClass = "NormalRed"
-                                valRequiredEmail.Display = ValidatorDisplay.Dynamic
+                                valRequiredEmail.Display = ValidatorDisplay.Static
                                 valRequiredEmail.ValidationGroup = ModuleKey
                                 valRequiredEmail.SetFocusOnError = True
                                 valRequiredEmail.ValidationExpression = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
@@ -509,7 +509,7 @@ Namespace Ventrian.PropertyAgent
                                 valRequired.ControlToValidate = objTextBox.ID
                                 valRequired.ErrorMessage = Localization.GetString("valRequired", Me.ResourceFile)
                                 valRequired.CssClass = "NormalRed"
-                                valRequired.Display = ValidatorDisplay.Dynamic
+                                valRequired.Display = ValidatorDisplay.Static
                                 valRequired.ValidationGroup = ModuleKey
                                 valRequired.SetFocusOnError = True
                                 phValue.Controls.Add(valRequired)
@@ -549,7 +549,7 @@ Namespace Ventrian.PropertyAgent
                                 '    valRequired.ErrorMessage = valRequired.ErrorMessage.Replace("[CUSTOMFIELD]", objContactField.Name)
                                 'End If
                                 valRequired.CssClass = "NormalRed"
-                                valRequired.Display = ValidatorDisplay.Dynamic
+                                valRequired.Display = ValidatorDisplay.Static
                                 valRequired.SetFocusOnError = True
                                 valRequired.InitialValue = "-1"
                                 valRequired.ValidationGroup = ModuleKey
@@ -612,7 +612,7 @@ Namespace Ventrian.PropertyAgent
                                 'valRequired.ControlToValidate = objCheckBox.ID
                                 valRequired.ErrorMessage = Localization.GetString("valRequired", Me.ResourceFile)
                                 valRequired.CssClass = "NormalRed"
-                                valRequired.Display = ValidatorDisplay.Dynamic
+                                valRequired.Display = ValidatorDisplay.Static
                                 valRequired.IsValid = objCheckBox.Checked
                                 valRequired.ValidationGroup = ModuleKey
                                 valRequired.SetFocusOnError = True
@@ -663,7 +663,7 @@ Namespace Ventrian.PropertyAgent
                                         '    valRequired.ErrorMessage = valRequired.ErrorMessage.Replace("[CUSTOMFIELD]", objContactField.Name)
                                         'End If
                                         valRequired.CssClass = "NormalRed"
-                                        valRequired.Display = ValidatorDisplay.Dynamic
+                                        valRequired.Display = ValidatorDisplay.Static
                                         valRequired.SetFocusOnError = True
                                         valRequired.InitialValue = "-1"
                                         valRequired.ValidationGroup = ModuleKey

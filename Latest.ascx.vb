@@ -22,6 +22,20 @@ Namespace Ventrian.PropertyAgent
 
         Private _pageNumber As Integer = 1
 
+        Private _searchValues As String = Null.NullString
+        Private _agentType As String = Null.NullString
+        Private _agentFilter As String = Null.NullString
+        Private _propertyAgentID As Integer = Null.NullInteger
+        Private _propertyAgentName As String = Null.NullInteger
+        Private _propertyBrokerID As Integer = Null.NullInteger
+        Private _location As String = Null.NullString
+        Private _currentPage As Integer = 1
+        Private _pageRecords As Integer = 10
+        Private _customFieldIDs As String = Null.NullString
+        Private _sortBy As String = ""
+        Private _sortDirection As String = ""
+        Private _totalRecords As Integer = 0
+
 #End Region
 
 #Region " Private Properties "
@@ -315,6 +329,10 @@ Namespace Ventrian.PropertyAgent
                 If PropID <> -1 Then
                     objProperties.Add(objPropertyController.Get(PropID))
                 End If
+            ElseIf (Me.PropertySettingsLatest.SearchValuesInURL) Then
+                ReadQueryStringTotal()
+                objProperties = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, _propertyAgentID, _propertyBrokerID, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, _customFieldIDs, _searchValues, _currentPage - 1, _pageRecords, _totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
+
             Else
                 objProperties = objPropertyController.List(Me.PropertySettingsLatest.PropertyAgentModuleID, _propertyTypeID, SearchStatusType.PublishedActive, agentID, Null.NullInteger, Me.PropertySettingsLatest.FeaturedOnly, OnlyForAuthenticated, Me.SortBy, Me.SortByCustomField, Me.SortDirection, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, Null.NullInteger, Null.NullInteger, SortDirectionType.Ascending, customFieldFilters, customFieldValues, _pageNumber - 1, maxCount, totalRecords, Me.PropertySettingsLatest.Bubblefeatured, True, Null.NullInteger, Null.NullInteger, latitude, longitude, startDate, Null.NullString, shortListID)
 
@@ -401,6 +419,69 @@ Namespace Ventrian.PropertyAgent
             Else
                 ctlPagingControl1.Visible = False
             End If
+
+        End Sub
+
+        Private Sub ReadQueryStringTotal()
+
+            Dim agentTypeParam As String = PropertySettings.SEOAgentType
+            If (Request(agentTypeParam) = "") Then
+                agentTypeParam = "agentType"
+            End If
+            If Not (Request(agentTypeParam) Is Nothing) Then
+                _agentType = Request(agentTypeParam)
+            End If
+
+            Dim propertyTypeIDParam As String = PropertySettings.SEOPropertyTypeID
+            If (Request(propertyTypeIDParam) = "") Then
+                propertyTypeIDParam = "PropertyTypeID"
+            End If
+            If Not (Request(propertyTypeIDParam) Is Nothing) Then
+                Integer.TryParse(Request(propertyTypeIDParam), _propertyTypeID)
+                If (_propertyTypeID = 0) Then
+                    Response.Redirect(NavigateURL(Me.TabId), True)
+                End If
+            End If
+
+            If Not (Request("AgentFilter") Is Nothing) Then
+                _agentFilter = Server.UrlDecode(Request("AgentFilter"))
+            End If
+
+            If Not (Request("PropertyAgentID") Is Nothing) Then
+                _propertyAgentID = Convert.ToInt32(Request("PropertyAgentID"))
+            End If
+            If Not (Request("PropertyAgentName") Is Nothing) Then
+                _propertyAgentName = Request("PropertyAgentName")
+            End If
+            If Not (Request("PropertyBrokerID") Is Nothing) Then
+                _propertyBrokerID = Convert.ToInt32(Request("PropertyBrokerID"))
+            End If
+
+            If Not (Request("Location") Is Nothing) Then
+                _location = Server.UrlDecode(Request("Location"))
+            End If
+
+            If Not (Request("CurrentPage") Is Nothing) Then
+                _currentPage = Convert.ToInt32(Request("CurrentPage"))
+            End If
+
+            If Not (Request("CustomFieldIDs") Is Nothing) Then
+                _customFieldIDs = Request("CustomFieldIDs").Trim()
+            End If
+
+            If Not (Request("SearchValues") Is Nothing) Then
+                _searchValues = Request("SearchValues").Trim()
+            End If
+
+            If Not (Request("sortBy") Is Nothing) Then
+                _sortBy = Request("sortBy").Trim()
+            End If
+
+            If Not (Request("sortDir") Is Nothing) Then
+                _sortDirection = Request("sortDir").Trim()
+            End If
+
+            _pageRecords = Me.PropertySettings.ListingItemsPerPage
 
         End Sub
 

@@ -3535,7 +3535,7 @@ Namespace Ventrian.PropertyAgent
                                 objContactForm.ModuleID = _moduleID
                                 objContactForm.TabID = _tabID
                                 objContactForm.ModuleKey = _moduleKey
-                                objContactForm.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
+                                objContactForm.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString()).Replace("-", "_")
                                 objPlaceHolder.Add(objContactForm)
                             End If
 

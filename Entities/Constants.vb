@@ -578,6 +578,8 @@ Namespace Ventrian.PropertyAgent
         Public Const LATEST_TYPE_ID_SETTING_DEFAULT As Integer = -1
         Public Const LATEST_PROPERTY_ID_IN_URL_SETTING As String = "PropertyIDinURL"
         Public Const LATEST_PROPERTY_ID_IN_URL_SETTING_DEFAULT As Boolean = False
+        Public Const LATEST_SEARCH_VALUES_IN_URL_SETTING As String = "SearchValuesInURL"
+        Public Const LATEST_SEARCH_VALUES_IN_URL_SETTING_DEFAULT As Boolean = False
         Public Const LATEST_BUBBLE_FEATURED_SETTING As String = "LatestBubbleFeatured"
         Public Const LATEST_BUBBLE_FEATURED_SETTING_DEFAULT As Boolean = False
         Public Const LATEST_FEATURED_ONLY_SETTING As String = "LatestFeaturedOnly"

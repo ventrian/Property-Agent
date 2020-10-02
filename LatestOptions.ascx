@@ -16,6 +16,12 @@
 		</td>
 	</tr>
 	<tr>
+		<td class="SubHead" width="150">Bind search values in URL</td>
+		<td valign="bottom">
+			<asp:CheckBox ID="ckkSearchValuesInURL" Runat="server" />
+		</td>
+	</tr>
+	<tr>
 		<td class="SubHead" width="150"><dnn:label id="plBubbleFeatured" runat="server" controlname="chkBubbleFeatured" suffix=":"></dnn:label></td>
 		<td valign="bottom">
 			<asp:CheckBox ID="chkBubbleFeatured" Runat="server" />

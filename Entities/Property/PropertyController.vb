@@ -172,11 +172,23 @@ Namespace Ventrian.PropertyAgent
 
         End Function
 
-        Public Sub AddStatistic(ByVal propertyID As Integer, ByVal userID As Integer, ByVal remoteAddress As String)
+        Public Sub AddStatistic(ByVal propertyID As Integer, ByVal userID As Integer, ByVal remoteAddress As String, ByVal moduleID As Integer)
 
-            DataProvider.Instance().AddStatistic(propertyID, userID, remoteAddress)
+            DataProvider.Instance().AddStatistic(propertyID, userID, remoteAddress, moduleID)
 
         End Sub
+
+        Public Function StatisticGet(ByVal propertyID As Integer) As List(Of StatisticInfo)
+
+            Return CBO.FillCollection(Of StatisticInfo)(DataProvider.Instance().StatisticGet(propertyID))
+
+        End Function
+
+        Public Function StatisticList(ByVal moduleID As Integer) As List(Of StatisticInfo)
+
+            Return CBO.FillCollection(Of StatisticInfo)(DataProvider.Instance().StatisticList(moduleID))
+
+        End Function
 
         Public Sub Update(ByVal objProperty As PropertyInfo)
 

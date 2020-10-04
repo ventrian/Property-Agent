@@ -189,7 +189,7 @@ Namespace Ventrian.PropertyAgent
                     objPropertyInfo.ViewCount = objPropertyInfo.ViewCount + 1
                     objPropertyController.Update(objPropertyInfo)
 
-                    objPropertyController.AddStatistic(objPropertyInfo.PropertyID, Me.UserId, Request.UserHostAddress)
+                    objPropertyController.AddStatistic(objPropertyInfo.PropertyID, Me.UserId, Request.UserHostAddress, Me.ModuleId)
 
                     cookie = New HttpCookie("Property" & _propertyID.ToString())
                     cookie.Value = "1"

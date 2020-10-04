@@ -4533,6 +4533,39 @@ Namespace Ventrian.PropertyAgent
                             objLiteral.Text = script
                             objPlaceHolder.Add(objLiteral)
 
+                        Case "STATISTICS"
+                            Dim objStatisticController As New PropertyController()
+                            Dim objStatistics As List(Of StatisticInfo) = objStatisticController.StatisticGet(objProperty.PropertyID)
+                            Dim htmlStatistic As String = "<table class=""" & objProperty.ModuleID & "-PAStatistic"" data-toggle=""table"">" _
+                                & "<thead>" _
+                                & "<tr>" _
+                                & "<th>User Name</th>" _
+                                & "<th>Date</th>" _
+                                & "<th>IP</th>" _
+                                & "</tr>" _
+                                & "</thead>" _
+                                & "<tbody>"
+
+                            Dim StatisticUserName As String
+                            For Each objStatistic As StatisticInfo In objStatistics
+                                If objStatistic.UserID <> -1 Then
+                                    Dim _user As UserInfo = UserController.GetUserById(PortalSettings.Current.PortalId, objStatistic.UserID)
+                                    StatisticUserName = _user.DisplayName
+                                Else
+                                    StatisticUserName = "Anonymous"
+                                End If
+
+                                htmlStatistic = htmlStatistic & "<tr>" _
+                                    & "<td>" & StatisticUserName & "</td>" _
+                                    & "<td>" & objStatistic.DateCreated & "</td>" _
+                                    & "<td>" & objStatistic.RemoteAddress & "</td>" _
+                                    & "</tr>"
+                            Next
+                            htmlStatistic = htmlStatistic & "</tbody>" _
+                                & "</table>"
+                            Dim objLiteral As New Literal
+                            objLiteral.Text = htmlStatistic
+                            objPlaceHolder.Add(objLiteral)
                         Case "RATINGVALUE"
                             Dim objLiteral As New Literal
                             objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())

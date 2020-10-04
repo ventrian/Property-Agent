@@ -1,0 +1,51 @@
+﻿ALTER TABLE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic ADD
+	ModuleID int NULL
+GO
+
+DROP PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_StatisticAdd 
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}Ventrian_PropertyAgent_StatisticAdd 
+	@PropertyID int,
+	@UserID int,
+	@RemoteAddress nvarchar(50),
+	@ModuleID int
+AS
+	INSERT INTO 
+		{databaseOwner}{objectQualifier}Ventrian_PropertyAgent_Statistic(PropertyID, DateCreated, UserID, RemoteAddress, ModuleID)
+	VALUES
+		(@PropertyID, GetDate(), @UserID, @RemoteAddress, @ModuleID)
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}[Ventrian_PropertyAgent_StatisticGet]
+	@PropertyID int
+AS
+
+SELECT
+	[DateCreated],
+	[UserID],
+	[RemoteAddress]
+FROM 
+	{objectQualifier}Ventrian_PropertyAgent_Statistic
+WHERE
+	[PropertyID] = @PropertyID 
+ORDER BY
+	[DateCreated]
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}[Ventrian_PropertyAgent_StatisticList]
+	@ModuleID int
+AS
+
+SELECT
+	[UserID],
+	[DateCreated],
+	[RemoteAddress],
+	[ModuleID]
+FROM 
+	{objectQualifier}Ventrian_PropertyAgent_Statistic
+WHERE
+	[ModuleID] = @ModuleID 
+ORDER BY
+	[DateCreated]
+GO

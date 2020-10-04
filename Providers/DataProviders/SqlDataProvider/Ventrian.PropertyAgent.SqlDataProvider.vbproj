@@ -227,6 +227,7 @@
     <None Include="01.08.06.SqlDataProvider" />
     <None Include="01.08.07.SqlDataProvider" />
     <None Include="01.09.00.SqlDataProvider" />
+    <None Include="01.10.12.SqlDataProvider" />
     <None Include="Uninstall.SqlDataProvider" />
     <Compile Include="SqlDataProvider.vb">
       <SubType>Code</SubType>

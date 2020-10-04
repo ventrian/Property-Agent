@@ -246,7 +246,6 @@
     <Content Include="ImportTemplateDefinition.ascx" />
     <Content Include="Installs\PropertyAgent.01.08.10.zip" />
     <Content Include="Installs\PropertyAgent.01.09.00_DNN742_DNN804_Install.zip" />
-    <Content Include="Installs\PropertyAgent.01.10.00_DNN742_DNN92_Install.zip" />
     <Content Include="JS\Lightbox\jquery.lightbox-0.4.js" />
     <Content Include="JS\Lightbox\jquery.lightbox-0.4.pack.js" />
     <Content Include="JS\Rating\jquery.rating.js" />
@@ -1481,6 +1480,7 @@
     <Content Include="ImageHandlerExt.ashx" />
     <Content Include="Documentation\PropertyAgentAdminGuide.01.00.00.pdf" />
     <Content Include="Documentation\PropertyAgentTemplateGuide.doc" />
+    <Content Include="Installs\PropertyAgent.01.10.12.zip" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

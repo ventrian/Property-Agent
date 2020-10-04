@@ -401,9 +401,17 @@ Namespace Ventrian.PropertyAgent
 
 #Region " Statistic Methods "
 
-        Public Overrides Sub AddStatistic(ByVal propertyID As Integer, ByVal userID As Integer, ByVal remoteAddress As String)
-            SqlHelper.ExecuteNonQuery(ConnectionString, DatabaseOwner & ObjectQualifier & "Ventrian_PropertyAgent_StatisticAdd", propertyID, GetNull(userID), GetNull(remoteAddress))
+        Public Overrides Sub AddStatistic(ByVal propertyID As Integer, ByVal userID As Integer, ByVal remoteAddress As String, ByVal moduleID As Integer)
+            SqlHelper.ExecuteNonQuery(ConnectionString, DatabaseOwner & ObjectQualifier & "Ventrian_PropertyAgent_StatisticAdd", propertyID, GetNull(userID), GetNull(remoteAddress), moduleID)
         End Sub
+
+        Public Overrides Function StatisticGet(ByVal propertyID As Integer) As IDataReader
+            Return CType(SqlHelper.ExecuteReader(ConnectionString, DatabaseOwner & ObjectQualifier & "Ventrian_PropertyAgent_StatisticGet", propertyID), IDataReader)
+        End Function
+
+        Public Overrides Function StatisticList(ByVal moduleID As Integer) As IDataReader
+            Return CType(SqlHelper.ExecuteReader(ConnectionString, DatabaseOwner & ObjectQualifier & "Ventrian_PropertyAgent_StatisticList", moduleID), IDataReader)
+        End Function
 
 #End Region
 

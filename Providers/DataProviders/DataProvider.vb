@@ -167,7 +167,11 @@ Namespace Ventrian.PropertyAgent
 
 #Region " Statistic Methods "
 
-        Public MustOverride Sub AddStatistic(ByVal propertyID As Integer, ByVal userID As Integer, ByVal remoteAddress As String)
+        Public MustOverride Sub AddStatistic(ByVal propertyID As Integer, ByVal userID As Integer, ByVal remoteAddress As String, ByVal moduleID As Integer)
+
+        Public MustOverride Function StatisticGet(ByVal propertyID As Integer) As IDataReader
+
+        Public MustOverride Function StatisticList(ByVal moduleID As Integer) As IDataReader
 
 #End Region
 

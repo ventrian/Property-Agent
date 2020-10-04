@@ -1721,6 +1721,7 @@
     <Compile Include="Entities\Property\SubscriberController.vb" />
     <Compile Include="Entities\Social\Journal.vb" />
     <Compile Include="Entities\SortByTypeSecondary.vb" />
+    <Compile Include="Entities\StatisticInfo.vb" />
     <Compile Include="Entities\WebControls\RefreshControl.vb" />
     <Compile Include="ImageHandlerExt.ashx.vb">
       <DependentUpon>ImageHandlerExt.ashx</DependentUpon>

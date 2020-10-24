@@ -19,7 +19,7 @@ Imports System.Globalization
 Imports System.Xml.XPath
 Imports DotNetNuke.Web.Client.ClientResourceManagement
 Imports Microsoft.VisualBasic.CompilerServices
-
+Imports DotNetNuke.Services.FileSystem
 
 Namespace Ventrian.PropertyAgent
 
@@ -607,7 +607,7 @@ Namespace Ventrian.PropertyAgent
                                 Dim rate As Double = Null.NullDouble
 
                                 Dim uri As New Uri("http://themoneyconverter.com/rss-feed/" & _propertySettings.Currency.ToString() & "/rss.xml")
-                                If (uri.Scheme = uri.UriSchemeHttp) Then
+                                If (uri.Scheme = Uri.UriSchemeHttp) Then
 
                                     Dim objXml As XmlDocument = CType(DataCache.GetCache("PA-" & _moduleID.ToString() & "-RSS"), XmlDocument)
                                     If (objXml Is Nothing) Then
@@ -775,15 +775,15 @@ Namespace Ventrian.PropertyAgent
 
             Select Case thumbnailType
 
-                Case thumbnailType.Small
+                Case ThumbnailType.Small
                     thumbWidth = _propertySettings.SmallWidth
                     thumbHeight = _propertySettings.SmallHeight
 
-                Case thumbnailType.Medium
+                Case ThumbnailType.Medium
                     thumbWidth = _propertySettings.MediumWidth
                     thumbHeight = _propertySettings.MediumHeight
 
-                Case thumbnailType.Large
+                Case ThumbnailType.Large
                     thumbWidth = _propertySettings.LargeWidth
                     thumbHeight = _propertySettings.LargeHeight
 
@@ -827,15 +827,15 @@ Namespace Ventrian.PropertyAgent
 
             Select Case thumbnailType
 
-                Case thumbnailType.Small
+                Case ThumbnailType.Small
                     thumbWidth = _propertySettings.SmallWidth
                     thumbHeight = _propertySettings.SmallHeight
 
-                Case thumbnailType.Medium
+                Case ThumbnailType.Medium
                     thumbWidth = _propertySettings.MediumWidth
                     thumbHeight = _propertySettings.MediumHeight
 
-                Case thumbnailType.Large
+                Case ThumbnailType.Large
                     thumbWidth = _propertySettings.LargeWidth
                     thumbHeight = _propertySettings.LargeHeight
 
@@ -932,13 +932,13 @@ Namespace Ventrian.PropertyAgent
                 objImage.ID = Globals.CreateValidID(_moduleKey & "-Photo--1-" & iPtr.ToString())
                 Select Case thumbnailType
 
-                    Case thumbnailType.Small
+                    Case ThumbnailType.Small
                         objImage.ImageUrl = _objPage.ResolveUrl("~/DesktopModules/PropertyAgent/ImageHandler.ashx?width=" & _propertySettings.SmallWidth.ToString() & "&height=" & _propertySettings.SmallHeight.ToString() & "&HomeDirectory=" & _objPage.Server.UrlEncode(_objPage.ResolveUrl("~/DesktopModules/PropertyAgent/Images/")) & "&fileName=" & _objPage.Server.UrlEncode("placeholder-600.jpg") & "&portalid=" & _portalID.ToString())
 
-                    Case thumbnailType.Medium
+                    Case ThumbnailType.Medium
                         objImage.ImageUrl = _objPage.ResolveUrl("~/DesktopModules/PropertyAgent/ImageHandler.ashx?width=" & _propertySettings.MediumWidth.ToString() & "&height=" & _propertySettings.MediumHeight.ToString() & "&HomeDirectory=" & _objPage.Server.UrlEncode(_objPage.ResolveUrl("~/DesktopModules/PropertyAgent/Images/")) & "&fileName=" & _objPage.Server.UrlEncode("placeholder-600.jpg") & "&portalid=" & _portalID.ToString())
 
-                    Case thumbnailType.Large
+                    Case ThumbnailType.Large
                         objImage.ImageUrl = _objPage.ResolveUrl("~/DesktopModules/PropertyAgent/ImageHandler.ashx?width=" & _propertySettings.LargeWidth.ToString() & "&height=" & _propertySettings.LargeHeight.ToString() & "&HomeDirectory=" & _objPage.Server.UrlEncode(_objPage.ResolveUrl("~/DesktopModules/PropertyAgent/Images/")) & "&fileName=" & _objPage.Server.UrlEncode("placeholder-600.jpg") & "&portalid=" & _portalID.ToString())
 
                 End Select
@@ -1039,16 +1039,16 @@ Namespace Ventrian.PropertyAgent
             If context.Request.ServerVariables("HTTP_USER_AGENT") IsNot Nothing Then
 
                 'Create a list of all mobile types
-                Dim mobiles() As String = {"midp", "j2me", "avant", "docomo", "novarra", "palmos", _
-                     "palmsource", "240x320", "opwv", "chtml", "pda", "windows ce", _
-                     "mmp/", "blackberry", "mib/", "symbian", "wireless", "nokia", _
-                     "hand", "mobi", "phone", "cdm", "up.b", "audio", _
-                     "SIE-", "SEC-", "samsung", "HTC", "mot-", "mitsu", _
-                     "sagem", "sony", "alcatel", "lg", "eric", "vx", _
-                     "NEC", "philips", "mmm", "xx", "panasonic", "sharp", _
-                     "wap", "sch", "rover", "pocket", "benq", "java", _
-                     "pt", "pg", "vox", "amoi", "bird", "compal", _
-                     "kg", "voda", "sany", "kdd", "dbt", "sendo", _
+                Dim mobiles() As String = {"midp", "j2me", "avant", "docomo", "novarra", "palmos",
+                     "palmsource", "240x320", "opwv", "chtml", "pda", "windows ce",
+                     "mmp/", "blackberry", "mib/", "symbian", "wireless", "nokia",
+                     "hand", "mobi", "phone", "cdm", "up.b", "audio",
+                     "SIE-", "SEC-", "samsung", "HTC", "mot-", "mitsu",
+                     "sagem", "sony", "alcatel", "lg", "eric", "vx",
+                     "NEC", "philips", "mmm", "xx", "panasonic", "sharp",
+                     "wap", "sch", "rover", "pocket", "benq", "java",
+                     "pt", "pg", "vox", "amoi", "bird", "compal",
+                     "kg", "voda", "sany", "kdd", "dbt", "sendo",
                      "sgh", "gradi", "jb", "dddi", "moto", "iphone"}
 
                 'Loop through each item in the list created above 
@@ -5418,6 +5418,34 @@ Namespace Ventrian.PropertyAgent
                                     End If
                                 End If
 
+                                If (field.EndsWith("securelink")) Then
+                                    Dim fieldWithoutLink As String = field.Remove(field.Length - 10, 10)
+                                    For Each objCustomField As CustomFieldInfo In objCustomFields
+                                        If (objCustomField.Name.ToLower() = fieldWithoutLink.ToLower()) Then
+                                            customFieldID = objCustomField.CustomFieldID
+                                            objCustomFieldSelected = objCustomField
+                                            isLink = True
+
+                                            If objCustomFieldSelected.FieldType = CustomFieldType.FileUpload Then
+                                                'Ok the custom field is founded and it is Download type
+                                                Dim i As Integer = 0
+                                                Dim ButtonDownload As New Button()
+                                                ButtonDownload.Text = "Download " + objCustomFieldSelected.Caption
+                                                ButtonDownload.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString() & "-" & i.ToString())
+                                                Dim fieldValue As String = GetFieldValue(objCustomFieldSelected, objProperty, False, True)
+                                                ButtonDownload.ControlStyle.CssClass = Me._propertySettings.ButtonClass
+                                                AddHandler ButtonDownload.Click, Sub(sender, e) ButtonDownloadClick(ApplicationMapPath + fieldValue.Remove(0, TabController.CurrentPage.FullUrl.Length - 1).Replace("/", "\"))
+                                                'AddHandler ButtonDownload.Click, AddressOf ButtonDownloadClick
+                                                objPlaceHolder.Add(ButtonDownload)
+                                            End If
+
+
+                                        End If
+                                    Next
+
+
+                                End If
+
                                 isRendered = True
 
                             End If
@@ -6454,6 +6482,30 @@ Namespace Ventrian.PropertyAgent
 
             _listingIndex = _listingIndex + 1
 
+        End Sub
+        Private Sub ButtonDownloadClick(UrlLink As String)
+            Dim SecureDir As String = PortalSettings.Current.HomeDirectoryMapPath & "PASecureFile"
+            Dim SecureFile As String = SecureDir & "\" & Path.GetFileName(UrlLink)
+            Try
+
+                If Not (Directory.Exists(SecureDir)) Then
+                    Dim di As DirectoryInfo = Directory.CreateDirectory(SecureDir)
+                End If
+                FileCopy(UrlLink, SecureFile)
+            Catch e As Exception
+
+            Finally
+            End Try
+
+            Dim response As Web.HttpResponse = Web.HttpContext.Current.Response
+            response.ClearContent()
+            response.Clear()
+            response.ContentType = "text/plain"
+            response.AddHeader("Content-Disposition", "attachment; filename=" & SecureFile & ";")
+            response.TransmitFile(SecureFile)
+            response.Flush()
+            File.Delete(SecureFile)
+            response.End()
         End Sub
 
         Public Sub ProcessOptionItem(ByRef objPlaceHolder As ControlCollection, ByVal layoutArray As String())

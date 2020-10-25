@@ -20,6 +20,7 @@ Imports System.Xml.XPath
 Imports DotNetNuke.Web.Client.ClientResourceManagement
 Imports Microsoft.VisualBasic.CompilerServices
 Imports DotNetNuke.Services.FileSystem
+Imports DotNetNuke.Services.Log.EventLog
 
 Namespace Ventrian.PropertyAgent
 
@@ -5433,10 +5434,15 @@ Namespace Ventrian.PropertyAgent
                                                 ButtonDownload.Text = "Download " + objCustomFieldSelected.Caption
                                                 ButtonDownload.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString() & "-" & i.ToString())
                                                 Dim fieldValue As String = GetFieldValue(objCustomFieldSelected, objProperty, False, True)
-                                                ButtonDownload.ControlStyle.CssClass = Me._propertySettings.ButtonClass
-                                                AddHandler ButtonDownload.Click, Sub(sender, e) ButtonDownloadClick(ApplicationMapPath + fieldValue.Remove(0, TabController.CurrentPage.FullUrl.Length - 1).Replace("/", "\"))
-                                                'AddHandler ButtonDownload.Click, AddressOf ButtonDownloadClick
-                                                objPlaceHolder.Add(ButtonDownload)
+                                                If fieldValue <> "" Then
+                                                    ButtonDownload.ControlStyle.CssClass = Me._propertySettings.ButtonClass
+                                                    'AddHandler ButtonDownload.Click, Sub(sender, e) ButtonDownloadClick(ApplicationMapPath + fieldValue.Remove(0, HttpContext.Current.Request.Url.Scheme & "/" & HttpContext.Current.Request.Url.Authority.Length).Replace("/", "\"))
+                                                    AddHandler ButtonDownload.Click, Sub(sender, e) ButtonDownloadClick(ApplicationMapPath + fieldValue.Remove(0, HttpContext.Current.Request.Url.Scheme.Length + HttpContext.Current.Request.Url.Authority.Length + 3).Replace("/", "\"))
+                                                    'AddHandler ButtonDownload.Click, Sub(sender, e) ButtonDownloadClick(ApplicationMapPath + fieldValue.Remove(0, TabController.CurrentPage.FullUrl.Length - 1).Replace("/", "\"))
+                                                    'AddHandler ButtonDownload.Click, AddressOf ButtonDownloadClick
+                                                    objPlaceHolder.Add(ButtonDownload)
+                                                End If
+
                                             End If
 
 
@@ -6486,6 +6492,7 @@ Namespace Ventrian.PropertyAgent
         Private Sub ButtonDownloadClick(UrlLink As String)
             Dim SecureDir As String = PortalSettings.Current.HomeDirectoryMapPath & "PASecureFile"
             Dim SecureFile As String = SecureDir & "\" & Path.GetFileName(UrlLink)
+
             Try
 
                 If Not (Directory.Exists(SecureDir)) Then

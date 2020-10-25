@@ -200,6 +200,8 @@ Namespace Ventrian.PropertyAgent
         Public Const PROTECT_XSS_SETTING_DEFAULT As Boolean = True
         Public Const AGENT_DROPDOWN_SETTING As String = "AgentDropdown"
         Public Const AGENT_DROPDOWN_SETTING_DEFAULT As Boolean = False
+        Public Const MAX_UPLOAD_LIMIT_SETTING As String = "MaxUploadLimit"
+        Public Const MAX_UPLOAD_LIMIT_SETTING_DEFAULT As String = ""
 
         Public Const MAP_ENABLE_SETTING As String = "MapEnable"
         Public Const MAP_ENABLE_SETTING_DEFAULT As Boolean = False

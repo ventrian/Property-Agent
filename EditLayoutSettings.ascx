@@ -1114,6 +1114,16 @@
 			<asp:CheckBox ID="chkAgentDropdown" Runat="server" />
 		</td>
 	</tr>
+	<tr>
+		<td width="25"><img height="1" src='<%= Page.ResolveUrl("~/Images/Spacer.gif") %>' width=25></td>
+		<td class="SubHead" width="150"><dnn:label id="plMaxUploadLimit" runat="server" controlname="txtMaxUploadLimit" suffix=":"></dnn:label></td>
+        <td valign="bottom">
+            <asp:TextBox ID="txtMaxUploadLimit" runat="server" CssClass="NormalTextBox" />
+			<asp:CompareValidator ID="valMaxUploadLimitIsMB" Runat="server" ControlToValidate="txtMaxUploadLimit"
+				Display="Dynamic" ResourceKey="valMaxUploadLimitIsMB.ErrorMessage" CssClass="NormalRed" Operator="DataTypeCheck"
+				Type="Integer" />
+        </td>
+	</tr>
 </table>
 <br>
 <dnn:sectionhead id="dshMapSettings" cssclass="Head" runat="server" text="Map Settings" section="tblMap"

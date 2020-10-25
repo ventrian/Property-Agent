@@ -633,6 +633,7 @@ Namespace Ventrian.PropertyAgent
             End If
             chkProtectXSS.Checked = Me.PropertySettings.ProtectXSS
             chkAgentDropdown.Checked = Me.PropertySettings.AgentDropdownDefault
+            txtMaxUploadLimit.Text = Me.PropertySettings.MaxUploadLimit
 
             If Not (lstContactdestination.Items.FindByValue(Me.PropertySettings.ContactDestination.ToString()) Is Nothing) Then
                 lstContactdestination.SelectedValue = Me.PropertySettings.ContactDestination.ToString()
@@ -1024,6 +1025,7 @@ Namespace Ventrian.PropertyAgent
                     objModules.UpdateModuleSetting(ModuleId, Constants.UPLOAD_PLACEMENT_SETTING, lstUploadPlacement.SelectedValue)
                     objModules.UpdateModuleSetting(ModuleId, Constants.PROTECT_XSS_SETTING, chkProtectXSS.Checked.ToString())
                     objModules.UpdateModuleSetting(ModuleId, Constants.AGENT_DROPDOWN_SETTING, chkAgentDropdown.Checked.ToString())
+                    objModules.UpdateModuleSetting(ModuleId, Constants.MAX_UPLOAD_LIMIT_SETTING, txtMaxUploadLimit.Text.ToString())
 
                     objModules.UpdateModuleSetting(ModuleId, Constants.MAP_ENABLE_SETTING, chkEnableMaps.Checked.ToString())
                     objModules.UpdateModuleSetting(ModuleId, Constants.MAP_KEY_SETTING, txtMapKey.Text)

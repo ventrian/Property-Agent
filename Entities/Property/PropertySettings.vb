@@ -1031,6 +1031,15 @@ Namespace Ventrian.PropertyAgent
                 End If
             End Get
         End Property
+        Public ReadOnly Property MaxUploadLimit() As String
+            Get
+                If (_settings.Contains(Constants.MAX_UPLOAD_LIMIT_SETTING)) Then
+                    Return _settings(Constants.MAX_UPLOAD_LIMIT_SETTING).ToString()
+                Else
+                    Return Constants.MAX_UPLOAD_LIMIT_SETTING_DEFAULT
+                End If
+            End Get
+        End Property
 
         Public ReadOnly Property ButtonClass() As String
             Get

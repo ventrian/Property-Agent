@@ -2868,6 +2868,36 @@ Namespace Ventrian.PropertyAgent
         Protected WithEvents chkAgentDropdown As Global.System.Web.UI.WebControls.CheckBox
 
         '''<summary>
+        '''Controllo plMaxUploadLimit.
+        '''</summary>
+        '''<remarks>
+        '''Campo generato automaticamente.
+        '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        '''</remarks>
+        Protected WithEvents plMaxUploadLimit As Global.System.Web.UI.UserControl
+
+        '''<summary>
+        '''Controllo txtMaxUploadLimit.
+        '''</summary>
+        '''<remarks>
+        '''Campo generato automaticamente.
+        '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        '''</remarks>
+        Protected WithEvents txtMaxUploadLimit As Global.System.Web.UI.WebControls.TextBox
+
+        '''<summary>
+        '''Controllo valMaxUploadLimitIsMB.
+        '''</summary>
+        '''<remarks>
+        '''Campo generato automaticamente.
+        '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        '''</remarks>
+        Protected WithEvents valMaxUploadLimitIsMB As Global.System.Web.UI.WebControls.CompareValidator
+
+        '''<summary>
+        '''Controllo dshMapSettings.
+
+        '''<summary>
         '''dshMapSettings control.
         '''</summary>
         '''<remarks>

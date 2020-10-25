@@ -571,7 +571,7 @@ Namespace Ventrian.PropertyAgent
 
         End Sub
 
-        Private Sub Update()
+        Private Sub Update(ByRef MaxUploadLimit As Boolean)
             Dim hostSettings As Dictionary(Of String, String) = DotNetNuke.Entities.Controllers.HostController.Instance.GetSettingsDictionary()
             If (_propertyID = Null.NullInteger) Then
                 _property = New PropertyInfo
@@ -967,16 +967,34 @@ Namespace Ventrian.PropertyAgent
                                                 objPropertyValueController.Delete(_propertyID, objPropertyValue.PropertyValueID)
                                             End If
 
+
                                             If (objFileUpload.PostedFile.ContentLength > 0) Then
-                                                ' Upload new one
-                                                Dim filePath As String = PortalSettings.HomeDirectoryMapPath & "PropertyAgent\" & ModuleId.ToString() & "\Files\" & _propertyID.ToString() & "\"
-                                                Dim fileName As String = Path.GetFileName(objFileUpload.PostedFile.FileName)
-                                                Dim relativePath As String = "PropertyAgent\" & ModuleId.ToString() & "\Files\" & _propertyID.ToString() & "\" & fileName
-                                                If (Directory.Exists(filePath) = False) Then
-                                                    Directory.CreateDirectory(filePath)
+
+                                                If (Me.PropertySettings.MaxUploadLimit <> "") AndAlso (CInt(Me.PropertySettings.MaxUploadLimit) > 0) Then
+                                                    Dim LimitKBFileUpload As Long = (Me.PropertySettings.MaxUploadLimit * 1024 * 1024)
+                                                    Dim TotalFolderSize As Long = FolderSize(PortalSettings.HomeDirectoryMapPath & "PropertyAgent\" & ModuleId.ToString() & "\Files\") + objFileUpload.PostedFile.ContentLength
+                                                    ' Upload new one if I've no reached maximum upload size
+                                                    If TotalFolderSize <= LimitKBFileUpload Then
+                                                        Dim filePath As String = PortalSettings.HomeDirectoryMapPath & "PropertyAgent\" & ModuleId.ToString() & "\Files\" & _propertyID.ToString() & "\"
+                                                        Dim fileName As String = Path.GetFileName(objFileUpload.PostedFile.FileName)
+                                                        Dim relativePath As String = "PropertyAgent\" & ModuleId.ToString() & "\Files\" & _propertyID.ToString() & "\" & fileName
+                                                        If (Directory.Exists(filePath) = False) Then
+                                                            Directory.CreateDirectory(filePath)
+                                                        End If
+                                                        objFileUpload.PostedFile.SaveAs(filePath & fileName)
+                                                        fieldsToUpdate.Add(customFieldID.ToString(), relativePath)
+                                                    Else
+                                                        MaxUploadLimit = True
+                                                        Dim valMaxUploadLimitExcedeed As New CustomValidator
+
+                                                        valMaxUploadLimitExcedeed = phValue.FindControl(objControl.ID.Split("_")(0) & "_valMaxUploadLimitExcedeed")
+                                                        valMaxUploadLimitExcedeed.ErrorMessage = "File not uploaded. Folder Max Size Exceeded." & " Actual folder total size (MB): " & CType(FolderSize(PortalSettings.HomeDirectoryMapPath & "PropertyAgent\" & ModuleId.ToString() & "\Files\"), Integer) / 1024 / 1024 & " Max Allowed (MB):" & Me.PropertySettings.MaxUploadLimit
+                                                        valMaxUploadLimitExcedeed.IsValid = False
+                                                        valMaxUploadLimitExcedeed.SetFocusOnError = True
+                                                    End If
+
                                                 End If
-                                                objFileUpload.PostedFile.SaveAs(filePath & fileName)
-                                                fieldsToUpdate.Add(customFieldID.ToString(), relativePath)
+
                                             End If
 
                                         End If
@@ -1057,6 +1075,16 @@ Namespace Ventrian.PropertyAgent
 
         End Sub
 #End Region
+
+        Private Function FolderSize(ByVal FolderPath As String) As Long
+            Dim files() As String = Directory.GetFiles(FolderPath, "*", SearchOption.AllDirectories)
+            Dim size As Long = 0
+            For Each file As String In files
+                Dim info As New FileInfo(file)
+                size += info.Length
+            Next
+            Return size
+        End Function
 
 #Region " Protected Methods "
 
@@ -1788,6 +1816,18 @@ Namespace Ventrian.PropertyAgent
                                 objHtmlInputFile.Disabled = isLockdown
                                 phValue.Controls.Add(objHtmlInputFile)
 
+                                Dim valMaxUploadLimitExcedeed As New CustomValidator
+                                valMaxUploadLimitExcedeed.ID = objCustomField.CustomFieldID.ToString() & "_" & "valMaxUploadLimitExcedeed"
+                                valMaxUploadLimitExcedeed.ControlToValidate = objHtmlInputFile.ID
+                                valMaxUploadLimitExcedeed.IsValid = True
+                                valMaxUploadLimitExcedeed.ErrorMessage = "File Upload Folder Max Size Exceeded."
+                                valMaxUploadLimitExcedeed.CssClass = "NormalRed"
+                                valMaxUploadLimitExcedeed.Display = ValidatorDisplay.Dynamic
+                                valMaxUploadLimitExcedeed.SetFocusOnError = True
+
+                                'AddHandler valMaxUploadLimitExcedeed.ServerValidate, AddressOf valMaxUploadLimitExcedeed_ServerValidate
+                                phValue.Controls.Add(valMaxUploadLimitExcedeed)
+
                                 If Not (_property Is Nothing) Then
                                     If (_property.PropertyList.Contains(objCustomField.CustomFieldID) AndAlso _property.PropertyList(objCustomField.CustomFieldID).ToString() <> "") Then
 
@@ -1947,33 +1987,41 @@ Namespace Ventrian.PropertyAgent
         Private Sub cmdUpdate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUpdate.Click
 
             Try
-
                 If (Page.IsValid) Then
 
-                    Update()
+                    Dim MaxUploadLimit As Boolean = False
+                    Update(MaxUploadLimit)
 
-                    If (_returnUrl <> "") Then
-                        Response.Redirect(_returnUrl, True)
+                    If MaxUploadLimit Then
+                        ''                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alertMessage", "alert('The maximum upload limit
+                        ''has been exceeded!')", True)
+                        'Dim returnUrl As String = NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=PropertyManager")
+                        'UrlUtils.PopUpUrl(returnUrl, Me, PortalSettings, True, False)
+                        'ScriptManager.RegisterStartupScript(Me, Me.GetType(), "redirect", "alert('Data has been submitted successfully'); window.location='" + NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=PropertyManager"), True)
                     Else
-                        Select Case PropertySettings.RedirectType
+                        If (_returnUrl <> "") Then
+                            Response.Redirect(_returnUrl, True)
+                        Else
+                            Select Case PropertySettings.RedirectType
 
-                            Case RedirectType.PropertyManager
-                                Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=PropertyManager"), True)
-                                Exit Select
-
-                            Case RedirectType.ViewProperty
-                                Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=View", "PropertyID=" & _propertyID.ToString()), True)
-                                Exit Select
-
-                            Case RedirectType.Page
-                                If (Me.PropertySettings.RedirectPage <> Null.NullInteger) Then
-                                    Response.Redirect(NavigateURL(Me.PropertySettings.RedirectPage), True)
-                                Else
+                                Case RedirectType.PropertyManager
                                     Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=PropertyManager"), True)
-                                End If
-                                Exit Select
+                                    Exit Select
 
-                        End Select
+                                Case RedirectType.ViewProperty
+                                    Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=View", "PropertyID=" & _propertyID.ToString()), True)
+                                    Exit Select
+
+                                Case RedirectType.Page
+                                    If (Me.PropertySettings.RedirectPage <> Null.NullInteger) Then
+                                        Response.Redirect(NavigateURL(Me.PropertySettings.RedirectPage), True)
+                                    Else
+                                        Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=PropertyManager"), True)
+                                    End If
+                                    Exit Select
+
+                            End Select
+                        End If
                     End If
 
                 End If
@@ -1990,13 +2038,21 @@ Namespace Ventrian.PropertyAgent
 
                 If (Page.IsValid) Then
 
-                    Update()
+                    Dim MaxUploadLimit As Boolean = False
+                    Update(MaxUploadLimit)
 
-                    If (_returnUrl <> "") Then
-                        Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditPhotos", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString(), "ReturnUrl=" & _returnUrl), True)
+                    If MaxUploadLimit Then
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "alertMessage", "alert('The maximum upload limit
+has been exceeded!')", True)
                     Else
-                        Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditPhotos", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString()), True)
+                        If (_returnUrl <> "") Then
+                            Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditPhotos", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString(), "ReturnUrl=" & _returnUrl), True)
+                        Else
+                            Response.Redirect(NavigateURL(Me.TabId, "", PropertySettings.SEOAgentType & "=EditPhotos", PropertySettings.SEOPropertyID & "=" & _propertyID.ToString()), True)
+                        End If
                     End If
+
+
 
                 End If
 
@@ -2028,7 +2084,8 @@ Namespace Ventrian.PropertyAgent
 
                 If (Page.IsValid) Then
 
-                    Update()
+                    Dim MaxUploadLimit As Boolean = False
+                    Update(MaxUploadLimit)
 
                     Dim objPropertyController As New PropertyController()
                     Dim objProperty As PropertyInfo = objPropertyController.Get(_propertyID)
@@ -2136,6 +2193,13 @@ Namespace Ventrian.PropertyAgent
 
         End Sub
 
+
+
+        'Public Sub valMaxUploadLimitExcedeed_ServerValidate(ByVal source As Object, ByVal args As System.Web.UI.WebControls.ServerValidateEventArgs)
+
+        '    args.IsValid = False
+
+        'End Sub
         Protected Sub valPropertyTypeSubmission_ServerValidate(ByVal source As Object, ByVal args As System.Web.UI.WebControls.ServerValidateEventArgs) Handles valPropertyTypeSubmission.ServerValidate
 
             If (trType.Visible) Then

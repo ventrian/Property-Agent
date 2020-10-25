@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Main.Text" xml:space="preserve">
     <value>Main</value>
@@ -1511,5 +1511,14 @@
   </data>
   <data name="plLayoutTypeTypes.Text" xml:space="preserve">
     <value>Layout Type</value>
+  </data>
+  <data name="plMaxUploadLimit.Help" xml:space="preserve">
+    <value>Set the total max space reserved to File Upload Custom Fields (value expressed in MB)</value>
+  </data>
+  <data name="plMaxUploadLimit.Text" xml:space="preserve">
+    <value>Max Total File Upload Limit MB</value>
+  </data>
+  <data name="valMaxUploadLimitIsMB.ErrorMessage" xml:space="preserve">
+    <value>&lt;br&gt;The value is required in MB</value>
   </data>
 </root>

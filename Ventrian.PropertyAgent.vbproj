@@ -33,7 +33,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\Gruppo24\bin\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DocumentationFile>Ventrian.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
     <WarningsAsErrors>
@@ -88,6 +88,10 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Ventrian.ImageResizer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Ventrian.ImageResizer.dll</HintPath>
+    </Reference>
     <Reference Include="Ventrian.NewsArticles.Secure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\Ventrian.NewsArticles.Secure.dll</HintPath>
@@ -2182,12 +2186,6 @@
     <Folder Include="Templates\Simple\Images\Lightbox\.svn\tmp\prop-base\" />
     <Folder Include="Templates\Simple\Images\Lightbox\.svn\tmp\props\" />
     <Folder Include="Templates\Simple\Images\Lightbox\.svn\tmp\text-base\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\VentrianImageResizer\Ventrian.ImageResizer.csproj">
-      <Project>{ac62588e-ac15-4cf8-84ca-f7cfb84a4561}</Project>
-      <Name>Ventrian.ImageResizer</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

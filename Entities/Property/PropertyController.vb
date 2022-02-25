@@ -4,12 +4,14 @@ Imports DotNetNuke.Common.Utilities
 Imports DotNetNuke.Framework
 Imports DotNetNuke.Services.Search
 Imports DotNetNuke.Entities.Modules
+Imports DotNetNuke.Services.Search.Entities
+Imports DotNetNuke.Entities.Portals
 
 Namespace Ventrian.PropertyAgent
 
     Public Class PropertyController
 
-        Implements ISearchable
+        Inherits ModuleSearchBase
 
 
 #Region " Private Methods "
@@ -212,8 +214,7 @@ Namespace Ventrian.PropertyAgent
 
 #Region " Optional Interfaces "
 
-        Public Function GetSearchItems(ByVal ModInfo As DotNetNuke.Entities.Modules.ModuleInfo) As DotNetNuke.Services.Search.SearchItemInfoCollection Implements DotNetNuke.Entities.Modules.ISearchable.GetSearchItems
-
+        Public Overrides Function GetModifiedSearchDocuments(ModInfo As DotNetNuke.Entities.Modules.ModuleInfo, beginDateUtc As Date) As IList(Of SearchDocument)
             Dim objModuleController As New ModuleController
             Dim objSettings As Hashtable = objModuleController.GetModuleSettings(ModInfo.ModuleID)
 
@@ -240,6 +241,7 @@ Namespace Ventrian.PropertyAgent
                         End If
 
                         Dim SearchItemCollection As New SearchItemInfoCollection
+                        Dim list As New List(Of SearchDocument)
 
                         Dim objPropertyController As New PropertyController
                         Dim objProperties As List(Of PropertyInfo) = objPropertyController.List(ModInfo.ModuleID, Null.NullInteger, SearchStatusType.PublishedActive, Null.NullInteger, Null.NullInteger, Null.NullBoolean, Null.NullBoolean, SortByType.Published, Null.NullInteger, SortDirectionType.Descending, Null.NullString, Null.NullString, 0, 100000, Null.NullBoolean)
@@ -333,17 +335,32 @@ Namespace Ventrian.PropertyAgent
 
                             Dim SearchItem As New SearchItemInfo(strTitle, strDescription, Null.NullInteger, objProperty.DateModified, objProperty.ModuleID, objProperty.PropertyID.ToString(), strContent, "agentType=View&PropertyID=" & objProperty.PropertyID.ToString())
                             SearchItemCollection.Add(SearchItem)
+                            Dim TabPath As String = ModInfo.ParentTab.TabPath.Replace("//", "/")
+                            Dim item2 As New SearchDocument With {
+                                .Url = TabPath + "?" + SearchItem.GUID,
+                                    .AuthorUserId = SearchItem.Author,
+            .UniqueKey = SearchItem.SearchKey,
+            .PortalId = ModInfo.PortalID,
+            .Title = SearchItem.Title,
+            .Description = SearchItem.Description,
+            .Body = SearchItem.Content,
+            .ModifiedTimeUtc = SearchItem.PubDate
+        }
+                            list.Add(item2)
                         Next
 
-                        Return SearchItemCollection
+                        Return list
 
                     End If
                 End If
             End If
 
             Return Nothing
-
         End Function
+
+
+
+
 
 #End Region
 

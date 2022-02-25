@@ -143,9 +143,9 @@ Namespace Ventrian.PropertyAgent
         Public Const MEDIUM_HEIGHT_SETTING As String = "MediumHeight"
         Public Const MEDIUM_HEIGHT_SETTING_DEFAULT As Integer = 240
         Public Const LARGE_WIDTH_SETTING As String = "LargeWidth"
-        Public Const LARGE_WIDTH_SETTING_DEFAULT As Integer = 700
+        Public Const LARGE_WIDTH_SETTING_DEFAULT As Integer = 1600
         Public Const LARGE_HEIGHT_SETTING As String = "LargeHeight"
-        Public Const LARGE_HEIGHT_SETTING_DEFAULT As Integer = 475
+        Public Const LARGE_HEIGHT_SETTING_DEFAULT As Integer = 1200
         Public Const IMAGES_ITEMS_PER_ROW_SETTING As String = "ImagesItemsPerRow"
         Public Const IMAGES_ITEMS_PER_ROW_SETTING_DEFAULT As Integer = 2
         Public Const IMAGES_WATERMARK_ENABLED_SETTING As String = "ImagesWatermarkEnabled"

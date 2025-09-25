@@ -115,7 +115,9 @@ Namespace Ventrian.PropertyAgent
             nodeRoot.AppendChild(nodeSettings)
 
             Dim objModuleController As New ModuleController
-            Dim objSettings As Hashtable = objModuleController.GetModuleSettings(_moduleID)
+            Dim objController As New DotNetNuke.Entities.Modules.ModuleController
+            Dim objModule As ModuleInfo = objController.GetModule(_moduleID)
+            Dim objSettings As Hashtable = objModule.ModuleSettings
 
             Dim settings As IDictionaryEnumerator = objSettings.GetEnumerator
             While settings.MoveNext

@@ -12,6 +12,7 @@ Imports DotNetNuke.Services.Exceptions
 Imports DotNetNuke.Services.Localization
 Imports DotNetNuke.Security
 Imports DotNetNuke.Web.Client.ClientResourceManagement
+Imports DotNetNuke.Framework.JavaScriptLibraries
 
 Namespace Ventrian.PropertyAgent
 
@@ -400,7 +401,7 @@ Namespace Ventrian.PropertyAgent
                 End If
             End If
 
-            If (Me.PropertySettings.Template(ModuleId) = "") Then
+            If (Me.PropertySettings.Template(ModuleId, TabId) = "") Then
                 If (Me.IsEditor) Then
                     If (_controlToLoad <> "EditTemplateDefinitions.ascx" And _controlToLoad <> "ImportTemplateDefinition.ascx") Then
                         _controlToLoad = "ChangeTemplate.ascx"
@@ -414,7 +415,7 @@ Namespace Ventrian.PropertyAgent
 
         Private Sub RegisterScripts()
 
-            DotNetNuke.Framework.jQuery.RequestRegistration()
+            JavaScript.RequestRegistration(CommonJs.jQuery)
             ClientResourceManager.RegisterScript(Page, Me.ResolveUrl("js/lightbox/jquery.lightbox-0.4.pack.js"))
 
             'If (Me.PropertySettings.IncludejQuery And HttpContext.Current.Items("jquery_registered") Is Nothing And HttpContext.Current.Items("jQueryRequested") Is Nothing) Then

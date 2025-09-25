@@ -1,5 +1,6 @@
 Imports System
 Imports System.Data
+Imports DotNetNuke.Common.Lists
 
 Imports DotNetNuke.Common.Utilities
 Imports DotNetNuke.Framework
@@ -12,13 +13,17 @@ Namespace Ventrian.PropertyAgent
 
         Public Function [Get](ByVal templateID As Integer) As TemplateInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetTemplate(templateID), GetType(TemplateInfo)), TemplateInfo)
+            Return CBO.FillObject(Of TemplateInfo)(DataProvider.Instance().GetTemplate(templateID))
+            'Return CType(DataProvider.Instance().GetTemplate(templateID), CType(TemplateInfo TemplateInfo)
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetTemplate(templateID), GetType(TemplateInfo)), TemplateInfo)
 
         End Function
 
         Public Function [GetByFolder](ByVal folder As String) As TemplateInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetTemplateByFolder(folder), GetType(TemplateInfo)), TemplateInfo)
+            Return CBO.FillObject(Of TemplateInfo)(DataProvider.Instance().GetTemplateByFolder(folder))
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetTemplateByFolder(folder), GetType(TemplateInfo)), TemplateInfo)
+            'Return CType(DataProvider.Instance().GetTemplateByFolder(folder), TemplateInfo)
 
         End Function
 

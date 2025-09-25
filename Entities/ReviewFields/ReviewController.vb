@@ -14,7 +14,9 @@ Namespace Ventrian.PropertyAgent
 
         Public Function GetReview(ByVal propertyID As Integer, ByVal userID As Integer) As ReviewInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetReview(propertyID, userID), GetType(ReviewInfo)), ReviewInfo)
+            Return CType(CBO.FillObject(Of ReviewInfo)(DataProvider.Instance().GetReview(propertyID, userID)), ReviewInfo)
+
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetReview(propertyID, userID), GetType(ReviewInfo)), ReviewInfo)
 
         End Function
 

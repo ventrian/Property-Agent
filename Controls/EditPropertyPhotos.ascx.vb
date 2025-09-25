@@ -110,7 +110,7 @@ Namespace Ventrian.PropertyAgent.Controls
             Try
 
                 ReadQueryString()
-                DotNetNuke.Framework.jQuery.RequestUIRegistration()
+                DotNetNuke.Framework.JavaScriptLibraries.JavaScript.RequestRegistration(DotNetNuke.Framework.JavaScriptLibraries.CommonJs.jQuery)
 
                 If (Page.IsPostBack = False) Then
 

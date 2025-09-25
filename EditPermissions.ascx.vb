@@ -48,7 +48,8 @@ Namespace Ventrian.PropertyAgent
 
             Dim objRoleController As New RoleController
             Dim availableRoles As New ArrayList
-            Dim objRoles As ArrayList = objRoleController.GetPortalRoles(Me.PortalId)
+
+            Dim objRoles As ArrayList = objRoleController.GetRoles(Me.PortalId)
 
             For Each objRole As RoleInfo In objRoles
                 availableRoles.Add(New ListItem(objRole.RoleName, objRole.RoleName))

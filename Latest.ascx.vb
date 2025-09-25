@@ -4,6 +4,7 @@ Imports DotNetNuke.Services.Exceptions
 Imports DotNetNuke.Services.Localization
 Imports DotNetNuke.Security
 Imports Ventrian.PropertyAgent.Mapping
+Imports DotNetNuke.Framework.JavaScriptLibraries
 
 Namespace Ventrian.PropertyAgent
 
@@ -647,7 +648,8 @@ Namespace Ventrian.PropertyAgent
 
         Private Sub RegisterScripts()
 
-            DotNetNuke.Framework.jQuery.RequestRegistration()
+            'DotNetNuke.Framework.jQuery.RequestRegistration()
+            JavaScript.RequestRegistration(CommonJs.jQuery)
 
             'If (PropertySettings.IncludejQuery And HttpContext.Current.Items("jquery_registered") Is Nothing And HttpContext.Current.Items("jQueryRequested") Is Nothing) Then
             '    If (HttpContext.Current.Items("PropertyAgent-jQuery-ScriptsRegistered") Is Nothing And HttpContext.Current.Items("SimpleGallery-ScriptsRegistered") Is Nothing) Then
@@ -819,7 +821,7 @@ Namespace Ventrian.PropertyAgent
                 End If
 
                 If (Me.PropertySettings.Template = "") Then
-                    If (Me.PropertySettings.Template(Me.PropertySettingsLatest.PropertyAgentModuleID) = "") Then
+                    If (Me.PropertySettings.Template(Me.PropertySettingsLatest.PropertyAgentModuleID, Me.PropertySettingsLatest.PropertyAgentTabID) = "") Then
                         Dim objLabel As New Label
                         objLabel.Text = Localization.GetString("NoTemplate", Me.LocalResourceFile)
                         objLabel.CssClass = "Normal"

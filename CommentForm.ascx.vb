@@ -1,4 +1,5 @@
 Imports DotNetNuke.Common.Utilities
+Imports DotNetNuke.Entities.Modules
 Imports DotNetNuke.Entities.Users
 Imports DotNetNuke.Services.Exceptions
 Imports DotNetNuke.Services.Localization
@@ -344,7 +345,9 @@ Namespace Ventrian.PropertyAgent
                     If (objProperty IsNot Nothing) Then
 
                         If (PropertyAgentBase.UserId <> Null.NullInteger) Then
-                            Journal.AddCommentToJournal(objProperty, objComment, PropertyAgentBase.PortalId, TabID, PropertyAgentBase.UserId, objLayoutController.GetExternalLink(objLayoutController.GetPropertyLink(objProperty, PropertyAgentBase.CustomFields)), PropertySettings.PropertyLabel)
+                            Dim objController As New DotNetNuke.Entities.Modules.ModuleController
+                            Dim objModule As ModuleInfo = objController.GetModule(ModuleID)
+                            Journal.AddCommentToJournal(objProperty, objComment, PropertyAgentBase.PortalId, objModule, PropertyAgentBase.UserId, objLayoutController.GetExternalLink(objLayoutController.GetPropertyLink(objProperty, PropertyAgentBase.CustomFields)), PropertySettings.PropertyLabel)
                         End If
 
                         If (PropertySettings.CommentNotifyOwner) Then

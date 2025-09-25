@@ -75,7 +75,7 @@ Namespace Ventrian.PropertyAgent
                                 Dim objPropertyController As New PropertyController
                                 Dim objProperty As PropertyInfo = objPropertyController.Get(_propertyID)
                                 If Not (objProperty Is Nothing) Then
-                                    If (UserController.GetCurrentUserInfo.UserID = objProperty.AuthorID) Then
+                                    If (UserController.Instance.GetCurrentUserInfo.UserID = objProperty.AuthorID) Then
                                         isOwner = True
                                     End If
                                 End If

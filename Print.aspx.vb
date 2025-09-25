@@ -4,6 +4,7 @@ Imports DotNetNuke.Entities.Modules
 Imports DotNetNuke.Entities.Host
 Imports System.IO
 
+
 Namespace Ventrian.PropertyAgent
 
     Partial Public Class Print
@@ -209,7 +210,11 @@ Namespace Ventrian.PropertyAgent
             Get
                 If (_propertySettings Is Nothing) Then
                     Dim objModuleController As New ModuleController
-                    Dim settings As Hashtable = objModuleController.GetModuleSettings(_moduleID)
+                    Dim objModule As ModuleInfo = objModuleController.GetModule(_moduleID)
+
+                    Dim settings As Hashtable = objModule.ModuleSettings
+
+                    'Dim settings As Hashtable = objModuleController.GetModuleSettings(_moduleID)
                     _propertySettings = New PropertySettings(settings)
                 End If
                 Return _propertySettings

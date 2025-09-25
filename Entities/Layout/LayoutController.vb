@@ -1587,7 +1587,7 @@ Namespace Ventrian.PropertyAgent
                             ' Do Nothing
 
                         Case "ISCOMMENTOWNER"
-                            If (objComment.UserID <> UserController.GetCurrentUserInfo().UserID) Then
+                            If (objComment.UserID <> UserController.Instance.GetCurrentUserInfo.UserID) Then
                                 While (iPtr < layoutArray.Length - 1)
                                     If (layoutArray(iPtr + 1) = "/ISCOMMENTOWNER") Then
                                         Exit While
@@ -3558,7 +3558,7 @@ Namespace Ventrian.PropertyAgent
                             End If
 
                         Case "CURRENTUSERID"
-                            Dim objUser As UserInfo = UserController.GetCurrentUserInfo()
+                            Dim objUser As UserInfo = UserController.Instance.GetCurrentUserInfo()
                             If (objUser IsNot Nothing) Then
                                 Dim objLiteral As New Literal
                                 objLiteral.ID = Globals.CreateValidID(_moduleKey & objProperty.PropertyID.ToString() & "-" & iPtr.ToString())
@@ -4066,7 +4066,7 @@ Namespace Ventrian.PropertyAgent
                         Case "ISOWNER"
                             Dim isOwner As Boolean = False
                             If (_objPage.User.Identity.IsAuthenticated) Then
-                                If (UserController.GetCurrentUserInfo.UserID = objProperty.AuthorID) Then
+                                If (UserController.Instance.GetCurrentUserInfo.UserID = objProperty.AuthorID) Then
                                     isOwner = True
                                 End If
                             End If
@@ -4465,7 +4465,7 @@ Namespace Ventrian.PropertyAgent
                             Dim hasRated As Boolean = False
                             If (_objPage.User.Identity.IsAuthenticated) Then
                                 Dim objRatingController As New RatingController()
-                                Dim objRating As RatingInfo = objRatingController.Get(objProperty.PropertyID, UserController.GetCurrentUserInfo.UserID)
+                                Dim objRating As RatingInfo = objRatingController.Get(objProperty.PropertyID, UserController.Instance.GetCurrentUserInfo.UserID)
                                 hasRated = Not (objRating Is Nothing)
                             Else
                                 If Not (_objPage.Request.Cookies("PropertyAgent-Rating-" & objProperty.PropertyID.ToString()) Is Nothing) Then
@@ -4498,7 +4498,7 @@ Namespace Ventrian.PropertyAgent
 
                                 Dim callbackFunctionName As String = "RateProperty_" & objProperty.PropertyID.ToString() & "_" & iPtr.ToString()
                                 Dim callbackReturnFunctionName As String = "RateProperty_" & objProperty.PropertyID.ToString() & "_" & iPtr.ToString() & "_Callback"
-                                _objPage.ClientScript.RegisterClientScriptBlock(Me.GetType(), callbackFunctionName, "jQuery(document).ready(function() {" & vbCrLf & "jQuery('#rating-" + objProperty.PropertyID.ToString() & "-" & _moduleKey & "').rating('" & callbackFunctionName & "', {propertyID: " & objProperty.PropertyID.ToString() & ", userID: " & UserController.GetCurrentUserInfo.UserID.ToString() & "});" & vbCrLf & "});", True)
+                                _objPage.ClientScript.RegisterClientScriptBlock(Me.GetType(), callbackFunctionName, "jQuery(document).ready(function() {" & vbCrLf & "jQuery('#rating-" + objProperty.PropertyID.ToString() & "-" & _moduleKey & "').rating('" & callbackFunctionName & "', {propertyID: " & objProperty.PropertyID.ToString() & ", userID: " & UserController.Instance.GetCurrentUserInfo.UserID.ToString() & "});" & vbCrLf & "});", True)
                                 _objPage.ClientScript.RegisterClientScriptBlock(Me.GetType(), callbackReturnFunctionName, "<script type=""text/javascript"">function " & callbackReturnFunctionName & "() {}</script>")
 
                                 If (TypeOf _objControl Is PropertyAgentBase) Then
@@ -4897,7 +4897,9 @@ Namespace Ventrian.PropertyAgent
                                                 objLiteral.ID = controlID
                                                 objLiteral.Text = profilePropertyValue
                                                 Dim objListController As New ListController
-                                                Dim objListEntryInfoCollection As ListEntryInfoCollection = objListController.GetListEntryInfoCollection(profilePropertyName)
+                                                'Dim objListEntryInfoCollection As ListEntryInfoCollection = objListController.GetListEntryInfoCollection(profilePropertyName)
+                                                Dim objListEntryInfoCollection As IEnumerable(Of ListEntryInfo) = objListController.GetListEntryInfoItems(profilePropertyName)
+
                                                 For Each objListEntryInfo As ListEntryInfo In objListEntryInfoCollection
                                                     If objListEntryInfo.Value = profilePropertyValue Then
                                                         objLiteral.Text = objListEntryInfo.Text
@@ -5053,7 +5055,9 @@ Namespace Ventrian.PropertyAgent
                                                 objLiteral.ID = controlID
                                                 objLiteral.Text = profilePropertyValue
                                                 Dim objListController As New ListController
-                                                Dim objListEntryInfoCollection As ListEntryInfoCollection = objListController.GetListEntryInfoCollection(profilePropertyName)
+                                                'Dim objListEntryInfoCollection As ListEntryInfoCollection = objListController.GetListEntryInfoCollection(profilePropertyName)
+                                                Dim objListEntryInfoCollection As IEnumerable(Of ListEntryInfo) = objListController.GetListEntryInfoItems(profilePropertyName)
+
                                                 For Each objListEntryInfo As ListEntryInfo In objListEntryInfoCollection
                                                     If objListEntryInfo.Value = profilePropertyValue Then
                                                         objLiteral.Text = objListEntryInfo.Text
@@ -5285,7 +5289,9 @@ Namespace Ventrian.PropertyAgent
                                                 objLiteral.ID = controlID
                                                 objLiteral.Text = profilePropertyValue
                                                 Dim objListController As New ListController
-                                                Dim objListEntryInfoCollection As ListEntryInfoCollection = objListController.GetListEntryInfoCollection(profilePropertyName)
+                                                'Dim objListEntryInfoCollection As ListEntryInfoCollection = objListController.GetListEntryInfoCollection(profilePropertyName)
+                                                Dim objListEntryInfoCollection As IEnumerable(Of ListEntryInfo) = objListController.GetListEntryInfoItems(profilePropertyName)
+
                                                 For Each objListEntryInfo As ListEntryInfo In objListEntryInfoCollection
                                                     If objListEntryInfo.Value = profilePropertyValue Then
                                                         objLiteral.Text = objListEntryInfo.Text

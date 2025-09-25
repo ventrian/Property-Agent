@@ -64,7 +64,7 @@ Namespace Ventrian.PropertyAgent
         Private Sub BindModules()
 
             Dim objDesktopModuleController As New DesktopModuleController
-            Dim objDesktopModuleInfo As DesktopModuleInfo = objDesktopModuleController.GetDesktopModuleByModuleName("PropertyAgent", PortalId)
+            Dim objDesktopModuleInfo As DesktopModuleInfo = DesktopModuleController.GetDesktopModuleByModuleName("PropertyAgent", PortalId)
 
             If Not (objDesktopModuleInfo Is Nothing) Then
 
@@ -476,7 +476,10 @@ Namespace Ventrian.PropertyAgent
                 End If
 
                 Dim objModuleController As New ModuleController
-                Me.PropertySettingsLatest.SetSettings(objModuleController.GetModuleSettings(Me.ModuleId))
+                Dim objController As New DotNetNuke.Entities.Modules.ModuleController
+                Dim objModule As ModuleInfo = objController.GetModule(Me.ModuleId)
+                Me.PropertySettingsLatest.SetSettings(objModule.ModuleSettings)
+
                 BindCustomFilters()
 
             End If
@@ -503,9 +506,14 @@ Namespace Ventrian.PropertyAgent
                 Next
 
                 Dim objModuleController As New ModuleController
+
                 objModuleController.UpdateModuleSetting(Me.ModuleId, Constants.LATEST_CUSTOM_FIELD_FILTERS_SETTING, newCustomFieldIDs)
                 objModuleController.UpdateModuleSetting(Me.ModuleId, Constants.LATEST_CUSTOM_FIELD_VALUES_SETTING, newCustomFieldValues)
-                Me.PropertySettingsLatest.SetSettings(objModuleController.GetModuleSettings(Me.ModuleId))
+
+                Dim objController As New DotNetNuke.Entities.Modules.ModuleController
+                Dim objModule As ModuleInfo = objController.GetModule(Me.ModuleId)
+                Me.PropertySettingsLatest.SetSettings(objModule.ModuleSettings)
+
                 BindCustomFilters()
 
             End If

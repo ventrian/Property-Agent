@@ -57,8 +57,10 @@ Namespace Ventrian.PropertyAgent
             Dim tabID As Integer = Convert.ToInt32(Me.ScheduleHistoryItem.GetSetting("TabID"))
 
             Dim objModuleController As New ModuleController
+            Dim objController As New DotNetNuke.Entities.Modules.ModuleController
+            Dim objModule As ModuleInfo = objController.GetModule(moduleID)
+            Dim settings As Hashtable = objModule.ModuleSettings
 
-            Dim settings As Hashtable = objModuleController.GetModuleSettings(moduleID)
 
             Dim period As Integer = Null.NullInteger
             If (settings.Contains(Constants.REMINDER_PERIOD_SETTING)) Then
@@ -275,7 +277,8 @@ Namespace Ventrian.PropertyAgent
                                 Next
 
                                 Dim objAliasController As New PortalAliasController
-                                Dim col As ArrayList = objAliasController.GetPortalAliasArrayByPortalID(portalID)
+
+                                Dim col As ArrayList = PortalAliasController.Instance.GetPortalAliasesByPortalId(portalID)
 
                                 If (col.Count > 0) Then
                                     strURL = strURL.Replace("~", CType(col(0), PortalAliasInfo).HTTPAlias)

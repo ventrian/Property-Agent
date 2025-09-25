@@ -156,8 +156,11 @@ Namespace Ventrian.PropertyAgent
 
         Public ReadOnly Property PropertySettings(ByVal forceRefresh As Boolean) As PropertySettings
             Get
-                Dim objModuleController As New ModuleController
-                _propertySettings = New PropertySettings(objModuleController.GetModuleSettings(ModuleId))
+                Dim moduleInfo = New ModuleController().GetModule(ModuleId, TabId)
+                'Dim _propertySettings = moduleInfo.ModuleSettings
+                _propertySettings = New PropertySettings(moduleInfo.ModuleSettings)
+                'Dim objModuleController As New ModuleController
+                '_propertySettings = New PropertySettings(objModuleController.GetModuleSettings(ModuleId))
                 Return _propertySettings
             End Get
         End Property

@@ -9,7 +9,10 @@ Namespace Ventrian.PropertyAgent
 
         Public Function [Get](ByVal customFieldID As Integer) As CustomFieldInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetCustomField(customFieldID), GetType(CustomFieldInfo)), CustomFieldInfo)
+            Return CBO.FillObject(Of CustomFieldInfo)(DataProvider.Instance().GetCustomField(customFieldID))
+
+
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetCustomField(customFieldID), GetType(CustomFieldInfo)), CustomFieldInfo)
 
         End Function
 

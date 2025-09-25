@@ -2,6 +2,7 @@ Imports System
 Imports System.Data
 
 Imports DotNetNuke.Common.Utilities
+Imports DotNetNuke.Entities.Modules
 Imports DotNetNuke.Framework
 
 Namespace Ventrian.PropertyAgent
@@ -58,7 +59,8 @@ Namespace Ventrian.PropertyAgent
                 objPropertyValues = CBO.FillCollection(Of PropertyValueInfo)(DataProvider.Instance().ListPropertyValue(propertyID))
 
                 Dim objController As New DotNetNuke.Entities.Modules.ModuleController
-                Dim settings As Hashtable = objController.GetModuleSettings(moduleID)
+                Dim objModule As ModuleInfo = objController.GetModule(moduleID)
+                Dim settings As Hashtable = objModule.ModuleSettings
 
                 Dim useCache As Boolean = Constants.CACHE_PROPERTY_VALUES_SETTING_DEFAULT
                 If (settings.ContainsKey(Constants.CACHE_PROPERTY_VALUES_SETTING)) Then

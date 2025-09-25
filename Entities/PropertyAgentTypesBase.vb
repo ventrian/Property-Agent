@@ -44,7 +44,9 @@ Namespace Ventrian.PropertyAgent
             Get
                 If (_propertySettings Is Nothing) Then
                     Dim objModuleController As New ModuleController
-                    _propertySettings = New PropertySettings(objModuleController.GetModuleSettings(Me.PropertySettingsTypes.PropertyAgentModuleID))
+                    Dim objModule As ModuleInfo = objModuleController.GetModule(Me.PropertySettingsTypes.PropertyAgentModuleID)
+                    _propertySettings = New PropertySettings(objModule.ModuleSettings)
+                    '_propertySettings = New PropertySettings(objModuleController.GetModuleSettings(Me.PropertySettingsTypes.PropertyAgentModuleID))
                 End If
                 Return _propertySettings
             End Get

@@ -1,4 +1,5 @@
 Imports System.Web.UI.WebControls
+Imports DotNetNuke.Entities
 
 Imports DotNetNuke.Entities.Modules
 Imports Ventrian.PropertyAgent.Mapping
@@ -33,19 +34,20 @@ Namespace Ventrian.PropertyAgent
             End Get
         End Property
 
-        Public ReadOnly Property Template(ByVal moduleID As Integer) As String
+        Public ReadOnly Property Template(ByVal moduleID As Integer, ByVal tabID As Integer) As String
             Get
                 If (_settings.Contains(Constants.TEMPLATE_SETTING)) Then
                     Return _settings(Constants.TEMPLATE_SETTING).ToString()
                 Else
-                    Dim objModuleController As New ModuleController()
-                    Dim objSettings As Hashtable = objModuleController.GetModuleSettings(moduleID)
+                    Dim ActiveModule As ModuleInfo = ModuleController.Instance.GetModule(moduleID, tabID, True)
+                    Dim objSettings As Hashtable = ActiveModule.ModuleSettings
+
 
                     If (objSettings.Contains(Constants.TEMPLATE_OLD_SETTING)) Then
-                        objModuleController.UpdateModuleSetting(moduleID, Constants.TEMPLATE_SETTING, objSettings(Constants.TEMPLATE_OLD_SETTING))
+                        ModuleController.Instance.UpdateTabModuleSetting(ActiveModule.ModuleID, Constants.TEMPLATE_SETTING, objSettings(Constants.TEMPLATE_OLD_SETTING))
                         Return objSettings(Constants.TEMPLATE_OLD_SETTING)
                     Else
-                        objModuleController.UpdateModuleSetting(moduleID, Constants.TEMPLATE_SETTING, Constants.TEMPLATE_SETTING_DEFAULT)
+                        ModuleController.Instance.UpdateTabModuleSetting(ActiveModule.ModuleID, Constants.TEMPLATE_SETTING, Constants.TEMPLATE_SETTING_DEFAULT)
                     End If
                     Return Constants.TEMPLATE_SETTING_DEFAULT
                 End If

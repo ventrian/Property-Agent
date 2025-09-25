@@ -11,6 +11,7 @@ Imports DotNetNuke.UI.UserControls
 Imports System.IO
 Imports System.Globalization
 Imports Ventrian.PropertyAgent.Social
+Imports DotNetNuke.Entities.Modules
 
 Namespace Ventrian.PropertyAgent
 
@@ -343,8 +344,8 @@ Namespace Ventrian.PropertyAgent
                 cmdClone.Visible = False
 
                 If (PropertySettings.AgentDropdownDefault) Then
-                    If (drpOwner.Items.FindByValue(DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo.UserID.ToString) IsNot Nothing) Then
-                        drpOwner.SelectedValue = DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo.UserID.ToString
+                    If (drpOwner.Items.FindByValue(UserController.Instance.GetCurrentUserInfo.UserID.ToString) IsNot Nothing) Then
+                        drpOwner.SelectedValue = UserController.Instance.GetCurrentUserInfo.UserID.ToString
                     End If
                 End If
 
@@ -1069,7 +1070,10 @@ Namespace Ventrian.PropertyAgent
                 Dim objLayoutController As New LayoutController(PortalSettings, PropertySettings, Page, Nothing, False, TabId, ModuleId, ModuleKey)
                 summary = summary.Replace("[LINK]", objLayoutController.GetExternalLink(objLayoutController.GetPropertyLink(_property, objCustomFields)))
                 summary = summary.Replace("[PROPERTYLABEL]", PropertySettings.PropertyLabel)
-                Journal.AddPropertyToJournal(_property, PortalId, TabId, UserId, Null.NullInteger, objLayoutController.GetExternalLink(objLayoutController.GetPropertyLink(_property, objCustomFields)), summary)
+                Dim _Url As String = objLayoutController.GetExternalLink(objLayoutController.GetPropertyLink(_property, objCustomFields))
+                Dim objController As New DotNetNuke.Entities.Modules.ModuleController
+                Dim objModule As ModuleInfo = objController.GetModule(ModuleId)
+                Journal.AddPropertyToJournal(_property, PortalId, objModule, UserId, Null.NullInteger, _Url, summary)
             End If
 
 
@@ -2147,7 +2151,7 @@ has been exceeded!')", True)
 
                 Try
                     If objProperty Is Nothing Then
-                        drpOwner.SelectedValue = DotNetNuke.Entities.Users.UserController.GetCurrentUserInfo.UserID.ToString
+                        drpOwner.SelectedValue = UserController.Instance.GetCurrentUserInfo.UserID.ToString
                     Else
                         drpOwner.SelectedValue = objProperty.AuthorID.ToString()
                     End If

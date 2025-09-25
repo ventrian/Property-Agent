@@ -8,7 +8,9 @@ Namespace Ventrian.PropertyAgent
 
         Public Function [Get](ByVal reviewFieldID As Integer) As ReviewFieldInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetReviewField(reviewFieldID), GetType(ReviewFieldInfo)), ReviewFieldInfo)
+            Return CType(CBO.FillObject(Of ReviewFieldInfo)(DataProvider.Instance().GetReviewField(reviewFieldID)), ReviewFieldInfo)
+
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetReviewField(reviewFieldID), GetType(ReviewFieldInfo)), ReviewFieldInfo)
 
         End Function
 

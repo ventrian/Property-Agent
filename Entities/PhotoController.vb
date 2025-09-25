@@ -21,7 +21,10 @@ Namespace Ventrian.PropertyAgent
             Dim objPhoto As PhotoInfo = CType(DataCache.GetCache(_cacheKey & photoID.ToString()), PhotoInfo)
 
             If (objPhoto Is Nothing) Then
-                objPhoto = CType(CBO.FillObject(DataProvider.Instance().GetPhoto(photoID), GetType(PhotoInfo)), PhotoInfo)
+
+                objPhoto = CBO.FillObject(Of PhotoInfo)(DataProvider.Instance().GetPhoto(photoID))
+
+                'objPhoto = CType(CBO.FillObject(DataProvider.Instance().GetPhoto(photoID), GetType(PhotoInfo)), PhotoInfo)
                 DataCache.SetCache(_cacheKey & photoID.ToString(), objPhoto)
             End If
 

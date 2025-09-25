@@ -1,5 +1,6 @@
 ﻿Imports DotNetNuke.Services.Journal
 Imports DotNetNuke.Security.Roles.Internal
+Imports DotNetNuke.Entities.Modules
 
 Namespace Ventrian.PropertyAgent.Social
 
@@ -10,7 +11,7 @@ Namespace Ventrian.PropertyAgent.Social
 
 #Region "Internal Methods"
 
-        Friend Shared Sub AddPropertyToJournal(ByVal objProperty As PropertyInfo, ByVal portalId As Integer, ByVal tabId As Integer, ByVal journalUserId As Integer, ByVal journalGroupID As Integer, ByVal url As String, ByVal summary As String)
+        Friend Shared Sub AddPropertyToJournal(ByVal objProperty As PropertyInfo, ByVal portalId As Integer, ByVal objModule As ModuleInfo, ByVal journalUserId As Integer, ByVal journalGroupID As Integer, ByVal url As String, ByVal summary As String)
             Dim objectKey As String = "Ventrian_Article_" + objProperty.PropertyID.ToString() + "_" + journalGroupID.ToString()
             Dim ji As JournalItem = JournalController.Instance.GetJournalItemByKey(portalId, objectKey)
 
@@ -36,10 +37,13 @@ Namespace Ventrian.PropertyAgent.Social
                 ji.SocialGroupId = journalGroupID
             End If
 
-            JournalController.Instance.SaveJournalItem(ji, tabId)
+            'Dim objModuleController As New ModuleController
+            'Dim objModule As ModuleInfo = objModuleController.GetModule(_moduleID)
+
+            JournalController.Instance.SaveJournalItem(ji, objModule)
         End Sub
 
-        Friend Shared Sub AddCommentToJournal(ByVal objProperty As PropertyInfo, ByVal objComment As CommentInfo, ByVal portalId As Integer, ByVal tabId As Integer, ByVal journalUserId As Integer, ByVal url As String, ByVal title As String)
+        Friend Shared Sub AddCommentToJournal(ByVal objProperty As PropertyInfo, ByVal objComment As CommentInfo, ByVal portalId As Integer, ByVal objModule As ModuleInfo, ByVal journalUserId As Integer, ByVal url As String, ByVal title As String)
             Dim objectKey As String = "Ventrian_PropertyAgent_Comment_" + objProperty.PropertyID.ToString() + ":" + objComment.CommentID.ToString()
             Dim ji As JournalItem = JournalController.Instance.GetJournalItemByKey(portalId, objectKey)
 
@@ -62,7 +66,7 @@ Namespace Ventrian.PropertyAgent.Social
             ji.ObjectKey = objectKey
             ji.SecuritySet = "E,"
 
-            JournalController.Instance.SaveJournalItem(ji, tabId)
+            JournalController.Instance.SaveJournalItem(ji, objModule)
         End Sub
 
         'Friend Sub AddRatingToJournal(ByVal objArticle As ArticleInfo, ByVal objRating As RatingInfo, ByVal portalId As Integer, ByVal tabId As Integer, ByVal journalUserId As Integer, ByVal url As String)

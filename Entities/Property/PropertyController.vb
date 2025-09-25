@@ -24,7 +24,8 @@ Namespace Ventrian.PropertyAgent
             Dim arrProperties As New List(Of PropertyInfo)
             Dim objProperty As PropertyInfo
             While dr.Read
-                objProperty = CType(CBO.FillObject(dr, GetType(PropertyInfo), False), PropertyInfo)
+                objProperty = CBO.FillObject(Of PropertyInfo)(dr, False)
+                'objProperty = CType(CBO.FillObject(dr, GetType(PropertyInfo), False), PropertyInfo)
                 arrProperties.Add(objProperty)
             End While
 
@@ -76,7 +77,10 @@ Namespace Ventrian.PropertyAgent
 
         Public Function [Get](ByVal propertyID As Integer) As PropertyInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetProperty(propertyID), GetType(PropertyInfo)), PropertyInfo)
+            Return CBO.FillObject(Of PropertyInfo)(DataProvider.Instance().GetProperty(propertyID))
+
+
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetProperty(propertyID), GetType(PropertyInfo)), PropertyInfo)
 
         End Function
 
@@ -216,7 +220,9 @@ Namespace Ventrian.PropertyAgent
 
         Public Overrides Function GetModifiedSearchDocuments(ModInfo As DotNetNuke.Entities.Modules.ModuleInfo, beginDateUtc As Date) As IList(Of SearchDocument)
             Dim objModuleController As New ModuleController
-            Dim objSettings As Hashtable = objModuleController.GetModuleSettings(ModInfo.ModuleID)
+            Dim objModule As ModuleInfo = objModuleController.GetModule(ModInfo.ModuleID)
+            Dim objSettings As Hashtable = objModule.ModuleSettings
+            'Dim objSettings As Hashtable = objModuleController.GetModuleSettings(ModInfo.ModuleID)
 
             If (objSettings.Contains(Constants.CORE_SEARCH_ENABLED_SETTING)) Then
                 If (Convert.ToBoolean(objSettings(Constants.CORE_SEARCH_ENABLED_SETTING).ToString())) Then
@@ -241,6 +247,7 @@ Namespace Ventrian.PropertyAgent
                         End If
 
                         Dim SearchItemCollection As New SearchItemInfoCollection
+
                         Dim list As New List(Of SearchDocument)
 
                         Dim objPropertyController As New PropertyController

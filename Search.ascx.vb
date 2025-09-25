@@ -48,6 +48,7 @@ Namespace Ventrian.PropertyAgent
 
         Private Sub BindDetails()
 
+
             trWildcard.Visible = PropertyAgentBase.PropertySettings(True).SearchWildcard
 
             If (PropertyAgentBase.PropertySettings.SearchWildcard) Then

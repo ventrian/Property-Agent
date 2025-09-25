@@ -478,7 +478,8 @@ Namespace Ventrian.PropertyAgent
 
             Dim objRoleController As New RoleController()
 
-            lstEditRoles.DataSource = objRoleController.GetPortalRoles(Me.PortalId)
+            lstEditRoles.DataSource = objRoleController.GetRoles(Me.PortalId)
+
             lstEditRoles.DataBind()
 
         End Sub

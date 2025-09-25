@@ -20,7 +20,7 @@ Namespace Ventrian.PropertyAgent
             Get
                 Dim ID As Integer = Null.NullInteger
                 If (Request.IsAuthenticated) Then
-                    Dim objUser As UserInfo = UserController.GetCurrentUserInfo()
+                    Dim objUser As UserInfo = UserController.Instance.GetCurrentUserInfo()
                     If (objUser IsNot Nothing) Then
                         ID = objUser.UserID
                     End If

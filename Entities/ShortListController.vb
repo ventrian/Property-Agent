@@ -20,7 +20,9 @@ Namespace Ventrian.PropertyAgent
 
         Public Function [Get](ByVal propertyID As Integer, ByVal userID As Integer, ByVal userKey As String) As ShortListInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetShortlist(propertyID, userID, userKey), GetType(ShortListInfo)), ShortListInfo)
+            Return CType(CBO.FillObject(Of ShortListInfo)(DataProvider.Instance().GetShortlist(propertyID, userID, userKey)), ShortListInfo)
+
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetShortlist(propertyID, userID, userKey), GetType(ShortListInfo)), ShortListInfo)
 
         End Function
 

@@ -2,6 +2,7 @@ Imports DotNetNuke.Common.Utilities
 Imports DotNetNuke.Entities.Users
 Imports DotNetNuke.Entities.Portals
 Imports DotNetNuke.Security.Roles
+Imports DotNetNuke.Entities
 
 Namespace Ventrian.PropertyAgent
 
@@ -40,7 +41,9 @@ Namespace Ventrian.PropertyAgent
                 Dim objRoleController As New DotNetNuke.Security.Roles.RoleController
                 For Each roleName As String In arrRoles
                     If roleName <> String.Empty Then
-                        Dim arrUsersInRole As ArrayList = objRoleController.GetUsersByRoleName(_portalID, roleName)
+
+                        'Dim arrUsersInRole As ArrayList = objRoleController.GetUsersByRoleName(_portalID, roleName)
+                        Dim arrUsersInRole As ArrayList = RoleController.Instance.GetUsersByRole(_portalID, roleName)
                         AddUsersToList(availableUsers, arrUsersInRole)
                     End If
                 Next
@@ -102,7 +105,8 @@ Namespace Ventrian.PropertyAgent
                 Dim objRoleController As New DotNetNuke.Security.Roles.RoleController
                 For Each roleName As String In arrRoles
                     If roleName <> String.Empty Then
-                        Dim arrUsersInRole As ArrayList = objRoleController.GetUsersByRoleName(_portalID, roleName)
+                        Dim arrUsersInRole As ArrayList = RoleController.Instance.GetUsersByRole(_portalID, roleName)
+                        'Dim arrUsersInRole As ArrayList = objRoleController.GetUsersByRoleName(_portalID, roleName)
                         AddUsersToList(availableUsers, arrUsersInRole)
                     End If
                 Next
@@ -141,7 +145,8 @@ Namespace Ventrian.PropertyAgent
                 Dim objRoleController As New DotNetNuke.Security.Roles.RoleController
                 For Each roleName As String In arrRoles
                     If roleName <> String.Empty Then
-                        Dim arrUsersInRole As ArrayList = objRoleController.GetUsersByRoleName(_portalID, roleName)
+                        Dim arrUsersInRole As ArrayList = RoleController.Instance.GetUsersByRole(_portalID, roleName)
+                        'Dim arrUsersInRole As ArrayList = objRoleController.GetUsersByRoleName(_portalID, roleName)
                         AddUsersToList(availableUsers, arrUsersInRole)
                     End If
                 Next

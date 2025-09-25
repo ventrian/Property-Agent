@@ -240,7 +240,7 @@ Namespace Ventrian.PropertyAgent.Controls
                         objPhoto.Filename = (objPhoto.PhotoID.ToString & ".jpg")
                         Exit Select
                 End Select
-                Dim currentPortalSettings As PortalSettings = PortalController.GetCurrentPortalSettings
+                Dim currentPortalSettings As PortalSettings = PortalController.Instance.GetCurrentPortalSettings()
                 Dim path As String = (currentPortalSettings.HomeDirectoryMapPath & "PropertyAgent\" & Me._moduleID.ToString & "\Images\")
                 If Not Directory.Exists(path) Then
                     Directory.CreateDirectory(path)
@@ -255,7 +255,8 @@ Namespace Ventrian.PropertyAgent.Controls
                 End If
                 If (PropertySettings.WatermarkEnabled And (Operators.CompareString(PropertySettings.WatermarkImage, "", False) > 0)) Then
                     watermark.WatermarkImagePath = (currentPortalSettings.HomeDirectoryMapPath & PropertySettings.WatermarkImage)
-                    watermark.WatermarkImagePosition = DirectCast(PropertySettings.WatermarkPosition, WatermarkPosition)
+                    watermark.WatermarkImagePosition = PropertySettings.WatermarkPosition
+                    'watermark.WatermarkImagePosition = DirectCast(PropertySettings.WatermarkPosition, WatermarkPosition)
                 End If
                 Dim targetFile As String = (path & objPhoto.Filename)
                 ImageManager.getBestInstance.BuildImage((path & objPhoto.Filename), targetFile, queryString, watermark)
@@ -346,7 +347,8 @@ Namespace Ventrian.PropertyAgent.Controls
         Public ReadOnly Property PropertySettings() As PropertySettings
             Get
                 Dim objModuleController As New ModuleController
-                _propertySettings = New PropertySettings(objModuleController.GetModuleSettings(_moduleID))
+                Dim objModule As ModuleInfo = objModuleController.GetModule(_moduleID)
+                _propertySettings = New PropertySettings(objModule.ModuleSettings)
                 Return _propertySettings
             End Get
         End Property
@@ -355,7 +357,14 @@ Namespace Ventrian.PropertyAgent.Controls
             Get
                 If _settings Is Nothing Then
                     Dim objModuleController As New ModuleController
-                    _settings = objModuleController.GetModuleSettings(_moduleID)
+                    Dim objModule As ModuleInfo = objModuleController.GetModule(_moduleID)
+
+                    Dim _settings As Hashtable = objModule.ModuleSettings
+
+
+
+                    'Dim objModuleController As New ModuleController
+                    '_settings = objModuleController.GetModuleSettings(_moduleID)
                     '_settings = GetTabModuleSettings(_tabModuleID, _settings)
                 End If
                 Return _settings

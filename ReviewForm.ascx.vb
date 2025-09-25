@@ -67,7 +67,7 @@ Namespace Ventrian.PropertyAgent
 
                 If (Request.IsAuthenticated) Then
                     Dim objReviewController As New ReviewController()
-                    Dim objReview As ReviewInfo = objReviewController.GetReview(CurrentProperty.PropertyID, UserController.GetCurrentUserInfo.UserID)
+                    Dim objReview As ReviewInfo = objReviewController.GetReview(CurrentProperty.PropertyID, UserController.Instance.GetCurrentUserInfo.UserID)
 
                     If (objReview IsNot Nothing) Then
                         Me.Visible = False

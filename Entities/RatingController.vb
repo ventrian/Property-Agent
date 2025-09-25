@@ -20,7 +20,10 @@ Namespace Ventrian.PropertyAgent
 
         Public Function [Get](ByVal propertyID As Integer, ByVal userID As Integer) As RatingInfo
 
-            Return CType(CBO.FillObject(DataProvider.Instance().GetRating(propertyID, userID), GetType(RatingInfo)), RatingInfo)
+            Return CBO.FillObject(Of RatingInfo)(DataProvider.Instance().GetRating(propertyID, userID))
+
+
+            'Return CType(CBO.FillObject(DataProvider.Instance().GetRating(propertyID, userID), GetType(RatingInfo)), RatingInfo)
 
         End Function
 

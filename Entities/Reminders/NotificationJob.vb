@@ -58,7 +58,10 @@ Namespace Ventrian.PropertyAgent
 
             Dim objModuleController As New ModuleController
 
-            Dim settings As Hashtable = objModuleController.GetModuleSettings(moduleID)
+            Dim objModule As ModuleInfo = objModuleController.GetModule(moduleID)
+
+
+            Dim settings As Hashtable = objModule.ModuleSettings
 
             Dim datePeriod As DateTime = DateTime.Now.AddDays(-1)
             If (settings.Contains(Constants.PROPERTY_LAST_DATE_TIME_SETTING)) Then
@@ -240,7 +243,8 @@ Namespace Ventrian.PropertyAgent
                                 Next
 
                                 Dim objAliasController As New PortalAliasController
-                                Dim col As ArrayList = objAliasController.GetPortalAliasArrayByPortalID(portalID)
+
+                                Dim col As ArrayList = PortalAliasController.Instance.GetPortalAliasesByPortalId(portalID)
 
                                 If (col.Count > 0) Then
                                     strURL = strURL.Replace("~", CType(col(0), PortalAliasInfo).HTTPAlias)
